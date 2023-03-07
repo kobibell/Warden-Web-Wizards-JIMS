@@ -3,9 +3,14 @@
 ### Steps for Setting Up Python Virtual Environment (venv)
 
 
+2. Check that you have Python 3 installed by running python3 --version. If you don't have Python 3 installed, you can download it from the official website: https://www.python.org/downloads/mac-osx/.
+  - Note : The module we need is venv which is a built-in module with python3.
+
+3. Create a new virtual environment by running `python3 -m venv </path/to/new/virtual/environment>`. Replace `</path/to/new/virtual/environment>` with the path where you want to create your virtual environment. Take note of this path as you will need it to activate your environment
+
 1. First, ensure that the venv module is installed on your machine by running the command python3 -m venv --help in your terminal.
-2. To create a new virtual environment, navigate to the directory where you want to create the environment and run the command `python3 -m venv <path/to/new/virtual/environment> `. Replace `<path/to/new/virtual/environment>` with the path where you want to create the environment.
-  - NOTE : This step it may not needed as I have already created the env within this branch assuming it is the one you are cloning.
+2. To create a new virtual environment, navigate to the directory where you want to create the environment and run the command python3 -m venv <path/to/new/virtual/environment>. Replace <path/to/new/virtual/environment> with the path where you want to create the environment.
+  - NOTE : This set it not needed as I already created the env within this branch which you should clone
 3. To activate the virtual environment, run the command ` source <path/to/new/virtual/environment>/bin/activate `. This command will activate the virtual environment and show its name in your terminal prompt.
 4. Once activated, you can now run Python code within the virtual environment. Packages installed while working within this environment will be isolated from your global Python installation, preventing any potential conflicts with different versions of the same package or different project dependencies.
 5. You can now install any necessary packages or dependencies using pip. For instance, you can run ` pip install <package-name> `to install a package.
