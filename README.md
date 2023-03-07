@@ -2,15 +2,12 @@
 
 ### Steps for Setting Up Python Virtual Environment (venv)
 
-1. Make sure that `venv` is installed on your machine by running the command `python3 -m venv --help` in your terminal.
-2. Clone repository (or pull code) from GitHub that contains a Python ‘venv’ (note : this branch 
-3. Navigate to the directory where the repository is cloned and open it in your code editor of choice
-5. Activate the virtual environment by running the command `source /path/to/new/virtual/environment/bin/activate`. This will activate the virtual environment, and you should see its name in your terminal prompt.
-6. You can now run the Python code within the virtual environment.
-    - You will use packages defined by the environment based on the project.
-    - This means that any packages or dependencies you install while working within the virtual environment will be isolated from your global Python installation. This is useful if you're working on multiple projects with different dependencies or if you want to avoid conflicts between different versions of the same package.
-    - You can now install any necessary packages or dependencies within the virtual environment using `pip`. For example, you can run `pip install <package-name>` to install a package.
-8. To standardize libraries and make sure we are all using the same package, add any required or desired packages into  '/path/to/new/virtual/environment/requirements' by just entering the package name
-9. Within the terimal run the command `pip3 install -r ./env/requirements.txt`
-  -This will install all of the packages inside the requirements text that were specified
-7. When you're finished working within the virtual environment, you can deactivate it by running the command `deactivate` in your terminal.
+
+1. First, ensure that the venv module is installed on your machine by running the command python3 -m venv --help in your terminal.
+2. To create a new virtual environment, navigate to the directory where you want to create the environment and run the command python3 -m venv <path/to/new/virtual/environment>. Replace <path/to/new/virtual/environment> with the path where you want to create the environment.
+3. To activate the virtual environment, run the command source <path/to/new/virtual/environment>/bin/activate. This command will activate the virtual environment and show its name in your terminal prompt.
+4. Once activated, you can now run Python code within the virtual environment. Packages installed while working within this environment will be isolated from your global Python installation, preventing any potential conflicts with different versions of the same package or different project dependencies.
+5. You can now install any necessary packages or dependencies using pip. For instance, you can run pip install <package-name> to install a package.
+6. To standardize libraries and ensure everyone is using the same package versions, add any required or desired packages to <path/to/new/virtual/environment>/requirements.txt by simply entering the package name.
+7. In the terminal, run the command pip3 install -r <path/to/new/virtual/environment>/requirements.txt. This command will install all packages listed in the requirements file you specified.
+8. Once you're done working within the virtual environment (done working on the project), you can deactivate it by running the command deactivate in your terminal.
