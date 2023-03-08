@@ -23,7 +23,3 @@
 8. You can now work with all the packages needed for the project without affecting your global environment or other projects
 
 8. Once you're done working within the virtual environment (done working on the project), you can deactivate it by running the command deactivate in your terminal.
-
-### Steps for running the server
-1. Ensure your virtual environment is activate and all requirements are up to date
-2. Within the project folder run in the terminal` ./src/jimsproject/manage.py runserver`
