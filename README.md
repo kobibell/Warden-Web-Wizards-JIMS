@@ -27,7 +27,7 @@
 ## Steps for running server (locally for now)
 1. Within the terminal navigate to the main project folder
 
-2. Run the following command `./src/jims_project/python3 manage.py runserver`
+2. Run the following command `python3 ./src/jims_project/manage.py runserver`
 
 ## Extra notes 
 - The 'jims_app' database in azure is the current database that the app is connected to
