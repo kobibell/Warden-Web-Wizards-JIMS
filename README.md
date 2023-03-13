@@ -1,6 +1,6 @@
 # Warden-Web-Wizards-JIMS
 
-### Steps for Setting Up Python Virtual Environment
+## Steps for Setting Up Python Virtual Environment
 
 1. Open the Terminal app or Command Prompt depending on your machine (found in the Applications/Utilities folder).
 
@@ -24,13 +24,10 @@
 
 8. Once you're done working within the virtual environment (done working on the project), you can deactivate it by running the command deactivate in your terminal.
 
-### Steps for running server (locally for now)
+## Steps for running server (locally for now)
 1. Within the terminal navigate to the main project folder
 
-2. Run the following command ` ./src/jims_project/python3 manage.py runserver`
+2. Run the following command `./src/jims_project/python3 manage.py runserver`
 
-
-## Some notes 
-- The 'jims_app' database in azure is the current database the app is connected to
-
-- The 
+## Extra notes 
+- The 'jims_app' database in azure is the current database that the app is connected to
