@@ -1,0 +1,7 @@
+{
+    "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+    "terminal.integrated.fontWeightBold": "bold",
+    "terminal.integrated.fontWeight": "normal",
+    "terminal.explorerKind": "integrated",
+    "terminal.integrated.env.osx": {}
+}
