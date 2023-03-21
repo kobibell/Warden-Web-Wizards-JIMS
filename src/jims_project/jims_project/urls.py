@@ -17,14 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 urlpatterns = [
-<<<<<<< HEAD
-    path('admin/', admin.site.urls),
-    path('', include('jims_app.urls'))
-   
-=======
     path(r'admin/', admin.site.urls),
     path('', include('jims_app.urls')),
     # the regex ^$ matches empty
     path(r'', TemplateView.as_view(template_name='home_page'))
->>>>>>> 74e3784 (Added default page functionality)
 ]
