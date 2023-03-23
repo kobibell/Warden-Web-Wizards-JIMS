@@ -1,1 +1,13 @@
-<h1>Welcome to the home page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to the home page</title>
+</head>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="submit" value="LOGIN">
+</form>
+<body>
+    Test
+</body>
+</html>

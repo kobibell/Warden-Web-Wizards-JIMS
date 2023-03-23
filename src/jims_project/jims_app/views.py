@@ -22,3 +22,6 @@ def login(request):
 
 def home_page(request):
     return render(request, 'home_page.html')
+
+def profile(request):
+    return render(request, 'profile.html')
