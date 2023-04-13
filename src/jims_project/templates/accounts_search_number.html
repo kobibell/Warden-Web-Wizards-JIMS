@@ -3,11 +3,10 @@
 
 {% block account_content %}
     <div class="search-number">
-        <form class="search-account" action="{% url 'get_all_transaction_details' %}" method='POST'>
-            {% csrf_token %}
+        <form class="search-account" action="/">
             <div class="mb-3">
                 <label for="search_num" class="form-label">Enter Account Number</label>
-                <input type="text" class="form-control" name="search_num" id="search_num">
+                <input type="number" class="form-control" id="search_num">
             </div>
             <button type="submit" class="btn btn-primary">Get all transactions</button>
         </form>
