@@ -1,6 +1,7 @@
 # Warden-Web-Wizards-JIMS
 
-### Steps for Setting Up Python Virtual Environment (venv)
+## Steps for Setting Up Python Virtual Environment
+- Python environments are isolated spaces where you can install and manage Python packages independently of the system Python installation. In other words, a Python environment allows you to have multiple versions of Python and their associated packages installed on the same machine, without conflicts.
 
 
 2. Check that you have Python 3 installed by running python3 --version. If you don't have Python 3 installed, you can download it from the official website: https://www.python.org/downloads/mac-osx/.
@@ -17,3 +18,24 @@
 6. To standardize libraries and ensure everyone is using the same package versions, add any required or desired packages to  ` <path/to/new/virtual/environment>/requirements.txt` by simply entering the package name.
 7. In the terminal, run the command ` pip3 install -r <path/to/new/virtual/environment>/requirements.txt `. This command will install all packages listed in the requirements file you specified.
 8. Once you're done working within the virtual environment (done working on the project), you can deactivate it by running the command deactivate in your terminal.
+
+## Making migrations
+- Models are the Python classes that define the structure and behavior of your database tables. When you make changes to your models, such as adding, modifying, or deleting fields, Django needs to know how to update the database schema to reflect those changes. This is where migrations come in.
+
+- When every you make changes to you models make sure you make migraitons and migrate using the following steps
+
+1. Within the terminal navigate to the main project folder
+
+2. Run the following command `python3 ./src/jims_project/manage.py makemigrations`
+
+3. Run the following command `python3 ./src/jims_project/manage.py migrate`
+
+## Steps for running server
+1. Within the terminal navigate to the main project folder
+
+2. Run the following command `python3 ./src/jims_project/manage.py runserver`
+
+## Extra notes 
+- The 'main_dev' database in azure is the current database that the app is connected to
+
+- To change the database that the application is connec
