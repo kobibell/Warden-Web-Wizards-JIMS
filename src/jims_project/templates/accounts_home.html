@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'accounts_navigation.html' %}
+{% load static %}
 
-{% block content %}
-    <h1>Accounts</h1>
-    <form class="search-account" action="/">
-        <input type="text" placeholder="Search..." name="search2">
-        <button type="submit"></i>Search</button>
-    </form>
-{% endblock %}
+{% block account_content %}
+    <h3>Account Operations</h3>
+    <button type="button" class="btn btn-primary">Add Money</button>
+    <button type="button" class="btn btn-warning">Withdraw Money</button>
+    <button type="button" class="btn btn-info">List all Accounts</button>
+{% endblock account_content %}

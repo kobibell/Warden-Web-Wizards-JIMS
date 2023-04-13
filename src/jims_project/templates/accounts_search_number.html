@@ -1,0 +1,18 @@
+{% extends 'accounts_navigation.html' %}
+{% load static %}
+
+{% block account_content %}
+    <div class="search-number">
+        <form class="search-account" action="/">
+            <div class="mb-3">
+                <label for="search_num" class="form-label">Enter Account Number</label>
+                <input type="number" class="form-control" id="search_num">
+            </div>
+            <button type="submit" class="btn btn-primary">Get all transactions</button>
+        </form>
+    </div>
+    <div class="transaction-details">
+        <h3>Transaction Details</h3>
+    </div>
+    
+{% endblock account_content %}

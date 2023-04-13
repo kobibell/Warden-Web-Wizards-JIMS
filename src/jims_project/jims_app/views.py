@@ -24,4 +24,10 @@ def home_page(request):
     return render(request, 'home_page.html')
 
 def accounts_home(request):
-    return render(request, 'accounts_home.html')    
+    return render(request, 'accounts_home.html')  
+
+def accounts_transaction_details(request):
+    return render(request, 'accounts_search_number.html')  
+
+def accounts_search_name(request):
+    return render(request, 'accounts_search_name.html')    
