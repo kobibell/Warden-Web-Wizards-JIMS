@@ -48,4 +48,6 @@
 ## Extra notes 
 - The 'main_dev' database in azure is the current database that the app is connected to
 
-- To change the database that the application is connec
+- To change the database that the application is connect locate the settings.py file
+
+- Within the `DATABASE` section change the value of `NAME` to your desired database
