@@ -112,43 +112,12 @@ class Officer(models.Model):
     """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     officer_id = models.CharField(max_length=200, null=False)
-
-class BookingClerk(models.Model):
-    """
-    Create an Supervisor model which IS-A Custom User that HAS-A booking_clerk_id
-    """
-
-    #The feilds of a Booking Clerk
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
-    booking_clerk_id = models.CharField(max_length=200, null=False)
-
-
-class Supervisor(models.Model):
-    """
-    Create an Supervisor model which IS-A Custom User that HAS-A supervisor ID
-    """
-
-    #The feilds of a Supervisor
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
-    supervisor_id = models.CharField(max_length=200, null=False)
-
-
-class ReleaseClerk(models.Model):
-    """
-    Create an Release Clerk model which IS-A Custom User that HAS-A release_clerk_id
-    """
-
-    #The feilds of a ReleaseClerk
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
-    release_clerk_id = models.CharField(max_length=200, null=False)
-
+    user_password = models.CharField(max_length=200, null=False)
 
 class Accounts(models.Model):
     """
-    Create an Accounts model (database) HAS-A account_number, account_type, and balance
+    Create an Accounts model (database) with the account_number, account_type, and balance
     """
-
-    #The feilds of Accounts
     account_number = models.CharField(max_length=200, null=False, primary_key=True)
     inmate_id = models.CharField(max_length=200, null=False)
     balance = models.FloatField(null=False)
@@ -157,8 +126,6 @@ class TransactionDetails(models.Model):
     """
     Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
     """
-
-    #The feilds of Transaction Details
     transaction_id = models.CharField(max_length=200, null=False, primary_key=True, auto_created=True)
     account_number = models.CharField(max_length=200, null=False)
     transaction_type = models.CharField(max_length=2, null=False)
