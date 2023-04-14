@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block account_content %}
-
-{% if accounts %}
+    
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -22,9 +21,5 @@
         {% endfor %}
         </tbody>
   </table>
-
-{% else %}
-    <p>No Accounts found.</p>
-{% endif %}
   
 {% endblock account_content %}
