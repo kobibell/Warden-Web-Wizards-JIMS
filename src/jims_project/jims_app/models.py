@@ -19,3 +19,21 @@ class Officer(models.Model):
     person = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True)
     officer_id = models.CharField(max_length=200, null=False)
     user_password = models.CharField(max_length=200, null=False)
+
+class Accounts(models.Model):
+    """
+    Create an Accounts model (database) with the account_number, account_type, and balance
+    """
+    account_number = models.CharField(max_length=200, null=False, primary_key=True)
+    inmate_id = models.CharField(max_length=200, null=False)
+    balance = models.FloatField(null=False)
+
+class TransactionDetails(models.Model):
+    """
+    Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
+    """
+    transaction_id = models.CharField(max_length=200, null=False, primary_key=True, auto_created=True)
+    account_number = models.CharField(max_length=200, null=False)
+    transaction_type = models.CharField(max_length=2, null=False)
+    transaction_amount = models.FloatField(null=False)
+    transaction_date = models.DateTimeField(null=False)
