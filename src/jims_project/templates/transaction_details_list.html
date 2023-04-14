@@ -1,0 +1,34 @@
+{% extends 'accounts_navigation.html' %}
+{% load static %}
+
+{% block account_content %}
+    
+    {% if transaction_details %}
+        <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>Account Number</th>
+                    <th>Transaction Type ID</th>
+                    <th>Transaction Amount</th>
+                    <th>Transaction Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for details in transaction_details %}
+                <tr>
+                    <td>{{ details.transaction_id }}</td>
+                    <td>{{ details.account_number }}</td>
+                    <td>{{ details.transaction_type }}</td>
+                    <td>{{ details.transaction_amount }}</td>
+                    <td>{{ details.transaction_date }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+  
+{% endblock account_content %}
