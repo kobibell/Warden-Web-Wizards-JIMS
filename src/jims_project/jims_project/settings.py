@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'jims_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'alex_testing',
+        'NAME': 'main_dev',
         'USER': 'webwardens',
         'PASSWORD': 'TakBXzeiVL2Ym8K',
         'HOST': 'jims.postgres.database.azure.com',
@@ -130,3 +130,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [BASE_DIR / 'static']
