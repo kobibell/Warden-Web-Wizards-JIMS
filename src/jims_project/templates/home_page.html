@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html>
-{% block content %} 
-<head>
-    <title>Welcome to the home page</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}           
+<div>
+    <h1>
+        Home page
+    </h1>
+</div>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <input type="submit" value="LOGIN">
 </form>
-<body>
-    Test
-</body>
-</html>
-{% extends 'base.html' %}
-{% endblock %}
-
-
+{% endblock %} 

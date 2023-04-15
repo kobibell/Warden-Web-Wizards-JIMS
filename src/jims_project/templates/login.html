@@ -14,5 +14,9 @@
 		<input type="password" id="password" name="password" required><br><br>
 		<input type="submit" value="Login">
 	</form>
+	<form method="POST" action= "{% url 'home_page' %}"> 
+		{% csrf_token %}
+		<button>Home</button>
+		</form>
 </body>
 </html>
