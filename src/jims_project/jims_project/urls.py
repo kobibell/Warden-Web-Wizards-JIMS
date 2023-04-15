@@ -20,5 +20,5 @@ urlpatterns = [
     path(r'admin/', admin.site.urls),
     path('', include('jims_app.urls')),
     # the regex ^$ matches empty
-    path(r'', TemplateView.as_view(template_name='home_page'))
+    path(r'', TemplateView.as_view(template_name='home_page.html'))
 ]
