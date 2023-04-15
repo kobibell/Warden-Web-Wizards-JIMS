@@ -20,5 +20,9 @@
 			<input type="submit" style="margin-left: 50px;" value="New user"/>
 		</form>
 	</form>
+	<form method="POST" action= "{% url 'home_page' %}"> 
+		{% csrf_token %}
+		<button>Home</button>
+		</form>
 </body>
 </html>

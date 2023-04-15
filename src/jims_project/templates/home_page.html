@@ -5,7 +5,8 @@
         Home page
     </h1>
 </div>
-<button class="btn btn-primary" onclick="window.location.href = '/login/'">
-    Login Here
-</button>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="submit" value="LOGIN">
+</form>
 {% endblock %} 
