@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block account_content %}
-    
+
+    <h3>Transaction Details</h3>
+
     {% if transaction_details %}
         <table class="table table-bordered">
                 <thead>
@@ -18,7 +20,7 @@
                 {% for details in transaction_details %}
                 <tr>
                     <td>{{ details.transaction_id }}</td>
-                    <td>{{ details.account_number }}</td>
+                    <td>{{ details.account_number_id }}</td>
                     <td>{{ details.transaction_type }}</td>
                     <td>{{ details.transaction_amount }}</td>
                     <td>{{ details.transaction_date }}</td>
