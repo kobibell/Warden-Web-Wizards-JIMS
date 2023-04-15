@@ -5,8 +5,5 @@
         Home page
     </h1>
 </div>
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <input type="submit" value="LOGIN">
-</form>
+<a type="button" href="/login/">Login</a>
 {% endblock %} 
