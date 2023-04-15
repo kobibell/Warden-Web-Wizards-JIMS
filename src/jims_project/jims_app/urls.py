@@ -12,7 +12,7 @@ urlpatterns = [
         path(r'', TemplateView.as_view(template_name='home_page.html')),
         path('login/', LoginView.as_view(template_name='login.html'), name='login'),
         # Need to redirect to home page link
-        path('', views.home_page, name='home_page'),
+        #path('', views.home_page, name='home_page'),
         path('home_page/', views.home_page, name='home_page'),
         path('accounts/profile/', views.home_page, name='profile'),
         path('accounts/home/', views.accounts_home, name='accounts_home'),
