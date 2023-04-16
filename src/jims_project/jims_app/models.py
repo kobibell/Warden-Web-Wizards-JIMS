@@ -1,29 +1,154 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
 
-class Person(models.Model):
+
+class CustomUserManager(BaseUserManager):
     """
-    Create a Person model (database) with the first_name, last_name
+    A custom manager for the CustomUser model that extends Django's BaseUserManager.
+
+    This manager provides methods for creating and managing custom users 
+
+    Args:
+        BaseUserManager (Class) : Django's BaseUserManager Class
+    """
+    def create_user(self, email, user_name, first_name, last_name, password, position, **other_fields):
+        """
+        Creates a new custom user instance with the given fields.
+
+        Args:
+            email (str): The email address of the user
+            user_name (str): The username of the user
+            first_name (str): the first name of the user
+            last_name (str): the last name of the user
+            password (str): the password of the user
+            position (str): the position of the user
+
+        Returns:
+            CustomUser: A newly created user instance
+        """
+        
+        # Normalzie the email to contain only lowercase values
+        email = self.normalize_email(email)
+
+        #Create an instance a user using Djanos underlying base user manager
+        user = self.model(email=email, user_name=user_name, first_name = first_name, last_name = last_name, position = position, **other_fields)
+
+        #For the current user instance take has the users password
+        user.set_password(password)
+
+        #Save the user
+        user.save(using=self._db) 
+
+        #Print for testing
+        print(f"User created: username={user_name}, password={password}, password_hash={user.password}")
+        
+        return user
+
+    def create_superuser(self, email, password, first_name, last_name, **other_fields):
+        """
+        Creates a new superuser instance with the given fields.
+
+        Args:
+            email (str): The email address of the user
+            password (str): The password of the user
+            first_name (str): The first name of the user
+            last_name (str): The last name of the user
+            **other_fields: Additional fields to be set on the user
+
+        Returns:
+            CustomUser: A newly created superuser instance
+        """
+
+        # A super user will have an additional field is_staff which by default should be true
+        # Note : This staff is assocaited with staff of the Djano Admin not the JIMS System
+        other_fields.setdefault('is_staff', True)
+
+        # A super user will have an additional field is_superuser which by default should be true
+        other_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, password=password, first_name=first_name, last_name=last_name, **other_fields)
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    """
+    A custom user model that extends Django's built-in AbstractBaseUser and PermissionsMixin.
+
+    The purpose of this class is to define a custom user model that we can use to create user accounts with custom fields and functions beyond the defualy fields provided by Django
     """
 
-    first_name = models.CharField(max_length=200, null=False)
-    last_name = models.CharField(max_length=200, null=False)
+    # A custom user will be one of four positions
+    POSITION_CHOICES = (
+        ('officer', 'officer'),
+        ('booking_clerk', 'booking_clerk'),
+        ('supervisor', 'supervisor'),
+        ('release_clerk', 'release_clerk'),
+    )
+
+    #The feilds of a Custom User
+    user_id = models.AutoField(primary_key=True)
+    user_name = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    position = models.CharField(max_length=25, choices=POSITION_CHOICES)
+    user_status = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    # Define the username field that user will login with is their email
+    USERNAME_FIELD = 'email'
+
+    # In order to create a custom user a user name, first name last name and a position are required
+    REQUIRED_FIELDS = ['user_name', 'first_name', 'last_name', 'position']
+
+    objects = CustomUserManager()
 
 class Officer(models.Model):
     """
-    Create an Officer model (database) with officer_id, last_name, and user_password
+    Create an Supervisor model 
+    
+    A Officer model IS-A Custom User that HAS-A officer_id
     """
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    person = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     officer_id = models.CharField(max_length=200, null=False)
-    user_password = models.CharField(max_length=200, null=False)
+
+class BookingClerk(models.Model):
+    """
+    Create an Supervisor model which IS-A Custom User that HAS-A booking_clerk_id
+    """
+
+    #The feilds of a Booking Clerk
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    booking_clerk_id = models.CharField(max_length=200, null=False)
+
+
+class Supervisor(models.Model):
+    """
+    Create an Supervisor model which IS-A Custom User that HAS-A supervisor ID
+    """
+
+    #The feilds of a Supervisor
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    supervisor_id = models.CharField(max_length=200, null=False)
+
+
+class ReleaseClerk(models.Model):
+    """
+    Create an Release Clerk model which IS-A Custom User that HAS-A release_clerk_id
+    """
+
+    #The feilds of a ReleaseClerk
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    release_clerk_id = models.CharField(max_length=200, null=False)
+
 
 class Accounts(models.Model):
     """
-    Create an Accounts model (database) with the account_number, account_type, and balance
+    Create an Accounts model (database) HAS-A account_number, account_type, and balance
     """
+
+    #The feilds of Accounts
     account_number = models.CharField(max_length=200, null=False, primary_key=True)
     inmate_id = models.CharField(max_length=200, null=False)
     balance = models.FloatField(null=False)
@@ -32,6 +157,8 @@ class TransactionDetails(models.Model):
     """
     Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
     """
+
+    #The feilds of Transaction Details
     transaction_id = models.CharField(max_length=200, null=False, primary_key=True, auto_created=True)
     account_number = models.CharField(max_length=200, null=False)
     transaction_type = models.CharField(max_length=2, null=False)
