@@ -1,5 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib import messages
+from django.middleware import csrf
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 from .models import Accounts
 from .models import TransactionDetails
@@ -93,13 +101,13 @@ def accounts_transaction_details(request):
 def accounts_search_name(request):
     return render(request, 'accounts_search_name.html')
 
+@login_required
 def get_all_accounts(request):
     accounts = Accounts.objects.all()
     context = {'accounts': accounts}
     return render(request, 'account_list.html', context)
 
 def get_all_transaction_details(request):
-
     if request.method == 'POST':
         filter_by = request.POST.get('search_num')
         if filter_by:
