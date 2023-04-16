@@ -6,6 +6,6 @@ from .models import *
 # Register the 'login' model with the Django admin site to enable admin management of the 'login' model data
 admin.site.register(Person)
 admin.site.register(Officer)
-admin.site.register(Jacob)
+
 
 
