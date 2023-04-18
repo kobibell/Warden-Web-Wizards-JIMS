@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import AddInmate
 
 
 class SignUpForm(UserCreationForm):
@@ -11,3 +12,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', )
+
+class InmateForm(forms.ModelForm):
+    class Meta:
+        model = AddInmate
+        fields = '__all__'
+        widgets = {
+            'middle_initial': forms.TextInput(attrs={'size': '1', 'maxlength': '1'}),
+        }

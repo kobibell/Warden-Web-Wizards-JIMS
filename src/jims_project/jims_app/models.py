@@ -164,3 +164,31 @@ class TransactionDetails(models.Model):
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
+
+
+class AddInmate(models.Model):
+    
+    """
+    Create an AddInmate Model (database) with the details below
+    """
+
+    #The Fields for adding Inmate Details
+    first_name = models.CharField(max_length=80)
+    middle_initial = models.CharField(max_length=1, blank=True, null=True)
+    last_name = models.CharField(max_length=80)
+    date_of_birth = models.CharField(max_length=10)
+    place_of_birth = models.CharField(max_length=25)
+    country = models.CharField(max_length=80)
+    nationality = models.CharField(max_length=80)
+    sex = models.CharField(max_length=10)
+    hair_color = models.CharField(max_length=20)
+    eye_color = models.CharField(max_length=20)
+    height_feet = models.PositiveIntegerField()
+    height_inches = models.PositiveIntegerField()
+    weight = models.CharField(max_length=10)
+    alias = models.CharField(max_length=80, blank=True, null=True)
+    blemishes = models.CharField(max_length=200, blank=True, null=True)
+    primary_add = models.CharField(max_length=200)
+    temp_add = models.CharField(max_length=200, blank=True, null=True)
+    drivers_license_num = models.CharField(max_length=80)
+    drivers_license_state = models.CharField(max_length=2)
