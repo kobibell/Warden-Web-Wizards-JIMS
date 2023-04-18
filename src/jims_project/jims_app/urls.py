@@ -14,4 +14,6 @@ urlpatterns = [
         path('accounts/search-name/', views.accounts_search_name, name='accounts_search_name'),
         path('accounts/account_list/', views.get_all_accounts, name='get_all_accounts'),
         path('create_user/', views.create_user, name='create_user'),
+        path('create-user/success/', views.create_user_success, name='create_user_success'),
+        path('add_inmate', views.add_inmate, name='add_inmate'),
 ]

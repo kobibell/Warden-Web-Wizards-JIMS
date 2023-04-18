@@ -116,4 +116,9 @@ def get_all_transaction_details(request):
             return render(request, 'transaction_details_list.html', context)
 
     return render(request, 'transaction_details_list.html')
-    
+
+def add_inmate(request):
+    return render(request, 'add_inmate.html')
+
+def create_user_success(request):
+    return render(request, 'create_user_success.html')

@@ -14,11 +14,6 @@
 		<label for="password">Password:</label>
 		<input type="password" id="password" name="password" required><br><br>
 		<input type="submit" value="Login">
-		
-		<form action = "{% url 'signup' %}" method = "POST">
-			{% csrf_token %}
-			<input type="submit" style="margin-left: 50px;" value="New user"/>
-		</form>
 	</form>
 </body>
 </html>
