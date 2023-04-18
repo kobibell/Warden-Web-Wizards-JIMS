@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
+from .forms import InmateForm
 
 from django.contrib.auth import get_user_model
 
@@ -116,4 +117,17 @@ def get_all_transaction_details(request):
             return render(request, 'transaction_details_list.html', context)
 
     return render(request, 'transaction_details_list.html')
-    
+
+def add_inmate(request):
+    if request.method == 'POST':
+        form = InmateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'inmate_confirmation.html')
+    else:
+        form = InmateForm()
+    return render(request, 'add_inmate.html', {'form': form})
+
+
+def create_user_success(request):
+    return render(request, 'create_user_success.html')
