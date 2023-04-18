@@ -165,7 +165,6 @@ class TransactionDetails(models.Model):
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
 
-
 class AddInmate(models.Model):
     
     """
