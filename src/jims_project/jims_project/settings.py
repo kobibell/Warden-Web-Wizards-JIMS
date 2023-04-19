@@ -105,7 +105,7 @@ DATABASES = {
 #     },
 # }
 
-#Add cusomt user authentication model
+#Add custom user authentication model
 AUTH_USER_MODEL = 'jims_app.CustomUser'
 
 # Password validation
