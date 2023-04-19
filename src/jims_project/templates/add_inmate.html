@@ -1,0 +1,40 @@
+<style>
+    form label {
+    display: inline-block;
+    width: 200px; /* increased width from 150px */
+    text-align: right;
+}
+
+form input, form select {
+    display: inline-block;
+    width: 300px; /* increased width from 200px */
+}
+
+form span {
+    color: red;
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+
+form label[for="sex"] {
+    width: 200px;
+    margin-right: 20px;
+}
+
+form input[name="other_sex"] {
+    width: 200px;
+    margin-left: 10px;
+}
+
+</style>
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Add Inmate</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Inmate</button>
+    </form>
+{% endblock %}

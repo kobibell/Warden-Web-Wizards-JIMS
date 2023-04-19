@@ -2,21 +2,18 @@
 <html>
 <head>
 	<title>Login Form</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/login.css">
 </head>
 <body>
-    <h1>Welcome to our JIMS project</h1>
-	<h2>Login Form</h2>
+	<h1>Jail Information Managment System</h1>
+	<h2>Please Login With Your Credentials To Access The System</h2>
 	<form method="post" action="{% url 'login' %}">
 		{% csrf_token %}
-		<label for="username">Username:</label>
+		<label for="username">Email:</label>
 		<input type="text" id="username" name="username" required><br><br>
 		<label for="password">Password:</label>
 		<input type="password" id="password" name="password" required><br><br>
 		<input type="submit" value="Login">
 	</form>
-	<form method="POST" action= "{% url 'home_page' %}"> 
-		{% csrf_token %}
-		<button>Home</button>
-		</form>
 </body>
 </html>

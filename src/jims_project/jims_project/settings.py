@@ -94,14 +94,32 @@ DATABASES = {
     # For local development
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'jims',
-        'USER': 'postgres',
-        'PASSWORD': 'sheetal',
-        'HOST': '127.0.0.1',
+        'NAME': 'dev',
+        'USER': 'webwardens',
+        'PASSWORD': 'TakBXzeiVL2Ym8K',
+        'HOST': 'jims.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
+
+#Add custom user authentication model
+AUTH_USER_MODEL = 'jims_app.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
