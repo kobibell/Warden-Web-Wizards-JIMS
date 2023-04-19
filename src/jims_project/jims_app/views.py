@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-from .models import Accounts
+from .models import Accounts, CustomUser
 from .models import TransactionDetails
 
 # Create your views here.
@@ -46,7 +46,7 @@ def user_login(request):
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return redirect('/home_page/')
+                return render(request, 'home_page.html')
             
          # If the user is not authenticated display an error message and log the failed login attempt (in the Djano Admin Page)
         else:
@@ -88,10 +88,18 @@ def create_user(request):
 
 @login_required
 def home_page(request):
-    return render(request, 'home_page.html')
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'home_page.html', context)
+
+
 
 @login_required
 def accounts_home(request):
+    context = {
+        'user_position': request.user.position,
+    }
     return render(request, 'accounts_home.html')  
 
 @login_required
@@ -117,7 +125,7 @@ def get_all_transaction_details(request):
             return render(request, 'transaction_details_list.html', context)
 
     return render(request, 'transaction_details_list.html')
-
+  
 def add_inmate(request):
     if request.method == 'POST':
         form = InmateForm(request.POST)
