@@ -1,5 +1,7 @@
 from django import forms
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import AddInmate
 
 class AddMoneyForm(forms.Form):
     account_number = forms.CharField(max_length=200)
@@ -8,9 +10,6 @@ class AddMoneyForm(forms.Form):
 class WithdrawMoneyForm(forms.Form):
     account_number = forms.CharField(max_length=200)
     amount = forms.FloatField()
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .models import AddInmate
 
 
 class SignUpForm(UserCreationForm):

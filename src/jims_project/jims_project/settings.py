@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     "crispy_bootstrap5",
+    'reset_migrations',
 ]
 
 MIDDLEWARE = [
@@ -92,12 +93,20 @@ DATABASES = {
     # }
 
     # For local development
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'dev',
+    #     'USER': 'webwardens',
+    #     'PASSWORD': 'TakBXzeiVL2Ym8K',
+    #     'HOST': 'jims.postgres.database.azure.com',
+    #     'PORT': '5432',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dev',
-        'USER': 'webwardens',
-        'PASSWORD': 'TakBXzeiVL2Ym8K',
-        'HOST': 'jims.postgres.database.azure.com',
+        'NAME': 'jims',
+        'USER': 'postgres',
+        'PASSWORD': 'sheetal',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
