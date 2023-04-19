@@ -90,16 +90,6 @@ DATABASES = {
          'HOST': 'jims.postgres.database.azure.com',
          'PORT': '5432',
      }
-
-    # For local development
-    # 'default': {
-    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #    'NAME': 'dev',
-    #    'USER': 'webwardens',
-    #    'PASSWORD': 'TakBXzeiVL2Ym8K',
-    #    'HOST': 'jims.postgres.database.azure.com',
-    #    'PORT': '5432',
-    #}
     
 }
 
