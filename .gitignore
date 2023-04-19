@@ -8,8 +8,6 @@
 # Add .vscode to .gitignore if you have custom settings
 /.vscode
 
-/jims_app/management/
-
 */__pycache__/
 
 *.pyc
