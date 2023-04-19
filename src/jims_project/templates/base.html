@@ -32,7 +32,7 @@
 
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/home_page">Home</a>
               </li>
               {% if user.position == 'supervisor' %}
                 <li class="nav-item">
@@ -47,15 +47,15 @@
               {% endif %}
               {% if user.position == 'release clerk' %}
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Inventory</a>
+                  <a class="nav-link" href="/home_page/inventory">Inventory</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Accounts</a>
+                  <a class="nav-link" href="/accounts/home">Accounts</a>
                 </li>
               {% endif %}
               {% if user.position == 'booking clerk' %}
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Booking </a>
+                  <a class="nav-link" href="/add_inmate">Booking </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">View Inmates</a>
@@ -78,7 +78,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.user_name}}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="#">Logout</a>
+                  <a class="dropdown-item" href="/login">Logout</a>
                 </div>
               </li>
             </ul>

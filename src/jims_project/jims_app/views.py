@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
@@ -190,3 +192,12 @@ def add_inmate(request):
 
 def create_user_success(request):
     return render(request, 'create_user_success.html')
+
+def inventory(request):
+    return render(request, 'inventory.html')
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
