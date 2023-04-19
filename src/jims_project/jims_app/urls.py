@@ -15,7 +15,7 @@ urlpatterns = [
 
         #profile page for modification or viewing account info
         path('accounts/profile/', views.home_page, name='profile'),
-
+        
         #landing page for all cash accounts
         path('accounts/home/', views.accounts_home, name='accounts_home'),
 
@@ -34,4 +34,7 @@ urlpatterns = [
         #user creation page for each of the user types
         path('create_user/', views.create_user, name='create_user'),
         
+        path('create-user/success/', views.create_user_success, name='create_user_success'),
+        
+        path('add_inmate', views.add_inmate, name='add_inmate'),
 ]
