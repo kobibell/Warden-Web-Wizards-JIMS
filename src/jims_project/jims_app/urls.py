@@ -20,6 +20,7 @@ urlpatterns = [
         path('accounts/home/', views.accounts_home, name='accounts_home'),
 
         #form page for transations made for withdrawal or deposits
+
         path('accounts/transactions-details-form/', views.accounts_transaction_details, name='accounts_transaction_details'),
 
         #post page for all details retrieved from previous form
@@ -39,4 +40,4 @@ urlpatterns = [
         path('create-user/success/', views.create_user_success, name='create_user_success'),
         
         path('add_inmate', views.add_inmate, name='add_inmate'),
-]
+
