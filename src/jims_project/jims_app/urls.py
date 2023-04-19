@@ -31,6 +31,8 @@ urlpatterns = [
 
         #search results page for cash accounts
         path('accounts/account_list/', views.get_all_accounts, name='get_all_accounts'),
+        path('accounts/add_money/', views.add_money, name='add_money'),
+        path('accounts/withdraw_money/', views.withdraw_money, name='withdraw_money'),
 
         #user creation page for each of the user types
         path('create_user/', views.create_user, name='create_user'),

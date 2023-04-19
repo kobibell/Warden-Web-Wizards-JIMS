@@ -3,6 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import AddInmate
 
+class AddMoneyForm(forms.Form):
+    account_number = forms.CharField(max_length=200)
+    amount = forms.FloatField()
+
+class WithdrawMoneyForm(forms.Form):
+    account_number = forms.CharField(max_length=200)
+    amount = forms.FloatField()
+
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False)

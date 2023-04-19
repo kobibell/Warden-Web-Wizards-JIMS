@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
@@ -12,6 +13,9 @@ User = get_user_model()
 
 from .models import Accounts, CustomUser
 from .models import TransactionDetails
+
+from .forms import AddMoneyForm
+from .forms import WithdrawMoneyForm
 
 # Create your views here.
 
@@ -125,6 +129,53 @@ def get_all_transaction_details(request):
             return render(request, 'transaction_details_list.html', context)
 
     return render(request, 'transaction_details_list.html')
+
+def add_money(request):  
+    if request.method == 'POST':
+        form = AddMoneyForm(request.POST)
+        if form.is_valid():
+            try:
+             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
+            except Accounts.DoesNotExist:
+                account = None
+
+            if(account):
+                account.balance = account.balance + form.cleaned_data['amount']
+                transaction = TransactionDetails.objects.create(account_number=account, transaction_type='D', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
+                account.save()
+                transaction.save()
+                return render(request, 'add_money.html', {'message': 'Money added successfully'})
+            else:
+                return render(request, 'add_money.html', {'message': 'Account does not exist'})
+    else:
+        form = AddMoneyForm()
+    return render(request, 'add_money.html', {'form': form})
+
+def withdraw_money(request):  
+    if request.method == 'POST':
+        form = WithdrawMoneyForm(request.POST)
+        if form.is_valid():
+            try:
+             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
+            except Accounts.DoesNotExist:
+                account = None
+
+            if(account):
+                account.balance = account.balance - form.cleaned_data['amount']
+
+                if (account.balance < 0):
+                    return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
+                else:
+                    transaction = TransactionDetails.objects.create(account_number_id=account.account_number, transaction_type='W', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
+                    account.save()
+                    transaction.save()
+                    return render(request, 'withdraw_money.html', {'message': 'Money withdrawn successfully'})
+            else:
+                return render(request, 'withdraw_money.html', {'message': 'Account does not exist'})
+    else:
+        form = WithdrawMoneyForm()
+    return render(request, 'withdraw_money.html', {'form': form})
+    
   
 def add_inmate(request):
     if request.method == 'POST':
