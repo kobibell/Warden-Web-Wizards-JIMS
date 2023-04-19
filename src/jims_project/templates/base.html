@@ -15,6 +15,14 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         {% block extrahead %}
         {% endblock %}
+
+        <!-- TODO : Styling will not work within main.css - this is a temp. fix -->
+        <style>
+          .navbar .dropdown-menu {
+              right: 0;
+              left: auto;
+          }
+        </style>
     </head> 
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
@@ -26,19 +34,48 @@
               <li class="nav-item">
                 <a class="nav-link" href="/home_page">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/add_inmate">Inmates</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/accounts/home">Accounts</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/home_page/inventory">Inventory</a>
-              </li>
+              {% if user.position == 'supervisor' %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">View Inmates</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Transactions</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">View Accounts</a>
+                </li>
+              {% endif %}
+              {% if user.position == 'release clerk' %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/home_page/inventory">Inventory</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/accounts/home">Accounts</a>
+                </li>
+              {% endif %}
+              {% if user.position == 'booking clerk' %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/add_inmate">Booking </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">View Inmates</a>
+                </li>
+              {% endif %}
+              {% if user.position == 'cashier' %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Process Transactions </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Transactions List</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">View Accounts</a>
+                </li>
+              {% endif %}
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Username</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.user_name}}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="/login">Logout</a>
@@ -47,8 +84,6 @@
             </ul>
           </div>
         </nav>
-        
-        
         <div class="content-div">
             {% block content %}
             {% endblock %} 

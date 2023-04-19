@@ -20,6 +20,7 @@ urlpatterns = [
         path('accounts/home/', views.accounts_home, name='accounts_home'),
 
         #form page for transations made for withdrawal or deposits
+
         path('accounts/transactions-details-form/', views.accounts_transaction_details, name='accounts_transaction_details'),
 
         #post page for all details retrieved from previous form
@@ -30,6 +31,8 @@ urlpatterns = [
 
         #search results page for cash accounts
         path('accounts/account_list/', views.get_all_accounts, name='get_all_accounts'),
+        path('accounts/add_money/', views.add_money, name='add_money'),
+        path('accounts/withdraw_money/', views.withdraw_money, name='withdraw_money'),
 
         #user creation page for each of the user types
         path('create_user/', views.create_user, name='create_user'),
@@ -37,6 +40,7 @@ urlpatterns = [
         path('create-user/success/', views.create_user_success, name='create_user_success'),
         
         path('add_inmate', views.add_inmate, name='add_inmate'),
+
 
         path('home_page/add_inmate', views.add_inmate, name='add_inmate'),
 
@@ -46,3 +50,4 @@ urlpatterns = [
 
         
 ]
+
