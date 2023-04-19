@@ -2,8 +2,11 @@
 /jims_venv
 
 # Add __pychache__ to .gitignore
-src/jims_project/jims_app/__pycache__
-src/jims_project/jims_project/__pycache__
+*/__pycache__/
 
 # Add .vscode to .gitignore if you have custom settings
 /.vscode
+
+src/jims_project/jims_app/management/*
+
+ *.pyc
