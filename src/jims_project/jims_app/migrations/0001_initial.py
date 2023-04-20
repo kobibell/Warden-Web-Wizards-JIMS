@@ -103,7 +103,7 @@ class Migration(migrations.Migration):
                 ('transaction_type', models.CharField(max_length=2)),
                 ('transaction_amount', models.FloatField()),
                 ('transaction_date', models.DateTimeField()),
-                ('account_number_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jims_app.accounts')),
+                ('account_number', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jims_app.accounts')),
             ],
         ),
     ]
