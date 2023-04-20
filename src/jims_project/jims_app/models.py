@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.utils import timezone
 # Create your models here.
 
 
@@ -187,5 +187,6 @@ class AddInmate(models.Model):
     blemishes = models.CharField(max_length=200, blank=True, null=True)
     primary_add = models.CharField(max_length=200)
     temp_add = models.CharField(max_length=200, blank=True, null=True)
-    drivers_license_num = models.CharField(max_length=80)
+    drivers_license_num = models.CharField(max_length=80, unique=True)
     drivers_license_state = models.CharField(max_length=2)
+    date_added = models.DateTimeField(null=False, default=timezone.now)
