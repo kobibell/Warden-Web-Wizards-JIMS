@@ -15,67 +15,60 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         {% block extrahead %}
         {% endblock %}
-
-        <!-- TODO : Styling will not work within main.css - this is a temp. fix -->
-        <style>
-          .navbar .dropdown-menu {
-              right: 0;
-              left: auto;
-          }
-        </style>
     </head> 
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="navbar-brand brand-text" href="#">JIMS</a>
-
+            <a class="navbar-brand brand-text" href="/home_page">JIMS</a>
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/home_page">Home</a>
-              </li>
-              {% if user.position == 'Supervisor' %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_inmate">View Inmates</a>
+              {% if user.position == 'Cashier' or user.position == 'Release Clerk' or user.position == 'Booking Clerk' or user.position == 'Supervisor' %}
+              <!-- For all users add a drop down to view inmates -->
+              <ul class="navbar-nav ms-auto" id="left-dropdown">
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inmates</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">View Inmates</a>
+                    <!-- For Is the user is a supervisor or booking clerk add a drop down to add inmates -->
+                    {% if user.position == 'Supervisor' or user.position == 'Booking Clerk' %}
+                      <a class="dropdown-item" href="/add_inmate">Book Inmates</a>
+                    {% endif %}
+                  </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/accounts/home">View Accounts</a>
+                <!-- Is the user is a cashier or a supervisor add a dropdown for casha accounts -->
+                {% if user.position == 'Cashier' or user.position == 'Supervisor' %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Cash Accounts</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/accounts/home">Account Opperations</a>
+                    <a class="dropdown-item" href="/accounts/transactions-details-form">Transaction Details</a>
+                    <a class="dropdown-item" href="/accounts/search-name">Transaction Details</a>
+                  </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/home_page/inventory">Inventory</a>
+                {% endif %}
+                <!-- Is the user is a release clerk add a inventory drop down -->
+                {% if user.position == 'Release Clerk' or user.position == 'Supervisor' %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inventory</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/accounts/home">View Inventory</a>
+                  </div>
                 </li>
-              {% endif %}
-              {% if user.position == 'Release Clerk' %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/home_page/inventory">Inventory</a>
+                {% endif %}
+                <!-- Is the user is a supervisor add dropdown for JIMS accounts -->
+                {% if user.position == 'Supervisor' %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Jims Accounts</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/create_user">Create Account</a>
+                  </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/accounts/home">Accounts</a>
-                </li>
-              {% endif %}
-              {% if user.position == 'Booking Clerk' %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_inmate">Booking </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">View Inmates</a>
-                </li>
-              {% endif %}
-              {% if user.position == 'Cashier' %}
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Process Transactions </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Transactions List</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">View Accounts</a>
-                </li>
-              {% endif %}
+                {% endif %}
+              </ul>
+            {% endif %} 
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.user_name}}</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_id}}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="/logout">Logout</a>
