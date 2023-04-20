@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.views.generic.base import TemplateView
+from .views import logout_view, logout_success
 
 # Add your URL paths that belong to the jims_app here
 urlpatterns = [
@@ -46,7 +47,9 @@ urlpatterns = [
 
         path('home_page/inventory', views.inventory, name='inventory'),
 
-        path('logout/', views.logout_view, name='logout'),
+       path('logout/', logout_view, name='logout'),
+       
+       path('logout_success/', logout_success, name='logout_success'),
 
         
 ]
