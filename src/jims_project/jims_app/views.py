@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
 from .forms import InmateForm
+from django.urls import reverse
+
 
 from django.contrib.auth import get_user_model
 
@@ -199,5 +201,7 @@ def inventory(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('logout_success'))
 
+def logout_success(request):
+    return render(request, 'logout_success.html')
