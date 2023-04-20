@@ -40,4 +40,14 @@ urlpatterns = [
         path('create-user/success/', views.create_user_success, name='create_user_success'),
         
         path('add_inmate', views.add_inmate, name='add_inmate'),
+
+
+        path('home_page/add_inmate', views.add_inmate, name='add_inmate'),
+
+        path('home_page/inventory', views.inventory, name='inventory'),
+
+        path('logout/', views.logout_view, name='logout'),
+
+        
 ]
+
