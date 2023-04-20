@@ -158,7 +158,7 @@ class TransactionDetails(models.Model):
     Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
     """
     transaction_id = models.AutoField(primary_key=True)
-    account_number = models.ForeignKey(Accounts, null=False, on_delete=models.CASCADE)
+    account_number_id = models.ForeignKey(Accounts, null=False, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)

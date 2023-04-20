@@ -141,7 +141,7 @@ def add_money(request):
 
             if(account):
                 account.balance = account.balance + form.cleaned_data['amount']
-                transaction = TransactionDetails.objects.create(account_number=account, transaction_type='D', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
+                transaction = TransactionDetails.objects.create(account_number_id=account, transaction_type='D', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
                 account.save()
                 transaction.save()
                 return render(request, 'add_money.html', {'message': 'Money added successfully'})
