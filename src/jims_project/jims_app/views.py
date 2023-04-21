@@ -21,6 +21,7 @@ from .models import TransactionDetails
 from .forms import AddMoneyForm
 from .forms import WithdrawMoneyForm
 from .forms import SearchInmateForm
+from .forms import SearchInmateForm
 
 # Create your views here.
 
@@ -189,9 +190,7 @@ def get_inmate_details(request):
         form = SearchInmateForm()
     filter_by = request.POST.get('search_type')
     if filter_by == 'full_list':
-        #inmate_list = Inmate.objects.all()
-        #context = {'inmate_list': inmate_list}
-        return render(request, 'inmate_result.html')#, context)
+        return render(request, 'login.html')
     return render(request, 'home_page.html')
 
 

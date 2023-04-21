@@ -28,7 +28,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inmates</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">View Inmates</a>
+                    <a class="dropdown-item" href="/view_inmate">View Inmates</a>
                     <!-- For Is the user is a supervisor or booking clerk add a drop down to add inmates -->
                     {% if user.position == 'Supervisor' or user.position == 'Booking Clerk' %}
                       <a class="dropdown-item" href="/add_inmate">Book Inmates</a>
