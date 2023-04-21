@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     # Add jims_app to config
     'jims_app.apps.JimsAppConfig',
+
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -79,14 +82,15 @@ WSGI_APPLICATION = 'jims_project.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dev',
-        'USER': 'webwardens',
-        'PASSWORD': 'TakBXzeiVL2Ym8K',
-        'HOST': 'jims.postgres.database.azure.com',
-        'PORT': '5432',
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'dev',
+         'USER': 'webwardens',
+         'PASSWORD': 'TakBXzeiVL2Ym8K',
+         'HOST': 'jims.postgres.database.azure.com',
+         'PORT': '5432',
+     }
+    
 }
 
 # LOGGING = {
@@ -132,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -150,3 +154,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

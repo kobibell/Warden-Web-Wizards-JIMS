@@ -1,0 +1,22 @@
+<head>
+	<title>Logout Form</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/login.css">
+    
+    {% block content %}
+    <h1>You have been successfully logged out.</h1>
+    
+    <p id="redirect-msg" style="text-align: center;"></p>
+  
+    <script>
+      var countdown = 5;
+      var redirectMsg = document.getElementById('redirect-msg');
+      var countdownInterval = setInterval(function() {
+        redirectMsg.innerHTML = "You will be redirected to the login page in " + countdown + " seconds. Please wait...";
+        countdown--;
+        if (countdown < 0) {
+          clearInterval(countdownInterval);
+          location.replace('/login');
+        }
+      }, 1000); // 1 second in milliseconds
+    </script>
+  {% endblock %}

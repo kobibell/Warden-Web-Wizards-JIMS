@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.utils import timezone
 # Create your models here.
 
 
@@ -157,10 +157,8 @@ class TransactionDetails(models.Model):
     """
     Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
     """
-
-    #The feilds of Transaction Details
-    transaction_id = models.CharField(max_length=200, null=False, primary_key=True, auto_created=True)
-    account_number = models.CharField(max_length=200, null=False)
+    transaction_id = models.AutoField(primary_key=True)
+    account_number = models.ForeignKey(Accounts, null=False, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
@@ -189,5 +187,6 @@ class AddInmate(models.Model):
     blemishes = models.CharField(max_length=200, blank=True, null=True)
     primary_add = models.CharField(max_length=200)
     temp_add = models.CharField(max_length=200, blank=True, null=True)
-    drivers_license_num = models.CharField(max_length=80)
+    drivers_license_num = models.CharField(max_length=80, unique=True)
     drivers_license_state = models.CharField(max_length=2)
+    date_added = models.DateTimeField(null=False, default=timezone.now)
