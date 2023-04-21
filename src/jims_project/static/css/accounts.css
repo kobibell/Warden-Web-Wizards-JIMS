@@ -1,0 +1,34 @@
+.account-container{
+    display: flex;
+}
+
+.sidenav {
+    height:max-content;
+    width:25%;
+    z-index:1;
+    top:0;
+    left:0;
+    background-color:#111;
+    overflow-x:hidden;
+}
+
+.sidenav a {
+    padding:6px 8px 6px 16px;
+    text-decoration: none;
+    font-size:25px;
+    color: #818181;
+    display:block;
+}
+
+.sidenav a:hover{
+    color:#f1f1f1;
+}	
+
+.main-account{
+    margin-left:2%;
+    width: 70%;
+}
+
+.search-number{
+    margin-top: 2%;
+}
