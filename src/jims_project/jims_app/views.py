@@ -20,6 +20,7 @@ from .models import TransactionDetails
 
 from .forms import AddMoneyForm
 from .forms import WithdrawMoneyForm
+from .forms import SearchInmateForm
 
 # Create your views here.
 
@@ -180,7 +181,18 @@ def withdraw_money(request):
         form = WithdrawMoneyForm()
     return render(request, 'withdraw_money.html', {'form': form})
     
-  
+def view_inmate(request):
+    return render(request, 'view_inmate.html')
+
+def get_inmate_details(request):
+    if request.method == 'POST':
+        form = SearchInmateForm()
+    filter_by = request.POST.get('search_type')
+    if filter_by == 'full_list':
+        return render(request, 'login.html')
+    return render(request, 'home_page.html')
+
+
 def add_inmate(request):
     if request.method == 'POST':
         form = InmateForm(request.POST)

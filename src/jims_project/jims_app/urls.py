@@ -30,6 +30,8 @@ urlpatterns = [
         #search page for cash accounts
         path('accounts/search-name/', views.accounts_search_name, name='accounts_search_name'),
 
+
+        #!! url paths should use dashes (-) instead of underscores (_)
         #search results page for cash accounts
         path('accounts/account_list/', views.get_all_accounts, name='get_all_accounts'),
         path('accounts/add_money/', views.add_money, name='add_money'),
@@ -40,16 +42,18 @@ urlpatterns = [
         
         path('create-user/success/', views.create_user_success, name='create_user_success'),
         
-        path('add_inmate', views.add_inmate, name='add_inmate'),
+        path('view_inmate', views.view_inmate, name='view_inmate'),
+        path('view_inmate/inmate_details', views.get_inmate_details, name='get_inmate_details'),
 
+        path('add_inmate', views.add_inmate, name='add_inmate'),
 
         path('home_page/add_inmate', views.add_inmate, name='add_inmate'),
 
         path('home_page/inventory', views.inventory, name='inventory'),
-
-       path('logout/', logout_view, name='logout'),
-       
-       path('logout_success/', logout_success, name='logout_success'),
+        
+        path('logout/', logout_view, name='logout'),
+        
+        path('logout_success/', logout_success, name='logout_success'),
 
         
 ]
