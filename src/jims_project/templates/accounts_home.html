@@ -3,7 +3,7 @@
 
 {% block account_content %}
     <h3>Account Operations</h3>
-    <button type="button" onclick="location.href='{% url 'add_money' %}'" class="btn btn-primary">Deposit Money</button>
-    <button type="button" onclick="location.href='{% url 'withdraw_money' %}'" class="btn btn-warning">Withdraw Money</button>
-    <button type="button" onclick="location.href='{% url 'get_all_accounts' %}'" class="btn btn-info">List all Accounts</button>
+    <button type="button" class="btn btn-primary">Add Money</button>
+    <button type="button" class="btn btn-warning">Withdraw Money</button>
+    <button type="button" class="btn btn-info" onclick="location.href='{% url 'get_all_accounts' %}'">List all Accounts</button>
 {% endblock account_content %}

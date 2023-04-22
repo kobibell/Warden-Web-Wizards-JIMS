@@ -135,15 +135,16 @@
     </div>
 
     <div id="tab1" class="tab-content">
-        <div class="form-container">
-            <!-- <h2>Add Inmate</h2> -->
-            <form method="post" class="two-column-form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save and Continue</button>
-            </form>
-        </div>
-    </div>
+      <div class="form-container">
+          <!-- <h2>Add Inmate</h2> -->
+          <form method="post" class="two-column-form">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Save and Continue</button>
+          </form>
+      </div>
+  </div>
+  
 
     <div id="tab2" class="tab-content" style="display:none">
         <!-- Add content for Tab 2 here -->
