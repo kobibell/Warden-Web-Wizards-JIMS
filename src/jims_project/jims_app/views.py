@@ -197,18 +197,24 @@ def get_inmate_details(request):
             try:
                 inmate = InmateTraits.objects.filter(first_name=search_var)
             except InmateTraits.DoesNotExist:
-                None
-            context= {'by_first_name': inmate.get}
-            return render(request, 'inmate_result.html', context)
+                return render(request, 'view_inmate.html')
+            context= {'by_first_name': inmate}
+            try: 
+                return render(request, 'inmate_result.html', context)
+            except InmateTraits.MultipleObjectsReturned:
+                return render(request, 'view_inmate.html')
     
         if filter_by == 'by_last_name':
             search_var = request.POST.get('search-box')
             try:
                 inmate = InmateTraits.objects.filter(last_name=search_var)
             except InmateTraits.DoesNotExist:
-                None
-            context= {'by_last_name': inmate.get}
-            return render(request, 'inmate_result.html', context)
+                return render(request, 'view_inmate.html')
+            context= {'by_last_name': inmate}
+            try: 
+                return render(request, 'inmate_result.html', context)
+            except InmateTraits.MultipleObjectsReturned:
+                return render(request, 'view_inmate.html')
     
         if filter_by == 'by_id':
             search_var = request.POST.get('search-box')
@@ -216,7 +222,7 @@ def get_inmate_details(request):
                 inmate = InmateTraits.objects.filter(id=search_var)
             except InmateTraits.DoesNotExist:
                 None
-            context= {'by_id': inmate.get}
+            context= {'by_id': inmate}
             return render(request, 'inmate_result.html', context)
                 
         return render(request, 'view_inmate.html')
