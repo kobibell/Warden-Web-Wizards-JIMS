@@ -1,77 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="../static/css/booking.css">
 </head>
-
-{% extends 'base.html' %}
-{% block content %}
 <div class="parent-div">
     <div class="tab-container">
-        <button class="tab-button active" onclick="showTab(event, 'tab1')" data-done="true">Traits</button>
-        <button class="tab-button" onclick="showTab(event, 'tab2')" data-done="false">Health Sheet</button>
-        <button class="tab-button" onclick="showTab(event, 'tab3')" data-done="false">Vehicle Information</button>
+        <button class="tab-button active" onclick="showTab(event, 'tab1')">General Traits</button>
+        <button class="tab-button" onclick="showTab(event, 'tab2')">Arresting Information</button>
+        <button class="tab-button" onclick="showTab(event, 'tab3')">Health Information</button>
+        <button class="tab-button" onclick="showTab(event, 'tab4')">Gang Affiliation</button>
+        <button class="tab-button" onclick="showTab(event, 'tab5')">Vehicle Disposition</button>
+        <button class="tab-button" onclick="showTab(event, 'tab6')">Inventory</button>
     </div>
 
-    <div id="tab1" class="tab-content">
-      <div class="form-container">
-          <form method="post" class="two-column-form">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <button type="button" onclick="submitForm(event, 'tab1')">Save and Continue</button>
-          </form>
-      </div>
-    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="parent-div">
+            <div id="tab1" class="tab-content">
+                <div class="form-container">
+                    {{ inmate_traits_form.as_p }}
+                </div>
+                <button type="button" onclick="showNextTab('tab1', 'tab2')">Continue</button>
+            </div>
 
-    <div id="tab2" class="tab-content" style="display:none">
-        <h2>Tab 2</h2>
-        <p>This is the content for Tab 2.</p>
-    </div>
+            <div id="tab2" class="tab-content" style="display:none">
+                <div class="form-container">
+                    {{ inmate_arresting_info_form.as_p }}
+                </div>
+                <button type="button" onclick="showPrevTab('tab2', 'tab1')">Back</button>
+                <button type="button" onclick="showNextTab('tab2', 'tab3')">Continue</button>
+            </div>
 
-    <div id="tab3" class="tab-content" style="display:none">
-        <h2>Tab 3</h2>
-        <p>This is the content for Tab 3.</p>
-    </div>
+            <div id="tab3" class="tab-content" style="display:none">
+                <div class="form-container">
+                    {{ inmate_health_sheet_form.as_p }}
+                </div>
+                <button type="button" onclick="showPrevTab('tab3', 'tab2')">Back</button>
+                <button type="button" onclick="showNextTab('tab3', 'tab4')">Continue</button>
+            </div>
+
+            <div id="tab4" class="tab-content" style="display:none">
+                <div class="form-container">
+                    {{ inmate_gang_affiliation_form.as_p }}
+                </div>
+                <button type="button" onclick="showPrevTab('tab4', 'tab3')">Back</button>
+                <button type="button" onclick="showNextTab('tab4', 'tab5')">Continue</button>
+            </div>
+
+            <div id="tab5" class="tab-content" style="display:none">
+                <div class="form-container">
+                    {{ inmate_vehicle_disposition_form.as_p }}
+                </div>
+                <button type="button" onclick="showPrevTab('tab5', 'tab4')">Back</button>
+                <button type="button" onclick="showNextTab('tab5', 'tab6')">Continue</button>
+            </div>
+
+            <div id="tab6" class="tab-content" style="display:none">
+                <div class="form-container">
+                    {{ inmate_property_form.as_p }}
+                </div>
+                <button type="button" onclick="showPrevTab('tab6', 'tab5')">Back</button>
+                <button type="submit">Finish and Save</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script>
     function showTab(evt, tabName) {
-        var i, tabcontent, tablinks, button;
+        var i, tabcontent, tablinks;
 
-        // Check if the tab is done before proceeding
-        button = evt.currentTarget;
-        if (button.getAttribute("data-done") === "false") {
-            return;
-        }
-
-        // Hide all tab content
         tabcontent = document.getElementsByClassName("tab-content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
 
-        // Remove active class from tab buttons
         tablinks = document.getElementsByClassName("tab-button");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
 
-        // Show the clicked tab content and set the active class to the clicked tab button
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
-    }
-
-    function submitForm(evt, tabName) {
-        var tabButton;
-
-        // Add form submission logic here
-
-        // Set the tab button's done property to true
-        tabButton = document.querySelector('.tab-container [onclick="showTab(event, \'' + tabName + '\')"]');
-        tabButton.setAttribute("data-done", "true");
-
-        // Navigate to the next tab
-        if (tabName === 'tab1') {
-            showTab({ currentTarget: tabButton.nextSibling }, 'tab2');
-        }
     }
 </script>
 
