@@ -83,21 +83,6 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
-    function submitForm(evt, tabName) {
-        var tabButton;
-
-        // Add form submission logic here
-
-        // Set the tab button's done property to true
-        tabButton = document.querySelector('.tab-container [onclick="showTab(event, \'' + tabName + '\')"]');
-        tabButton.setAttribute("data-done", "true");
-
-        // Navigate to the next tab
-        if (tabName === 'tab1') {
-            showTab({ currentTarget: tabButton.nextSibling }, 'tab2');
-        }
-    }
 </script>
 
 {% endblock %}
