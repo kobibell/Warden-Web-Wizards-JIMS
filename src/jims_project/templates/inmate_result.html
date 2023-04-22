@@ -3,28 +3,226 @@
 
 {% block content %}
 
-{% if full_list %}
+{% if inmate_list %}
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Account Number</th>
             <th>Inmate ID</th>
-            <th>Balance</th>
+            <th>First Name</th>
+            <th>Middle Initial</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Birthplace</th>
+            <th>Country</th>
+            <th>Nationality</th>
+            <th>Sex</th>
+            <th>Hair Color</th>
+            <th>Eye Color</th>
+            <th>Height(Feet)</th>
+            <th>Height(Inches)</th>
+            <th>Weight</th>
+            <th>Alias</th>
+            <th>Blemishes</th>
+            <th>Primary Address</th>
+            <th>Temp Address</th>
+            <th>DL #</th>
+            <th>DL State</th>
+            <th>Check-in Date</th>
         </tr>
         </thead>
         <tbody>
-        {% for inmate in full_list %}
+        {% for inmate in inmate_list %}
         <tr>
-            <td>{{ inmate.inmate_id }}</td>
+            <td>{{ inmate.id }}</td>
             <td>{{ inmate.first_name }}</td>
+            <td>{{ inmate.middle_initial }}</td>
             <td>{{ inmate.last_name }}</td>
+            <td>{{ inmate.date_of_birth }}</td>
+            <td>{{ inmate.place_of_birth }}</td>
+            <td>{{ inmate.country }}</td>
+            <td>{{ inmate.nationality }}</td>
+            <td>{{ inmate.sex }}</td>
+            <td>{{ inmate.hair_color }}</td>
+            <td>{{ inmate.eye_color }}</td>
+            <td>{{ inmate.height_feet }}</td>
+            <td>{{ inmate.height_inches }}</td>
+            <td>{{ inmate.weight }}</td>
+            <td>{{ inmate.alias }}</td>
+            <td>{{ inmate.blemishes }}</td>
+            <td>{{ inmate.primary_add }}</td>
+            <td>{{ inmate.temp_add }}</td>
+            <td>{{ inmate.drivers_license_num }}</td>
+            <td>{{ inmate.drivers_license_state }}</td>
+            <td>{{ inmate.date_added }}</td>
         </tr>
         {% endfor %}
         </tbody>
   </table>
 
+{% elif by_first_name %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Inmate ID</th>
+            <th>First Name</th>
+            <th>Middle Initial</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Birthplace</th>
+            <th>Country</th>
+            <th>Nationality</th>
+            <th>Sex</th>
+            <th>Hair Color</th>
+            <th>Eye Color</th>
+            <th>Height(Feet)</th>
+            <th>Height(Inches)</th>
+            <th>Weight</th>
+            <th>Alias</th>
+            <th>Blemishes</th>
+            <th>Primary Address</th>
+            <th>Temp Address</th>
+            <th>DL #</th>
+            <th>DL State</th>
+            <th>Check-in Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ by_first_name.id }}</td>
+            <td>{{ by_first_name.first_name }}</td>
+            <td>{{ by_first_name.middle_initial }}</td>
+            <td>{{ by_first_name.last_name }}</td>
+            <td>{{ by_first_name.date_of_birth }}</td>
+            <td>{{ by_first_name.place_of_birth }}</td>
+            <td>{{ by_first_name.country }}</td>
+            <td>{{ by_first_name.nationality }}</td>
+            <td>{{ by_first_name.sex }}</td>
+            <td>{{ by_first_name.hair_color }}</td>
+            <td>{{ by_first_name.eye_color }}</td>
+            <td>{{ by_first_name.height_feet }}</td>
+            <td>{{ by_first_name.height_inches }}</td>
+            <td>{{ by_first_name.weight }}</td>
+            <td>{{ by_first_name.alias }}</td>
+            <td>{{ by_first_name.blemishes }}</td>
+            <td>{{ by_first_name.primary_add }}</td>
+            <td>{{ by_first_name.temp_add }}</td>
+            <td>{{ by_first_name.drivers_license_num }}</td>
+            <td>{{ by_first_name.drivers_license_state }}</td>
+            <td>{{ by_first_name.date_added }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% elif by_last_name %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Inmate ID</th>
+            <th>First Name</th>
+            <th>Middle Initial</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Birthplace</th>
+            <th>Country</th>
+            <th>Nationality</th>
+            <th>Sex</th>
+            <th>Hair Color</th>
+            <th>Eye Color</th>
+            <th>Height(Feet)</th>
+            <th>Height(Inches)</th>
+            <th>Weight</th>
+            <th>Alias</th>
+            <th>Blemishes</th>
+            <th>Primary Address</th>
+            <th>Temp Address</th>
+            <th>DL #</th>
+            <th>DL State</th>
+            <th>Check-in Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ by_last_name.id }}</td>
+            <td>{{ by_last_name.first_name }}</td>
+            <td>{{ by_last_name.middle_initial }}</td>
+            <td>{{ by_last_name.last_name }}</td>
+            <td>{{ by_last_name.date_of_birth }}</td>
+            <td>{{ by_last_name.place_of_birth }}</td>
+            <td>{{ by_last_name.country }}</td>
+            <td>{{ by_last_name.nationality }}</td>
+            <td>{{ by_last_name.sex }}</td>
+            <td>{{ by_last_name.hair_color }}</td>
+            <td>{{ by_last_name.eye_color }}</td>
+            <td>{{ by_last_name.height_feet }}</td>
+            <td>{{ by_last_name.height_inches }}</td>
+            <td>{{ by_last_name.weight }}</td>
+            <td>{{ by_last_name.alias }}</td>
+            <td>{{ by_last_name.blemishes }}</td>
+            <td>{{ by_last_name.primary_add }}</td>
+            <td>{{ by_last_name.temp_add }}</td>
+            <td>{{ by_last_name.drivers_license_num }}</td>
+            <td>{{ by_last_name.drivers_license_state }}</td>
+            <td>{{ by_last_name.date_added }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% elif by_id %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Inmate ID</th>
+            <th>First Name</th>
+            <th>Middle Initial</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Birthplace</th>
+            <th>Country</th>
+            <th>Nationality</th>
+            <th>Sex</th>
+            <th>Hair Color</th>
+            <th>Eye Color</th>
+            <th>Height(Feet)</th>
+            <th>Height(Inches)</th>
+            <th>Weight</th>
+            <th>Alias</th>
+            <th>Blemishes</th>
+            <th>Primary Address</th>
+            <th>Temp Address</th>
+            <th>DL #</th>
+            <th>DL State</th>
+            <th>Check-in Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ by_id.id }}</td>
+            <td>{{ by_id.first_name }}</td>
+            <td>{{ by_id.middle_initial }}</td>
+            <td>{{ by_id.last_name }}</td>
+            <td>{{ by_id.date_of_birth }}</td>
+            <td>{{ by_id.place_of_birth }}</td>
+            <td>{{ by_id.country }}</td>
+            <td>{{ by_id.nationality }}</td>
+            <td>{{ by_id.sex }}</td>
+            <td>{{ by_id.hair_color }}</td>
+            <td>{{ by_id.eye_color }}</td>
+            <td>{{ by_id.height_feet }}</td>
+            <td>{{ by_id.height_inches }}</td>
+            <td>{{ by_id.weight }}</td>
+            <td>{{ by_id.alias }}</td>
+            <td>{{ by_id.blemishes }}</td>
+            <td>{{ by_id.primary_add }}</td>
+            <td>{{ by_id.temp_add }}</td>
+            <td>{{ by_id.drivers_license_num }}</td>
+            <td>{{ by_id.drivers_license_state }}</td>
+            <td>{{ by_id.date_added }}</td>
+        </tr>
+        </tbody>
+    </table>
+
 {% else %}
-    <p>No Accounts found.</p>
+    <p>Either no inmate was found or the jail is empty!</p>
 {% endif %}
 
 {% endblock content %}
