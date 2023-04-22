@@ -163,10 +163,10 @@ class TransactionDetails(models.Model):
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
 
-class AddInmate(models.Model):
+class InmateTraits(models.Model):
     
     """
-    Create an AddInmate Model (database) with the details below
+    Create an InmateTraits Model (database) with the details below
     """
 
     #The Fields for adding Inmate Details

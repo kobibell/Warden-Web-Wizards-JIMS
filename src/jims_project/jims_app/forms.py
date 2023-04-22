@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import AddInmate
+from .models import InmateTraits
 
 class AddMoneyForm(forms.Form):
     account_number = forms.CharField(max_length=200)
@@ -23,7 +23,7 @@ class SignUpForm(UserCreationForm):
 
 class InmateForm(forms.ModelForm):
     class Meta:
-        model = AddInmate
+        model = InmateTraits
         fields = '__all__'
         widgets = {
             'middle_initial': forms.TextInput(attrs={'size': '1', 'maxlength': '1'}),
