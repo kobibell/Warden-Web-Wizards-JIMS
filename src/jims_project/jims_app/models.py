@@ -148,7 +148,7 @@ class Accounts(models.Model):
     Create an Accounts model (database) HAS-A account_number, account_type, and balance
     """
 
-    #The feilds of Accounts
+    #The fields of Accounts
     account_number = models.CharField(max_length=200, null=False, primary_key=True)
     inmate_id = models.CharField(max_length=200, null=False)
     balance = models.FloatField(null=False)
@@ -190,3 +190,5 @@ class InmateTraits(models.Model):
     drivers_license_num = models.CharField(max_length=80, unique=True)
     drivers_license_state = models.CharField(max_length=2)
     date_added = models.DateTimeField(null=False, default=timezone.now)
+
+    
