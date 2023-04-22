@@ -9,15 +9,40 @@
     <div class="search-bar">
         <form action="{% url 'get_inmate_details' %}" method='POST'>
             {% csrf_token %}
+            {{ form.as_p }}
             <div class="mb-3">
                 <label for="search_type" class="form-label">Choose Search Type</label>
-                <select name="search_type" id="search_type">
+                <select name="search_type" id="search_type" onchange="add_input(this)">
                     <option selected value="full_list">Full List</option>
                     <option value="by_first_name">By First Name</option>
+                    <option value="by_last_name">By Last Name</option>
+                    <option value="by_id">By ID</option>
                 </select>
+                <div id="search-input" class="search-input" style="display:none;">
+                    <label id="search-box-label" for="search-box"></label>
+                    <input name="search-box" value="" aria-placeholder="" id="search-box"></input>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Get all transactions</button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
 
+    <script>
+        function add_input(elem) {
+            if (elem.selectedIndex != 0) {
+                document.getElementById("search-input").style.display = 'block';
+            } else {
+                document.getElementById("search-input").style.display = 'none';
+            }
+            if (elem.selectedIndex == 1) {
+                document.getElementById("search-box-label").innerHTML = "Enter first name:";
+            } else if (elem.selectedIndex == 2) {
+                document.getElementById("search-box-label").innerHTML = "Enter last name:";
+            } else if (elem.selectedIndex == 3) {
+                document.getElementById("search-box-label").innerHTML = "Enter ID:";
+            } else {
+                document.getElementById("search-box-label").innerHTML = "Try selecting a search option.";
+            }
+        }
+    </script>
 {% endblock content %}
