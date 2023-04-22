@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
-from .forms import InmateForm
+from .forms import *
 from django.urls import reverse
 
 
@@ -17,9 +17,6 @@ User = get_user_model()
 
 from .models import Accounts, CustomUser, InmateTraits
 from .models import TransactionDetails
-
-from .forms import AddMoneyForm
-from .forms import WithdrawMoneyForm
 
 # Create your views here.
 
@@ -226,16 +223,67 @@ def get_inmate_details(request):
                 
         return render(request, 'view_inmate.html')
 
-
 def add_inmate(request):
+
+    # Intialize forms upon loading add_inmate page
     if request.method == 'POST':
-        form = InmateForm(request.POST)
-        if form.is_valid():
-            form.save()
+        inmate_traits_form = InmateForm(request.POST, prefix='inmate_traits_form')
+        inmate_health_sheet_form = InmateHealthSheetForm(request.POST, prefix='inmate_health_sheet_form')
+        inmate_property_form = InmatePropertyForm(request.POST, prefix='inmate_property_form')
+        inmate_arresting_info_form = InmateArrestingInfoForm(request.POST, prefix='inmate_arresting_info_form')
+        inmate_gang_affiliation_form = InmateGangAffiliationForm(request.POST, prefix='inmate_gang_affiliation_form')
+        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(request.POST, prefix='inmate_vehicle_disposition_form')
+
+        # Is all forms are valid save each form
+        if all([inmate_traits_form.is_valid(), 
+                inmate_health_sheet_form.is_valid(),
+                inmate_property_form.is_valid(),
+                inmate_arresting_info_form.is_valid(),
+                inmate_gang_affiliation_form.is_valid(),
+                inmate_vehicle_disposition_form.is_valid()]):
+
+            inmate = inmate_traits_form.save()
+            health_sheet = inmate_health_sheet_form.save(commit=False)
+            health_sheet.inmate = inmate
+            health_sheet.save()
+
+            property_info = inmate_property_form.save(commit=False)
+            property_info.inmate = inmate
+            property_info.save()
+
+            arrest_info = inmate_arresting_info_form.save(commit=False)
+            arrest_info.inmate = inmate
+            arrest_info.save()
+
+            gang_affiliation = inmate_gang_affiliation_form.save(commit=False)
+            gang_affiliation.inmate = inmate
+            gang_affiliation.save()
+
+            vehicle_disposition = inmate_vehicle_disposition_form.save(commit=False)
+            vehicle_disposition.inmate = inmate
+            vehicle_disposition.save()
+
+            # Return confirmation page
             return render(request, 'inmate_confirmation.html')
     else:
-        form = InmateForm()
-    return render(request, 'add_inmate.html', {'form': form})
+        inmate_traits_form = InmateForm(prefix='inmate_traits_form')
+        inmate_health_sheet_form = InmateHealthSheetForm(prefix='inmate_health_sheet_form')
+        inmate_property_form = InmatePropertyForm(prefix='inmate_property_form')
+        inmate_arresting_info_form = InmateArrestingInfoForm(prefix='inmate_arresting_info_form')
+        inmate_gang_affiliation_form = InmateGangAffiliationForm(prefix='inmate_gang_affiliation_form')
+        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(prefix='inmate_vehicle_disposition_form')
+
+    context = {
+        'inmate_traits_form': inmate_traits_form,
+        'inmate_health_sheet_form': inmate_health_sheet_form,
+        'inmate_property_form': inmate_property_form,
+        'inmate_arresting_info_form': inmate_arresting_info_form,
+        'inmate_gang_affiliation_form': inmate_gang_affiliation_form,
+        'inmate_vehicle_disposition_form': inmate_vehicle_disposition_form,
+    }
+
+    return render(request, 'add_inmate.html', context)
+
 
 
 def create_user_success(request):
