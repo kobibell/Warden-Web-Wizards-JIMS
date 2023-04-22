@@ -19,7 +19,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="navbar-brand brand-text" href="/home_page">JIMS</a>
+            <a class="navbar-brand brand-text" href="/home-page">JIMS</a>
             <ul class="navbar-nav mr-auto">
               {% if user.position == 'Cashier' or user.position == 'Release Clerk' or user.position == 'Booking Clerk' or user.position == 'Supervisor' %}
               <!-- For all users add a drop down to view inmates -->
@@ -27,10 +27,10 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inmates</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/view_inmate">View Inmates</a>
+                    <a class="dropdown-item" href="/view-inmate">View Inmates</a>
                     <!-- For Is the user is a supervisor or booking clerk add a drop down to add inmates -->
                     {% if user.position == 'Supervisor' or user.position == 'Booking Clerk' %}
-                      <a class="dropdown-item" href="/add_inmate">Book Inmates</a>
+                      <a class="dropdown-item" href="/add-inmate">Book Inmates</a>
                     {% endif %}
                   </div>
                 </li>
