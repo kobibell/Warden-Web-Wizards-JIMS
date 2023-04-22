@@ -20,6 +20,7 @@ from .models import TransactionDetails
 
 from .forms import AddMoneyForm
 from .forms import WithdrawMoneyForm
+from .forms import SearchInmateForm
 
 # Create your views here.
 

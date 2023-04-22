@@ -20,6 +20,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <a class="navbar-brand brand-text" href="/home_page">JIMS</a>
+            <a class="navbar-brand brand-text" href="/home_page">JIMS</a>
             <ul class="navbar-nav mr-auto">
               {% if user.position == 'Cashier' or user.position == 'Release Clerk' or user.position == 'Booking Clerk' or user.position == 'Supervisor' %}
               <!-- For all users add a drop down to view inmates -->
@@ -68,8 +69,6 @@
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_id}}</a>
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_name}}</a>
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_name}}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Profile</a>
