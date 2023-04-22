@@ -286,4 +286,3 @@ class InmateSheet(models.Model):
     property = models.OneToOneField(InmateProperty, on_delete=models.SET_NULL, null=True)
     gang_name = models.OneToOneField(InmateGangs, on_delete=models.SET_NULL, null=True)
     emergency_contact = models.OneToOneField(EmergencyContacts, on_delete=models.SET_NULL, null=True)
-    account_number = models.OneToOneField(Accounts, on_delete=models.CASCADE, default=None)
