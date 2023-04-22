@@ -28,10 +28,5 @@ class InmateForm(forms.ModelForm):
         widgets = {
             'middle_initial': forms.TextInput(attrs={'size': '1', 'maxlength': '1'}),
         }
-
-class SearchInmateForm(forms.Form):
-    inmate_id = forms.IntegerField(max_value=9999, required=False)
-    first_name = forms.CharField(max_length=30, required=False)
-    last_name = forms.CharField(max_length=30, required=False)
     
 
