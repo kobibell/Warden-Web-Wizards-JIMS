@@ -6,6 +6,8 @@ from .views import logout_view, logout_success
 # Add your URL paths that belong to the jims_app here
 # As stated below make sure that the path is using (-)instead of (_)
 #!! url paths should use dashes (-) instead of underscores (_)
+# As stated below make sure that the path is using (-)instead of (_)
+#!! url paths should use dashes (-) instead of underscores (_)
 urlpatterns = [
         #base page for all incoming traffic without url specification
         path(r'', views.user_login, name='login'),
@@ -41,12 +43,15 @@ urlpatterns = [
         #user creation page for each of the user types
         path('create-user/', views.create_user, name='create_user'),
 
-        path('create-user/success/', views.create_user_success, name='create_user_success'),
-        
-        path('view_inmate', views.view_inmate, name='view_inmate'),
-        path('view_inmate/inmate_details', views.get_inmate_details, name='get_inmate_details'),
+        path('create-user/', views.create_user, name='create_user'),
 
-        path('add_inmate/', views.add_inmate, name='add_inmate'),
+        path('create-user/success/', views.create_user_success, name='create_user_success'),
+
+        path('view-inmate/', views.view_inmate, name='view_inmate'),
+
+        path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
+
+        path('add-inmate/', views.add_inmate, name='add_inmate'),
 
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
 
