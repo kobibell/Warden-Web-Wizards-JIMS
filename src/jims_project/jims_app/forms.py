@@ -21,3 +21,12 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', )
 
+class InmateForm(forms.ModelForm):
+    class Meta:
+        model = InmateTraits
+        fields = '__all__'
+        widgets = {
+            'middle_initial': forms.TextInput(attrs={'size': '1', 'maxlength': '1'}),
+        }
+    
+
