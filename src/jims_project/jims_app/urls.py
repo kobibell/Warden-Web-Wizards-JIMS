@@ -42,13 +42,11 @@ urlpatterns = [
         path('create-user/', views.create_user, name='create_user'),
 
         path('create-user/success/', views.create_user_success, name='create_user_success'),
+        
+        path('view_inmate', views.view_inmate, name='view_inmate'),
+        path('view_inmate/inmate_details', views.get_inmate_details, name='get_inmate_details'),
 
-        path('view-inmate/', views.view_inmate, name='view_inmate'),
         path('add_inmate/', views.add_inmate, name='add_inmate'),
-
-        path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
-
-        path('add-inmate/', views.add_inmate, name='add_inmate'),
 
         path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
 
