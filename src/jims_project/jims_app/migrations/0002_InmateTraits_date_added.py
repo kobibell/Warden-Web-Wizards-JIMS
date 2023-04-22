@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='addinmate',
+            model_name='InmateTraits',
             name='date_added',
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
