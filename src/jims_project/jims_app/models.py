@@ -201,7 +201,8 @@ class InmateTraits(models.Model):
 
     FEET_CHOICES = [(i, f'{i} ft') for i in range(2, 8)]
     INCHES_CHOICES = [(i, f'{i} in') for i in range(0, 12)]
-
+    
+    profile_picture = models.ImageField(upload_to='inmate_pictures/', blank=True, null=True)
     first_name = models.CharField(max_length=80)
     middle_initial = models.CharField(max_length=1, blank=True, null=True)
     last_name = models.CharField(max_length=80)
