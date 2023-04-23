@@ -13,12 +13,12 @@
         <a class="tab-button" href="#tab6">Inventory</a>
     </div>
 
-    <form method="post" action="{% url 'add_inmate' %}" id="inmate-form">
+    <form method="post" action="{% url 'inmate_arrest_info' %}" id="inmate-arrest-info-form">
         {% csrf_token %}
         <div class="parent-div">
-            <div id="tab1" class="tab-content">
+            <div id="tab2" class="tab-content">
                 <div class="form-container">
-                    {{ inmate_traits_form.as_p }}
+                    {{ inmate_arrest_info_form.as_p }}
                 </div>
                 <button type="submit">Continue</button>
             </div>

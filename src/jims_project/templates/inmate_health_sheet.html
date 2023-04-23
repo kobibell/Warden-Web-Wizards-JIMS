@@ -5,24 +5,25 @@
 </head>
 <div class="parent-div">
     <div class="tab-container">
-        <a class="tab-button active" href="{% url 'add_inmate' %}">General Traits</a>
-        <a class="tab-button" href="{% url 'inmate_arrest_info' %}">Arresting Information</a>
+        <a class="tab-button active" href="#tab1">General Traits</a>
+        <a class="tab-button" href="#tab2">Arresting Information</a>
         <a class="tab-button" href="#tab3">Health Information</a>
         <a class="tab-button" href="#tab4">Gang Affiliation</a>
         <a class="tab-button" href="#tab5">Vehicle Disposition</a>
         <a class="tab-button" href="#tab6">Inventory</a>
     </div>
 
-    <form method="post" action="{% url 'add_inmate' %}" id="inmate-form">
+    <form method="post" action="{% url 'inmate_health_sheet' %}" id="inmate-health-sheet-form">
         {% csrf_token %}
         <div class="parent-div">
-            <div id="tab1" class="tab-content">
+            <div id="tab3" class="tab-content">
                 <div class="form-container">
-                    {{ inmate_traits_form.as_p }}
+                    {{ inmate_health_sheet_form.as_p }}
                 </div>
-                <button type="submit">Continue</button>
+                <button type="submit">Submit</button>
             </div>
         </div>
-    </form>
+    </form>    
 </div>
+
 {% endblock %}
