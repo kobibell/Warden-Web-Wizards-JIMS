@@ -20,12 +20,12 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <a class="navbar-brand brand-text" href="/home-page">JIMS</a>
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" style="cursor: default;">
               {% if user.position == 'Cashier' or user.position == 'Release Clerk' or user.position == 'Booking Clerk' or user.position == 'Supervisor' %}
               <!-- For all users add a drop down to view inmates -->
               <ul class="navbar-nav ms-auto" id="left-dropdown">
                 <li class="nav-item dropdown">
-                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inmates</a>
+                  <a class="nav-link" id="navbarDropdown" aria-expanded="false"> Inmates</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/view-inmate">View Inmates</a>
                     <!-- For Is the user is a supervisor or booking clerk add a drop down to add inmates -->
@@ -37,7 +37,7 @@
                 <!-- Is the user is a cashier or a supervisor add a dropdown for casha accounts -->
                 {% if user.position == 'Cashier' or user.position == 'Supervisor' %}
                 <li class="nav-item dropdown">
-                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Cash Accounts</a>
+                  <a class="nav-link" id="navbarDropdown" aria-expanded="false"> Cash Accounts</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/accounts/home">Account Operations</a>
                     <a class="dropdown-item" href="/accounts/transactions-details-form">Transaction Details</a>
@@ -48,7 +48,7 @@
                 <!-- Is the user is a release clerk add a inventory drop down -->
                 {% if user.position == 'Release Clerk' or user.position == 'Supervisor' %}
                 <li class="nav-item dropdown">
-                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Inventory</a>
+                  <a class="nav-link" id="navbarDropdown" aria-expanded="false"> Inventory</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/accounts/home">View Inventory</a>
                   </div>
@@ -57,7 +57,7 @@
                 <!-- Is the user is a supervisor add dropdown for JIMS accounts -->
                 {% if user.position == 'Supervisor' %}
                 <li class="nav-item dropdown">
-                  <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false"> Jims Accounts</a>
+                  <a class="nav-link" id="navbarDropdown" aria-expanded="false"> Jims Accounts</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/create-user">Create Account</a>
                   </div>
@@ -68,9 +68,9 @@
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_name}}</a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false"> User Id : {{user.user_name}}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="">Profile</a>
                   <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
               </li>
