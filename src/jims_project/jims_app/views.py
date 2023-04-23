@@ -354,6 +354,7 @@ def get_inmate_details(request):
 from django.shortcuts import redirect
 
 def add_inmate(request):
+    
     # If the request method is POST process the form data
     if request.method == 'POST':
 
@@ -495,7 +496,7 @@ def add_inmate_property(request):
                 return render(request, 'inmate_confirmation.html')
 
     else:
-        form = InmateHealthSheetForm()
+        form = InmateHealthSheetForm(initial=request.session.get('inmate_health_sheet_data', None))
 
     # Render the inmate_health_sheet.html template with the form object as a context variable
     return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
