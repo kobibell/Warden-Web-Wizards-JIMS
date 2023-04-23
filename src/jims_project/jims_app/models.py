@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from django import forms
+from django_countries.fields import CountryField
+from localflavor.us.models import USStateField
 # Create your models here.
 
 
@@ -168,27 +171,55 @@ class InmateTraits(models.Model):
     """
     Create an InmateTraits Model (database) with the details below
     """
+    SEX_CHOICES = [
+        ('W', 'Woman'),
+        ('M', 'Man'),
+        ('T', 'Transgender'),
+        ('N', 'Non-binary/non-conforming'),
+        ('P', 'Prefer not to respond'),
+    ]
 
-    #The Fields for adding Inmate Details
+    HAIR_COLOR_CHOICES = (
+        ('black', 'Black'),
+        ('brown', 'Brown'),
+        ('blonde', 'Blonde'),
+        ('red', 'Red'),
+        ('gray', 'Gray'),
+        ('white', 'White'),
+        ('other', 'Other'),
+    )
+
+    EYE_COLOR_CHOICES = (
+        ('black', 'Black'),
+        ('brown', 'Brown'),
+        ('blue', 'Blue'),
+        ('green', 'Green'),
+        ('gray', 'Gray'),
+        ('hazel', 'Hazel'),
+        ('other', 'Other'),
+    )
+
+    FEET_CHOICES = [(i, f'{i} ft') for i in range(2, 8)]
+    INCHES_CHOICES = [(i, f'{i} in') for i in range(0, 12)]
+
     first_name = models.CharField(max_length=80)
     middle_initial = models.CharField(max_length=1, blank=True, null=True)
     last_name = models.CharField(max_length=80)
-    date_of_birth = models.CharField(max_length=10)
-    place_of_birth = models.CharField(max_length=25)
-    country = models.CharField(max_length=80)
-    nationality = models.CharField(max_length=80)
-    sex = models.CharField(max_length=10)
-    hair_color = models.CharField(max_length=20)
-    eye_color = models.CharField(max_length=20)
-    height_feet = models.PositiveIntegerField()
-    height_inches = models.PositiveIntegerField()
-    weight = models.CharField(max_length=10)
+    date_of_birth = models.DateField()
+    place_of_birth = CountryField()
+    # nationality = models.CharField(max_length=80)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    hair_color = models.CharField(max_length=20, choices=HAIR_COLOR_CHOICES)
+    eye_color = models.CharField(max_length=20, choices=EYE_COLOR_CHOICES)
+    height_feet = models.PositiveIntegerField(choices=FEET_CHOICES)
+    height_inches = models.PositiveIntegerField(choices=INCHES_CHOICES)
+    weight = models.PositiveIntegerField()
     alias = models.CharField(max_length=80, blank=True, null=True)
     blemishes = models.CharField(max_length=200, blank=True, null=True)
-    primary_add = models.CharField(max_length=200)
-    temp_add = models.CharField(max_length=200, blank=True, null=True)
-    drivers_license_num = models.CharField(max_length=80, unique=True)
-    drivers_license_state = models.CharField(max_length=2)
+    primary_address = models.CharField(max_length=200)
+    secondary_adress = models.CharField(max_length=200, blank=True, null=True)
+    drivers_license_num = models.CharField(max_length=8, unique=True)
+    drivers_license_state = USStateField()
     date_added = models.DateTimeField(null=False, default=timezone.now)
 
 class InmateArrestInfo(models.Model):

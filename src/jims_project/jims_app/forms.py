@@ -27,6 +27,13 @@ class InmateForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'middle_initial': forms.TextInput(attrs={'size': '1', 'maxlength': '1'}),
+            'date_of_birth': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'sex': forms.Select,
+            'height_feet': forms.Select,
+            'height_inches': forms.Select,
+            'country' : forms.Select,
+            'nationality' : forms.Select,
+
         }
 
 class InmateHealthSheetForm(forms.ModelForm):

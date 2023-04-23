@@ -1,29 +1,25 @@
-{% extends 'base.html' %}
-{% block content %}
-<head>
-  <link rel="stylesheet" type="text/css" href="../static/css/booking.css">
-</head>
-<div class="parent-div">
-    <div class="tab-container">
-        <a class="tab-button active" href="{% url 'add_inmate' %}">General Traits</a>
-        <a class="tab-button" href="{% url 'inmate_arrest_info' %}">Arresting Information</a>
-        <a class="tab-button" href="#tab3">Health Information</a>
-        <a class="tab-button" href="#tab4">Gang Affiliation</a>
-        <a class="tab-button" href="#tab5">Vehicle Disposition</a>
-        <a class="tab-button" href="#tab6">Inventory</a>
-    </div>
+{% extends 'inmate_booking_base.html' %}
 
-    <form method="post" action="{% url 'inmate_arrest_info' %}" id="inmate-arrest-info-form">
+{% load static %}
+
+{% block inmate_content %}
+    <form method="post" action="{% url 'inmate_arrest_info' %}" id="inmate-form">
         {% csrf_token %}
         <div class="parent-div">
-            <div id="tab2" class="tab-content">
-                <div class="form-container">
-                    {{ inmate_arrest_info_form.as_p }}
-                </div>
-                <button type="submit">Continue</button>
-                <button type="button" onclick="location.href='{% url 'add_inmate' %}'">Back</button>
+            <div class="form-container">
+                {% for field in inmate_arrest_info_form %}
+                    <div class="form-field">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
+            <button type="submit">Continue</button>
         </div>
     </form>
-</div>
 {% endblock %}

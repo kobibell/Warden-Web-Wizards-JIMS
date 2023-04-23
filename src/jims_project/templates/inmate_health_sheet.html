@@ -1,30 +1,27 @@
-{% extends 'base.html' %}
-{% block content %}
-<head>
-  <link rel="stylesheet" type="text/css" href="../static/css/booking.css">
-</head>
-<div class="parent-div">
-    <div class="tab-container">
-        <a class="tab-button active" href="#tab1">General Traits</a>
-        <a class="tab-button" href="#tab2">Arresting Information</a>
-        <a class="tab-button" href="#tab3">Health Information</a>
-        <a class="tab-button" href="#tab4">Gang Affiliation</a>
-        <a class="tab-button" href="#tab5">Vehicle Disposition</a>
-        <a class="tab-button" href="#tab6">Inventory</a>
-    </div>
+{% extends 'inmate_booking_base.html' %}
 
-    <form method="post" action="{% url 'inmate_health_sheet' %}" id="inmate-health-sheet-form">
+{% load static %}
+
+{% block inmate_content %}
+    <form method="post" action="{% url 'inmate_health_sheet' %}" id="inmate-form">
         {% csrf_token %}
         <div class="parent-div">
-            <div id="tab3" class="tab-content">
+            <div id="tab1" class="tab-content">
                 <div class="form-container">
-                    {{ inmate_health_sheet_form.as_p }}
+                    {% for field in inmate_health_sheet_form %}
+                        <div class="form-field">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="field-error">
+                                    {{ field.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
-                <button type="submit">Submit</button>
-                <button type="button" onclick="location.href='{% url 'inmate_arrest_info' %}'">Back</button>
+                <button type="submit">Continue</button>
             </div>
         </div>
-    </form>    
-</div>
-
+    </form>
 {% endblock %}
