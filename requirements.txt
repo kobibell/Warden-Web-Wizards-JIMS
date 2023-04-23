@@ -3,5 +3,6 @@ psycopg2
 django
 django-bootstrap-v5
 crispy_bootstrap5
+Pillow
 django-localflavor
 django-countries
