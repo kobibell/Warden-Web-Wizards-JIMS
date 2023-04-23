@@ -54,7 +54,7 @@ def user_login(request):
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return render(request, 'home_page.html')
+                return redirect('/home-page/')
             
          # If the user is not authenticated display an error message and log the failed login attempt (in the Djano Admin Page)
         else:
