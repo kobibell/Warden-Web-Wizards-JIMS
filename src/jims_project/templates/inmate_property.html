@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block inmate_content %}
-    <form method="post" action="{% url 'add_inmate' %}" id="inmate-form">
+    <form method="post" action="{% url 'inmate_property' %}" id="inmate-form">
         {% csrf_token %}
         <div class="parent-div">
             <div class="form-container">
-                {% for field in inmate_traits_form %}
+                {% for field in inmate_property_form %}
                     <div class="form-field">
                         {{ field.label_tag }}
                         {{ field }}
@@ -22,5 +22,5 @@
             <button type="submit">Continue</button>
         </div>
     </form>
-
 {% endblock %}
+
