@@ -44,11 +44,8 @@ urlpatterns = [
         path('create-user/success/', views.create_user_success, name='create_user_success'),
 
         path('view-inmate/', views.view_inmate, name='view_inmate'),
-        path('add_inmate/', views.add_inmate, name='add_inmate'),
 
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
-
-        path('add-inmate/', views.add_inmate, name='add_inmate'),
 
         path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
 
@@ -56,8 +53,10 @@ urlpatterns = [
 
         path('logout/', views.logout_view, name='logout'),
 
-        path('logout-success/', views.logout_success, name='logout_success')
+        path('logout-success/', views.logout_success, name='logout_success'),
 
-        
+        path('add-inmate/', views.add_inmate, name='add_inmate'),
+        path('add-inmate/health-sheet/', views.add_inmate_health_sheet, name='inmate_health_sheet'),
+        path('add-inmate/arrest-information/', views.add_inmate_arrest_information, name='inmate_arrest_info'),
 ]
 

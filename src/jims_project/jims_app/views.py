@@ -223,66 +223,80 @@ def get_inmate_details(request):
                 
         return render(request, 'view_inmate.html')
 
+from django.shortcuts import redirect
+
 def add_inmate(request):
-
-    # Intialize forms upon loading add_inmate page
+    # If the request method is POST process the form data
     if request.method == 'POST':
-        inmate_traits_form = InmateForm(request.POST, prefix='inmate_traits_form')
-        inmate_health_sheet_form = InmateHealthSheetForm(request.POST, prefix='inmate_health_sheet_form')
-        inmate_property_form = InmatePropertyForm(request.POST, prefix='inmate_property_form')
-        inmate_arresting_info_form = InmateArrestingInfoForm(request.POST, prefix='inmate_arresting_info_form')
-        inmate_gang_affiliation_form = InmateGangAffiliationForm(request.POST, prefix='inmate_gang_affiliation_form')
-        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(request.POST, prefix='inmate_vehicle_disposition_form')
 
-        # Is all forms are valid save each form
-        if all([inmate_traits_form.is_valid(), 
-                inmate_health_sheet_form.is_valid(),
-                inmate_property_form.is_valid(),
-                inmate_arresting_info_form.is_valid(),
-                inmate_gang_affiliation_form.is_valid(),
-                inmate_vehicle_disposition_form.is_valid()]):
+        # Create a form object with the POST data
+        form = InmateForm(request.POST)
 
-            inmate = inmate_traits_form.save()
-            health_sheet = inmate_health_sheet_form.save(commit=False)
-            health_sheet.inmate = inmate
-            health_sheet.save()
-
-            property_info = inmate_property_form.save(commit=False)
-            property_info.inmate = inmate
-            property_info.save()
-
-            arrest_info = inmate_arresting_info_form.save(commit=False)
-            arrest_info.inmate = inmate
-            arrest_info.save()
-
-            gang_affiliation = inmate_gang_affiliation_form.save(commit=False)
-            gang_affiliation.inmate = inmate
-            gang_affiliation.save()
-
-            vehicle_disposition = inmate_vehicle_disposition_form.save(commit=False)
-            vehicle_disposition.inmate = inmate
-            vehicle_disposition.save()
-
-            # Return confirmation page
-            return render(request, 'inmate_confirmation.html')
+        # If the form is valid save the POST data to the session and redirect to the next page
+        if form.is_valid():
+            request.session['inmate_traits_data'] = request.POST
+            return redirect('inmate_arrest_info')
+        
+    # If the request method is GET, render a blank form
     else:
-        inmate_traits_form = InmateForm(prefix='inmate_traits_form')
-        inmate_health_sheet_form = InmateHealthSheetForm(prefix='inmate_health_sheet_form')
-        inmate_property_form = InmatePropertyForm(prefix='inmate_property_form')
-        inmate_arresting_info_form = InmateArrestingInfoForm(prefix='inmate_arresting_info_form')
-        inmate_gang_affiliation_form = InmateGangAffiliationForm(prefix='inmate_gang_affiliation_form')
-        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(prefix='inmate_vehicle_disposition_form')
+        form = InmateForm()
+    
+    # Render the add_inmate.html template with the form object as a context variable
+    return render(request, 'add_inmate.html', {'inmate_traits_form': form})
 
-    context = {
-        'inmate_traits_form': inmate_traits_form,
-        'inmate_health_sheet_form': inmate_health_sheet_form,
-        'inmate_property_form': inmate_property_form,
-        'inmate_arresting_info_form': inmate_arresting_info_form,
-        'inmate_gang_affiliation_form': inmate_gang_affiliation_form,
-        'inmate_vehicle_disposition_form': inmate_vehicle_disposition_form,
-    }
+def add_inmate_arrest_information(request):
+    # If the request method is POST process the form data
+    if request.method == 'POST':
 
-    return render(request, 'add_inmate.html', context)
+        # Create a form object with the POST data
+        form = InmateArrestingInfoForm(request.POST)
+        
+        # If the form is valid save the POST data to the session and redirect to the next page
+        if form.is_valid():
+            request.session['inmate_arrest_info_data'] = request.POST
+            return redirect('inmate_health_sheet')
+    # If the request method is GET, render a blank form
+    else:
+        form = InmateArrestingInfoForm()
+
+    # Render the inmate_arrest_info.html template with the form object as a context variable
+    return render(request, 'inmate_arrest_info.html', {'inmate_arrest_info_form': form})
+
+def add_inmate_health_sheet(request):
+    # If the request method is POST process the form data
+    if request.method == 'POST':
+
+        # Create a form object with the POST data
+        form = InmateHealthSheetForm(request.POST)
+        
+        # If the form is valid save the data from all three forms to the database and render a confirmation page
+        if form.is_valid():
+
+            # Get the inmate traits data from the session and create a form object with it
+            inmate_form = InmateForm(request.session['inmate_traits_data'])
+
+            #Check if its valid and save it
+            if inmate_form.is_valid():
+                inmate_form.save()
+
+            # Get the arrest info data from the session and create a form object with it 
+            arrest_info_form = InmateArrestingInfoForm(request.session['inmate_arrest_info_data'])
+
+            # Check if its valid and save it
+            if arrest_info_form.is_valid():
+                arrest_info_form.save()
+
+            # Save the current inmate health sheet form
+            form.save()
+
+            # Render confirmation page
+            return render(request, 'inmate_confirmation.html')
+    # If the request method is GET render a blank form
+    else:
+        form = InmateHealthSheetForm()
+
+    # Render the inmate_health_sheet.html template with the form object as a context variable
+    return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
 
 
 
