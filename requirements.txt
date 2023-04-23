@@ -4,4 +4,4 @@ django
 django-bootstrap-v5
 crispy_bootstrap5
 django-localflavor
-django-counrties
+django-countries
