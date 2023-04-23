@@ -358,7 +358,11 @@ def create_user_success(request):
     return render(request, 'create_user_success.html')
 
 def view_users(request):
-    return render(request, 'view_users.html')
+    user_list = CustomUser.objects.order_by('-position')
+    context = {'user_list': user_list}
+    return render(request, 'view_users.html', context)
+
+
 
 def inventory(request):
     return render(request, 'inventory.html')
