@@ -241,6 +241,9 @@ def add_inmate(request):
 def create_user_success(request):
     return render(request, 'create_user_success.html')
 
+def view_users(request):
+    return render(request, 'view_users.html')
+
 def inventory(request):
     return render(request, 'inventory.html')
 
