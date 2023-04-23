@@ -226,6 +226,7 @@ def get_inmate_details(request):
 from django.shortcuts import redirect
 
 def add_inmate(request):
+    
     # If the request method is POST process the form data
     if request.method == 'POST':
 
@@ -237,14 +238,15 @@ def add_inmate(request):
             request.session['inmate_traits_data'] = request.POST
             return redirect('inmate_arrest_info')
         
-    # If the request method is GET, render a blank form
+    # If the request method is GET, render the form with info on the previous sesison
     else:
-        form = InmateForm()
+        form = InmateForm(initial=request.session.get('inmate_traits_data', None))
     
     # Render the add_inmate.html template with the form object as a context variable
     return render(request, 'add_inmate.html', {'inmate_traits_form': form})
 
 def add_inmate_arrest_information(request):
+
     # If the request method is POST process the form data
     if request.method == 'POST':
 
@@ -257,12 +259,14 @@ def add_inmate_arrest_information(request):
             return redirect('inmate_health_sheet')
     # If the request method is GET, render a blank form
     else:
-        form = InmateArrestingInfoForm()
+        form = InmateArrestingInfoForm(initial=request.session.get('inmate_arrest_info_data', None))
+
 
     # Render the inmate_arrest_info.html template with the form object as a context variable
     return render(request, 'inmate_arrest_info.html', {'inmate_arrest_info_form': form})
 
 def add_inmate_health_sheet(request):
+
     # If the request method is POST process the form data
     if request.method == 'POST':
 
@@ -293,7 +297,7 @@ def add_inmate_health_sheet(request):
             return render(request, 'inmate_confirmation.html')
     # If the request method is GET render a blank form
     else:
-        form = InmateHealthSheetForm()
+        form = InmateHealthSheetForm(initial=request.session.get('inmate_health_sheet_data', None))
 
     # Render the inmate_health_sheet.html template with the form object as a context variable
     return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
