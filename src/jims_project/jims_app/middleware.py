@@ -30,5 +30,14 @@ class ClearSessionDataMiddleware:
             # Remove the 'inmate_health_sheet_data' from the session if it exists
             request.session.pop('inmate_health_sheet_data', None)
 
+             # Remove the 'inmate_traits_data' from the session if it exists
+            request.session.pop('inmate_gang_affiliation_data', None)
+
+            # Remove the 'inmate_arrest_info_data' from the session if it exists
+            request.session.pop('inmate_vehicle_disposition_data', None)
+
+            # Remove the 'inmate_health_sheet_data' from the session if it exists
+            request.session.pop('inmate_property_data', None)
+
         # Return the response
         return response

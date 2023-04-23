@@ -226,7 +226,6 @@ def get_inmate_details(request):
 from django.shortcuts import redirect
 
 def add_inmate(request):
-    
     # If the request method is POST process the form data
     if request.method == 'POST':
 
@@ -247,22 +246,16 @@ def add_inmate(request):
 
 def add_inmate_arrest_information(request):
 
-    # If the request method is POST process the form data
     if request.method == 'POST':
 
-        # Create a form object with the POST data
         form = InmateArrestingInfoForm(request.POST)
         
-        # If the form is valid save the POST data to the session and redirect to the next page
         if form.is_valid():
             request.session['inmate_arrest_info_data'] = request.POST
             return redirect('inmate_health_sheet')
-    # If the request method is GET, render a blank form
     else:
         form = InmateArrestingInfoForm(initial=request.session.get('inmate_arrest_info_data', None))
 
-
-    # Render the inmate_arrest_info.html template with the form object as a context variable
     return render(request, 'inmate_arrest_info.html', {'inmate_arrest_info_form': form})
 
 def add_inmate_health_sheet(request):
@@ -273,28 +266,10 @@ def add_inmate_health_sheet(request):
         # Create a form object with the POST data
         form = InmateHealthSheetForm(request.POST)
         
-        # If the form is valid save the data from all three forms to the database and render a confirmation page
+         # If the form is valid save the POST data to the session and redirect to the next page
         if form.is_valid():
-
-            # Get the inmate traits data from the session and create a form object with it
-            inmate_form = InmateForm(request.session['inmate_traits_data'])
-
-            #Check if its valid and save it
-            if inmate_form.is_valid():
-                inmate_form.save()
-
-            # Get the arrest info data from the session and create a form object with it 
-            arrest_info_form = InmateArrestingInfoForm(request.session['inmate_arrest_info_data'])
-
-            # Check if its valid and save it
-            if arrest_info_form.is_valid():
-                arrest_info_form.save()
-
-            # Save the current inmate health sheet form
-            form.save()
-
-            # Render confirmation page
-            return render(request, 'inmate_confirmation.html')
+            request.session['inmate_health_sheet_data'] = request.POST
+            return redirect('inmate_gang_affiliation')
     # If the request method is GET render a blank form
     else:
         form = InmateHealthSheetForm(initial=request.session.get('inmate_health_sheet_data', None))
@@ -302,6 +277,81 @@ def add_inmate_health_sheet(request):
     # Render the inmate_health_sheet.html template with the form object as a context variable
     return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
 
+
+def add_inmate_gang_affiliation(request):
+
+    if request.method == 'POST':
+
+        form = InmateGangAffiliationForm(request.POST)
+        
+        if form.is_valid():
+            request.session['inmate_gang_affiliation_data'] = request.POST
+            return redirect('inmate_vehicle_disposition')
+        
+    else:
+        form = InmateGangAffiliationForm(initial=request.session.get('inmate_gang_affiliation_data', None))
+
+    return render(request, 'inmate_gang_affiliation.html', {'inmate_gang_affiliation_form': form})
+
+def add_inmate_vehicle_disposition(request):
+
+    # If the request method is POST process the form data
+    if request.method == 'POST':
+
+        # Create a form object with the POST data
+        form = InmateVehicleDispositionForm(request.POST)
+        
+        # If the form is valid save the POST data to the session and redirect to the next page
+        if form.is_valid():
+            request.session['inmate_vehicle_disposition_data'] = request.POST
+            return redirect('inmate_property')
+        
+    # If the request method is GET, render a blank form
+    else:
+        form = InmateVehicleDispositionForm(initial=request.session.get('inmate_vehicle_disposition_data', None))
+
+    # Render the inmate_arrest_info.html template with the form object as a context variable
+    return render(request, 'inmate_vehicle_disposition.html', {'inmate_vehicle_disposition_form': form})
+
+
+def add_inmate_property(request):
+    if request.method == 'POST':
+        form = InmatePropertyForm(request.POST)
+
+        if form.is_valid():
+            inmate_form = InmateForm(request.session['inmate_traits_data'])
+            arrest_info_form = InmateArrestingInfoForm(request.session['inmate_arrest_info_data'])
+            health_sheet_form = InmateHealthSheetForm(request.session['inmate_health_sheet_data'])
+            gang_affiliation_form = InmateGangAffiliationForm(request.session['inmate_gang_affiliation_data'])
+            vehicle_disposition_form = InmateVehicleDispositionForm(request.session['inmate_vehicle_disposition_data'])
+
+            if (inmate_form.is_valid() and arrest_info_form.is_valid() and
+                    health_sheet_form.is_valid() and gang_affiliation_form.is_valid() and
+                    vehicle_disposition_form.is_valid()):
+
+                traits = inmate_form.save()
+                arrest_info = arrest_info_form.save()
+                health_sheet = health_sheet_form.save()
+                gang_affiliation = gang_affiliation_form.save()
+                vehicle_disposition = vehicle_disposition_form.save()
+                inmate_property = form.save()
+
+                inmate_sheet = InmateSheet(
+                    traits=traits,
+                    arrest_info=arrest_info,
+                    health_sheet=health_sheet,
+                    gang_name=gang_affiliation,
+                    license_plate_number=vehicle_disposition,
+                    property=inmate_property
+                )
+                inmate_sheet.save()
+
+                return render(request, 'inmate_confirmation.html')
+
+    else:
+        form = InmatePropertyForm(initial=request.session.get('inmate_property_data', None))
+
+    return render(request, 'inmate_property.html', {'inmate_property_form': form})
 
 
 def create_user_success(request):
