@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import *
+from .models import InmateTraits
 
 class AddMoneyForm(forms.Form):
     account_number = forms.CharField(max_length=200)
@@ -34,29 +34,5 @@ class InmateForm(forms.ModelForm):
             'country' : forms.Select,
             'nationality' : forms.Select,
         }
-
-class InmateHealthSheetForm(forms.ModelForm):
-    class Meta:
-        model = InmateHealthSheet
-        fields = '__all__'
-
-class InmateArrestingInfoForm(forms.ModelForm):
-    class Meta:
-        model = InmateArrestInfo
-        fields = '__all__'
-
-class InmatePropertyForm(forms.ModelForm):
-    class Meta:
-        model = InmateProperty
-        fields = '__all__'
-
-class InmateVehicleDispositionForm(forms.ModelForm):
-    class Meta:
-        model = InmateVehicles
-        fields = '__all__'
-        
-class InmateGangAffiliationForm(forms.ModelForm):
-    class Meta:
-        model = InmateGangs
-        fields = '__all__'
+    
 

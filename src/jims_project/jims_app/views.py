@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
 from .forms import *
-from .forms import *
 from django.urls import reverse
 from .models import *
 from django.contrib.auth import get_user_model
@@ -17,6 +16,9 @@ User = get_user_model()
 
 from .models import Accounts, CustomUser, InmateTraits
 from .models import TransactionDetails
+
+from .forms import AddMoneyForm
+from .forms import WithdrawMoneyForm
 
 # Create your views here.
 
@@ -496,24 +498,8 @@ def add_inmate_property(request):
                 return render(request, 'inmate_confirmation.html')
 
     else:
-        inmate_traits_form = InmateForm(prefix='inmate_traits_form')
-        inmate_health_sheet_form = InmateHealthSheetForm(prefix='inmate_health_sheet_form')
-        inmate_property_form = InmatePropertyForm(prefix='inmate_property_form')
-        inmate_arresting_info_form = InmateArrestingInfoForm(prefix='inmate_arresting_info_form')
-        inmate_gang_affiliation_form = InmateGangAffiliationForm(prefix='inmate_gang_affiliation_form')
-        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(prefix='inmate_vehicle_disposition_form')
-
-    context = {
-        'inmate_traits_form': inmate_traits_form,
-        'inmate_health_sheet_form': inmate_health_sheet_form,
-        'inmate_property_form': inmate_property_form,
-        'inmate_arresting_info_form': inmate_arresting_info_form,
-        'inmate_gang_affiliation_form': inmate_gang_affiliation_form,
-        'inmate_vehicle_disposition_form': inmate_vehicle_disposition_form,
-    }
-
-    return render(request, 'add_inmate.html', context)
-
+        form = InmateForm()
+    return render(request, 'add_inmate.html', {'form': form})
 
 
 def create_user_success(request):
