@@ -56,7 +56,9 @@ urlpatterns = [
         path('logout-success/', views.logout_success, name='logout_success'),
 
         path('add-inmate/', views.add_inmate, name='add_inmate'),
+        
         path('add-inmate/health-sheet/', views.add_inmate_health_sheet, name='inmate_health_sheet'),
+        
         path('add-inmate/arrest-information/', views.add_inmate_arrest_information, name='inmate_arrest_info'),
 
         path('add-inmate/gang-affiliation/', views.add_inmate_gang_affiliation, name='inmate_gang_affiliation'),
