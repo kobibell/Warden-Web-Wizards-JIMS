@@ -2,13 +2,21 @@ from django.urls import path
 from . import views
 from django.views.generic.base import TemplateView
 from .views import logout_view, logout_success
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
 
 # Add your URL paths that belong to the jims_app here
 # As stated below make sure that the path is using (-)instead of (_)
 #!! url paths should use dashes (-) instead of underscores (_)
 # As stated below make sure that the path is using (-)instead of (_)
 #!! url paths should use dashes (-) instead of underscores (_)
+
+                
+
 urlpatterns = [
+    
+    
         #base page for all incoming traffic without url specification
         path(r'', views.user_login, name='login'),
 
@@ -72,5 +80,9 @@ urlpatterns = [
         path('add-inmate/vehicle-disposition/', views.add_inmate_vehicle_disposition,name='inmate_vehicle_disposition'),
 
         path('add-inmate/property/', views.add_inmate_property,name='inmate_property'),
+
+                
 ]
 
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
