@@ -495,23 +495,10 @@ def add_inmate_property(request):
                 return render(request, 'inmate_confirmation.html')
 
     else:
-        inmate_traits_form = InmateForm(prefix='inmate_traits_form')
-        inmate_health_sheet_form = InmateHealthSheetForm(prefix='inmate_health_sheet_form')
-        inmate_property_form = InmatePropertyForm(prefix='inmate_property_form')
-        inmate_arresting_info_form = InmateArrestingInfoForm(prefix='inmate_arresting_info_form')
-        inmate_gang_affiliation_form = InmateGangAffiliationForm(prefix='inmate_gang_affiliation_form')
-        inmate_vehicle_disposition_form = InmateVehicleDispositionForm(prefix='inmate_vehicle_disposition_form')
+        form = InmateHealthSheetForm()
 
-    context = {
-        'inmate_traits_form': inmate_traits_form,
-        'inmate_health_sheet_form': inmate_health_sheet_form,
-        'inmate_property_form': inmate_property_form,
-        'inmate_arresting_info_form': inmate_arresting_info_form,
-        'inmate_gang_affiliation_form': inmate_gang_affiliation_form,
-        'inmate_vehicle_disposition_form': inmate_vehicle_disposition_form,
-    }
-
-    return render(request, 'add_inmate.html', context)
+    # Render the inmate_health_sheet.html template with the form object as a context variable
+    return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
 
 
 
