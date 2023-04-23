@@ -47,9 +47,9 @@ urlpatterns = [
 
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
 
-        path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
+        #path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
 
-        path('home-page/inventory/', views.inventory, name='inventory'),
+        #path('home-page/inventory/', views.inventory, name='inventory'),
 
         path('logout/', views.logout_view, name='logout'),
 
