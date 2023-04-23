@@ -11,7 +11,7 @@ from jims_app.models import CustomUser
 class HomePageTest(TestCase):
 
     def setUpTestData():
-        CustomUser.objects.create(user_name="chunkycop@police.com", password="glazed")
+        CustomUser.objects.create(user_name="chunkycop@police.com", password="glazed", first_name="Chuck", last_name="Cop", position="supervisor")
 
     def test_url_exists_at_correct_location(self):
         response = self.client.get("/")
