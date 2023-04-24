@@ -13,3 +13,9 @@
 *.pyc
 
 .coverage
+
+.coveragerc
+
+.coverage.
+
+htmlcov/
