@@ -33,7 +33,6 @@ class InmateForm(forms.ModelForm):
             'height_inches': forms.Select,
             'country' : forms.Select,
             'nationality' : forms.Select,
-
         }
 
 class InmateHealthSheetForm(forms.ModelForm):

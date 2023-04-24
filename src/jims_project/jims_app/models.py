@@ -164,6 +164,7 @@ class TransactionDetails(models.Model):
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
+    transaction_performed_by = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE)
 
 class InmateTraits(models.Model):
     

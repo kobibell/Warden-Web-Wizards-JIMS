@@ -8,15 +8,12 @@ from django.contrib import messages
 from django.middleware import csrf
 from .forms import *
 from django.urls import reverse
-
-
+from .models import *
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
-from .models import Accounts, CustomUser, InmateTraits
-from .models import TransactionDetails
 
 # Create your views here.
 
@@ -98,18 +95,133 @@ def home_page(request):
     }
     return render(request, 'home_page.html', context)
 
-
-
 @login_required
 def accounts_home(request):
+    """
+    This function handles the deposit and withdrawal operations for a user's account. It processes the
+    request, performs the required action based on the provided input, and returns the appropriate
+    response to the user. It also displays the transaction history for the logged-in user.
+
+    Args:
+        request: The HTTP request object containing information about the current request.
+
+    Returns:
+        An HTTP response containing the accounts_home template rendered with the appropriate context data.
+    """
+     
+    # Initialize variables
+    message = None
+    deposit_form = AddMoneyForm()
+    withdraw_form = WithdrawMoneyForm()
+
+    # Check if the form has been submitted if it has get its action
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # If the action is to deposit money: 
+        if action == 'deposit':
+
+            # Create an instance of the AddMoneyForm with the submitted data
+            deposit_form = AddMoneyForm(request.POST)
+
+            # If the form is valid
+            if deposit_form.is_valid():
+
+                #Try to find the account with the given account number
+                try:
+                    account = Accounts.objects.get(account_number=deposit_form.cleaned_data['account_number'])
+                except Accounts.DoesNotExist:
+                    account = None
+
+                # If the account exists
+                if account:
+
+                    #Update the account balance and create a new transactino
+                    account.balance = account.balance + deposit_form.cleaned_data['amount']
+                    transaction = TransactionDetails.objects.create(
+                        account_number=account, transaction_type='D',
+                        transaction_amount=deposit_form.cleaned_data['amount'],
+                        transaction_date=timezone.now(),
+                        transaction_performed_by=request.user,
+                    )
+
+                    # Save the changes to the account and the transaction
+                    account.save()
+                    transaction.save()
+
+                    # Set a success message to display to the user
+                    message = 'Money added successfully'
+
+                else:
+
+                    # Set an error message to display to the user
+                    message = 'Account does not exist'
+
+        # If the action is to withdraw money
+        elif action == 'withdraw':
+
+            # Create an instance of the WithdrawMoneyForm with the submitted data
+            withdraw_form = WithdrawMoneyForm(request.POST)
+
+            #If the form is valid
+            if withdraw_form.is_valid():
+
+                # Try to find the account with the given account number
+                try:
+                    account = Accounts.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
+                
+                # If the account does not exist set it equal to none
+                except Accounts.DoesNotExist:
+                    account = None
+
+                # If the account exists update its balance
+                if account:
+
+                    # If the balance goes below zero set an error message that there are not enough funds
+                    if account.balance <= 0:
+                        message = 'Insufficient funds'
+
+                    #Update the account balance and create a new transactino
+                    else:
+                        account.balance = account.balance - withdraw_form.cleaned_data['amount']
+                        transaction = TransactionDetails.objects.create(
+                            account_number=account, transaction_type='W',
+                            transaction_amount=withdraw_form.cleaned_data['amount'],
+                            transaction_date=timezone.now(),
+                            transaction_performed_by=request.user,
+                        )
+
+                        # Save the changes to the account and the transaction
+                        account.save()
+                        transaction.save()
+
+                        # Set an success message that there withdraw is successful
+                        message = 'Money withdrawn successfully'
+
+                # If the account does not exist set an error messege that the account does not exist
+                else:
+                    message = 'Account does not exist'
+
+    # Get the transaction history for the current user
+    transactions = TransactionDetails.objects.filter(transaction_performed_by=request.user)
+
+    # Create a dictionary of variables to pass to the template
     context = {
         'user_position': request.user.position,
+        'transactions': transactions,
+        'deposit_form': deposit_form,
+        'withdraw_form': withdraw_form,
+        'message': message,
     }
-    return render(request, 'accounts_home.html')  
+
+    # Render the accounts_home template with the updated context data.
+    return render(request, 'accounts_home.html', context)
 
 @login_required
 def accounts_transaction_details(request):
-    return render(request, 'accounts_search_number.html')  
+    accounts = Accounts.objects.all()
+    context = {'accounts': accounts}
+    return render(request, 'accounts_search_number.html', context)
 
 @login_required
 def accounts_search_name(request):
@@ -121,6 +233,7 @@ def get_all_accounts(request):
     context = {'accounts': accounts}
     return render(request, 'account_list.html', context)
 
+@login_required
 def get_all_transaction_details(request):
     if request.method == 'POST':
         filter_by = request.POST.get('search_num')
@@ -142,9 +255,16 @@ def add_money(request):
 
             if(account):
                 account.balance = account.balance + form.cleaned_data['amount']
-                transaction = TransactionDetails.objects.create(account_number=account, transaction_type='D', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
+                transaction = TransactionDetails.objects.create(
+                account_number=account, transaction_type='D', 
+                transaction_amount=form.cleaned_data['amount'], 
+                transaction_date=timezone.now(),
+                transaction_performed_by=request.user,  
+                )
+                
                 account.save()
                 transaction.save()
+
                 return render(request, 'add_money.html', {'message': 'Money added successfully'})
             else:
                 return render(request, 'add_money.html', {'message': 'Account does not exist'})
@@ -163,13 +283,18 @@ def withdraw_money(request):
 
             if(account):
                 account.balance = account.balance - form.cleaned_data['amount']
-
-                if (account.balance < 0):
+                if (account.balance <= 0):
                     return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
                 else:
-                    transaction = TransactionDetails.objects.create(account_number=account, transaction_type='W', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
+                    transaction = TransactionDetails.objects.create(
+                        account_number=account, transaction_type='W', 
+                        transaction_amount=form.cleaned_data['amount'], 
+                        transaction_date=timezone.now(),
+                        transaction_performed_by=request.user,
+                    )
                     account.save()
                     transaction.save()
+
                     return render(request, 'withdraw_money.html', {'message': 'Money withdrawn successfully'})
             else:
                 return render(request, 'withdraw_money.html', {'message': 'Account does not exist'})

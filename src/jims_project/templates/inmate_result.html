@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 
 {% if inmate_list %}
     <table class="table table-bordered">
@@ -13,8 +14,6 @@
             <th>Last Name</th>
             <th>DOB</th>
             <th>Birthplace</th>
-            <th>Country</th>
-            <th>Nationality</th>
             <th>Sex</th>
             <th>Hair Color</th>
             <th>Eye Color</th>
@@ -39,8 +38,6 @@
             <td>{{ inmate.last_name }}</td>
             <td>{{ inmate.date_of_birth }}</td>
             <td>{{ inmate.place_of_birth }}</td>
-            <td>{{ inmate.country }}</td>
-            <td>{{ inmate.nationality }}</td>
             <td>{{ inmate.sex }}</td>
             <td>{{ inmate.hair_color }}</td>
             <td>{{ inmate.eye_color }}</td>
@@ -49,8 +46,8 @@
             <td>{{ inmate.weight }}</td>
             <td>{{ inmate.alias }}</td>
             <td>{{ inmate.blemishes }}</td>
-            <td>{{ inmate.primary_add }}</td>
-            <td>{{ inmate.temp_add }}</td>
+            <td>{{ inmate.primary_address }}</td>
+            <td>{{ inmate.secondary_adress }}</td>
             <td>{{ inmate.drivers_license_num }}</td>
             <td>{{ inmate.drivers_license_state }}</td>
             <td>{{ inmate.date_added }}</td>
