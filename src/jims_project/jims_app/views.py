@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.middleware import csrf
-from .forms import InmateForm
+from .forms import *
 from django.urls import reverse
 from .models import *
 from django.contrib.auth import get_user_model
