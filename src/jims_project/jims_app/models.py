@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.utils import timezone
+from django import forms
+from django_countries.fields import CountryField
+from localflavor.us.models import USStateField
 # Create your models here.
 
 
@@ -148,7 +151,7 @@ class Accounts(models.Model):
     Create an Accounts model (database) HAS-A account_number, account_type, and balance
     """
 
-    #The feilds of Accounts
+    #The fields of Accounts
     account_number = models.CharField(max_length=200, null=False, primary_key=True)
     inmate_id = models.CharField(max_length=200, null=False)
     balance = models.FloatField(null=False)
@@ -163,29 +166,123 @@ class TransactionDetails(models.Model):
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
 
-class AddInmate(models.Model):
+class InmateTraits(models.Model):
     
     """
-    Create an AddInmate Model (database) with the details below
+    Create an InmateTraits Model (database) with the details below
     """
+    SEX_CHOICES = [
+        ('W', 'Woman'),
+        ('M', 'Man'),
+        ('T', 'Transgender'),
+        ('N', 'Non-binary/non-conforming'),
+        ('P', 'Prefer not to respond'),
+    ]
 
-    #The Fields for adding Inmate Details
+    HAIR_COLOR_CHOICES = (
+        ('black', 'Black'),
+        ('brown', 'Brown'),
+        ('blonde', 'Blonde'),
+        ('red', 'Red'),
+        ('gray', 'Gray'),
+        ('white', 'White'),
+        ('other', 'Other'),
+    )
+
+    EYE_COLOR_CHOICES = (
+        ('black', 'Black'),
+        ('brown', 'Brown'),
+        ('blue', 'Blue'),
+        ('green', 'Green'),
+        ('gray', 'Gray'),
+        ('hazel', 'Hazel'),
+        ('other', 'Other'),
+    )
+
+    FEET_CHOICES = [(i, f'{i} ft') for i in range(2, 8)]
+    INCHES_CHOICES = [(i, f'{i} in') for i in range(0, 12)]
+
     first_name = models.CharField(max_length=80)
     middle_initial = models.CharField(max_length=1, blank=True, null=True)
     last_name = models.CharField(max_length=80)
-    date_of_birth = models.CharField(max_length=10)
-    place_of_birth = models.CharField(max_length=25)
-    country = models.CharField(max_length=80)
-    nationality = models.CharField(max_length=80)
-    sex = models.CharField(max_length=10)
-    hair_color = models.CharField(max_length=20)
-    eye_color = models.CharField(max_length=20)
-    height_feet = models.PositiveIntegerField()
-    height_inches = models.PositiveIntegerField()
-    weight = models.CharField(max_length=10)
+    date_of_birth = models.DateField()
+    place_of_birth = CountryField()
+    # nationality = models.CharField(max_length=80)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    hair_color = models.CharField(max_length=20, choices=HAIR_COLOR_CHOICES)
+    eye_color = models.CharField(max_length=20, choices=EYE_COLOR_CHOICES)
+    height_feet = models.PositiveIntegerField(choices=FEET_CHOICES)
+    height_inches = models.PositiveIntegerField(choices=INCHES_CHOICES)
+    weight = models.PositiveIntegerField()
     alias = models.CharField(max_length=80, blank=True, null=True)
     blemishes = models.CharField(max_length=200, blank=True, null=True)
     primary_add = models.CharField(max_length=200)
     temp_add = models.CharField(max_length=200, blank=True, null=True)
-    drivers_license_num = models.CharField(max_length=80)
-    drivers_license_state = models.CharField(max_length=2)
+    drivers_license_num = models.CharField(max_length=8, unique=True)
+    drivers_license_state = USStateField()
+    date_added = models.DateTimeField(null=False, default=timezone.now)
+
+class InmateArrestInfo(models.Model):
+    arrest_timestamp = models.DateTimeField()
+    arresting_agency = models.CharField(max_length=100)
+    arresting_location = models.CharField(max_length=100)
+    arresting_charges = models.CharField(max_length=225)
+    arresting_officer_id = models.IntegerField()
+    searching_officer_id = models.IntegerField()
+    transporting_officer_id = models.IntegerField()
+    dept_report_number = models.IntegerField()
+    bail_allowance = models.BooleanField()
+    bail_amount = models.DecimalField(max_digits=8, decimal_places=2)
+
+class InmateVehicles(models.Model):
+    license_plate_number = models.CharField(max_length=7, primary_key=True)
+    license_plate_state = models.CharField(max_length=2)
+    make = models.CharField(max_length=50)
+    color = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
+    place_parked = models.CharField(max_length=100)
+    impound_company = models.CharField(max_length=100)
+    impound_location = models.CharField(max_length=100)
+
+class InmateHealthSheet(models.Model):
+    epilepsy = models.CharField(max_length=225)
+    escape_risk = models.BooleanField()
+    head_lice = models.CharField(max_length=225)
+    body_lice = models.CharField(max_length=225)
+    heart_disease = models.CharField(max_length=225)
+    impaired_consciousness = models.CharField(max_length=100)
+    medications = models.CharField(max_length=225)
+    mental_disorder = models.CharField(max_length=225)
+    emergency_care = models.CharField(max_length=225)
+    suicide_risk = models.CharField(max_length=225)
+    uses_drugs = models.CharField(max_length=225)
+    uses_alcohol = models.CharField(max_length=225)
+
+class InmateProperty(models.Model):
+    type_of_property = models.CharField(max_length=100)
+    description = models.CharField(max_length=225)
+    value = models.DecimalField(max_digits=8, decimal_places=2)
+    location = models.CharField(max_length=50)
+    release_status = models.BooleanField()
+
+class EmergencyContacts(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50)
+    suffix = models.CharField(max_length=10)
+    relationship = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=15)
+
+class InmateGangs(models.Model):
+    gang_name = models.CharField(max_length=50, primary_key=True)
+    gang_area = models.CharField(max_length=50)
+    is_active = models.BooleanField()
+
+class InmateSheet(models.Model):
+    traits = models.OneToOneField(InmateTraits, on_delete=models.CASCADE)
+    arrest_info = models.OneToOneField(InmateArrestInfo, on_delete=models.CASCADE)
+    health_sheet = models.OneToOneField(InmateHealthSheet, on_delete=models.CASCADE)
+    license_plate_number = models.OneToOneField(InmateVehicles, on_delete=models.SET_NULL, null=True)
+    property = models.OneToOneField(InmateProperty, on_delete=models.SET_NULL, null=True)
+    gang_name = models.OneToOneField(InmateGangs, on_delete=models.SET_NULL, null=True)
+    emergency_contact = models.OneToOneField(EmergencyContacts, on_delete=models.SET_NULL, null=True)

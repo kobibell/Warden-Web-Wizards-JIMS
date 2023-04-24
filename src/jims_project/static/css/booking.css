@@ -1,3 +1,48 @@
+
+form,
+.tab-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+form {
+    padding: 20px;
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+label[for="first_name"],
+label[for="last_name"],
+label[for="middle_name"] {
+    grid-column: 1 / 2;
+}
+
+input#first_name,
+input#last_name,
+input#middle_name {
+    grid-column: 2 / 3;
+}
+
+label[for="weight"],
+label[for="height"],
+label[for="eye_color"],
+label[for="hair_color"] {
+    grid-column: 1 / 2;
+}
+
+input#weight,
+input#height,
+input#eye_color,
+input#hair_color {
+    grid-column: 2 / 3;
+}
+
+/* The rest of your CSS code */
 body {
     background-color: #f2f2f2;
     font-family: Arial, sans-serif;
@@ -20,19 +65,9 @@ h2 {
     font-weight: lighter;
 }
 
-form {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 50px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: bold;
 }
 
@@ -43,7 +78,6 @@ input[type="password"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    margin-bottom: 20px;
     box-sizing: border-box;
 }
 
@@ -71,11 +105,17 @@ button {
 
 button:hover,
 input[type="submit"]:hover {
-    background-color: #3da7fd;
+    background-color: #fdc639;
 }
 
 input:focus {
     outline: none;
-    border-color: #3da7fd;
+    border-color: #f7e562;
     box-shadow: 0 0 5px rgba(62, 142, 65, 0.5);
+}
+
+.two-column-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
 }

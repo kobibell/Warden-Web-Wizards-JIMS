@@ -6,6 +6,12 @@
     padding-left: 0.5%;
 }
 
-.navbar-text {
-    padding-right: 0.5%;
+.navbar .dropdown-menu {
+    right: auto;
+    left: 0;
+    min-width: 100%; /* add this to make the dropdown menu adjust to the width of the dropdown button */
+}
+  
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
