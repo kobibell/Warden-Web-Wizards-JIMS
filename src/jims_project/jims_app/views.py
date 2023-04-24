@@ -190,7 +190,7 @@ def accounts_home(request):
                 if account:
 
                     # If the balance goes below zero set an error message that there are not enough funds
-                    if account.balance <= 0:
+                    if account.balance - withdraw_form.cleaned_data['amount'] < 0:
                         message = 'Insufficient funds'
 
                     #Update the account balance and create a new transactino
@@ -306,7 +306,8 @@ def withdraw_money(request):
                 if (account.balance-money < 0):
                     return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
                 else:
-                    account.balance = account.balance - form.cleaned_data['amount']
+                    account.balance = account.balance - money
+                    print(type(money))
                     transaction = TransactionDetails.objects.create(
                         account_number=account, transaction_type='W', 
                         transaction_amount=form.cleaned_data['amount'], 

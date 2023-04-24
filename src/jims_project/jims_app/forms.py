@@ -34,6 +34,10 @@ class InmateForm(forms.ModelForm):
             'country' : forms.Select,
             'nationality' : forms.Select,
         }
+        labels = {
+            'primary_add': 'Primary Address',
+            'temp_add': 'Temporary Address',
+        }
 
 class InmateHealthSheetForm(forms.ModelForm):
     class Meta:
@@ -44,6 +48,9 @@ class InmateArrestingInfoForm(forms.ModelForm):
     class Meta:
         model = InmateArrestInfo
         fields = '__all__'
+        widgets = {
+            'arrest_timestamp': forms.DateTimeInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS'}),
+        }
 
 class InmatePropertyForm(forms.ModelForm):
     class Meta:
