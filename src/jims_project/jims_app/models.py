@@ -151,9 +151,8 @@ class Accounts(models.Model):
     Create an Accounts model (database) HAS-A account_number, account_type, and balance
     """
 
-    #The fields of Accounts
-    account_number = models.CharField(max_length=200, null=False, primary_key=True)
-    inmate_id = models.CharField(max_length=200, null=False)
+    # The fields of Accounts
+    account_number = models.IntegerField(null=False, primary_key=True)
     balance = models.FloatField(null=False)
 
 class TransactionDetails(models.Model):
@@ -165,6 +164,7 @@ class TransactionDetails(models.Model):
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
+    transaction_performed_by = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE)
 
 class InmateTraits(models.Model):
     
@@ -286,3 +286,4 @@ class InmateSheet(models.Model):
     property = models.OneToOneField(InmateProperty, on_delete=models.SET_NULL, null=True)
     gang_name = models.OneToOneField(InmateGangs, on_delete=models.SET_NULL, null=True)
     emergency_contact = models.OneToOneField(EmergencyContacts, on_delete=models.SET_NULL, null=True)
+    account_number = models.OneToOneField(Accounts, on_delete=models.CASCADE, default=None)
