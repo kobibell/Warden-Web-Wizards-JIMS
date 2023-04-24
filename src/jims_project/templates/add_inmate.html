@@ -2,25 +2,78 @@
 
 {% load static %}
 
-{% block inmate_content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Inmate Booking</title>
+    <!-- Add your CSS and other head elements here -->
+    {% load static %}
+    
+</head>
+<body>
+    {% block inmate_content %}
+    <!-- Add your form elements and other content here -->
     <form method="post" action="{% url 'add_inmate' %}" id="inmate-form">
         {% csrf_token %}
         <div class="parent-div">
-            <div class="form-container">
-                {% for field in inmate_traits_form %}
-                    <div class="form-field">
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.errors %}
-                            <div class="field-error">
-                                {{ field.errors.0 }}
+            <div class="form-container rounded">
+                {% if 'profile_picture' in inmate_traits_form.fields %}
+                    <div class="image-upload rounded">
+                        <div class="image-container">
+                            <img src="{% static '/img/placeholder_image.png' %}" alt="Placeholder" class="placeholder-image">
+                            <div class="image-label">
+                                {{ inmate_traits_form.profile_picture.label_tag }}
                             </div>
-                        {% endif %}
+                            <div class="browse-btn">
+                                <label for="id_profile_picture" class="custom-btn rounded">Browse for images</label>
+                                {{ inmate_traits_form.profile_picture }}
+                            </div>
+                        </div>
                     </div>
+                {% endif %}
+
+                {% for field in inmate_traits_form %}
+                    {% if 'profile_picture' not in field.name %}
+                        <div class="form-field rounded">
+                            <div class="field-wrapper">
+                                {{ field.label_tag }}
+                                {{ field }}
+                            </div>
+                            {% if field.errors %}
+                                <div class="field-error">
+                                    {{ field.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
-            <button type="submit">Continue</button>
+            <button type="submit" class="rounded">Continue</button>
         </div>
     </form>
+    {% endblock %}
 
-{% endblock %}
+    <!-- Add your script elements here -->
+    <script>
+        // Get the file input element and the image element
+        const fileInput = document.getElementById('id_profile_picture');
+        const image = document.querySelector('.placeholder-image');
+
+        // Add an event listener to the file input element
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            
+            reader.addEventListener('load', (event) => {
+                // Set the source of the image element to the image data
+                image.src = event.target.result;
+            });
+            
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
+
+

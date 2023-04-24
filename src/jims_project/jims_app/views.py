@@ -357,18 +357,18 @@ def add_inmate(request):
     # If the request method is POST process the form data
     if request.method == 'POST':
 
-        # Create a form object with the POST data
-        form = InmateForm(request.POST)
+        # Create a form object with the POST data and FILES
+        form = InmateForm(request.POST, request.FILES)
 
         # If the form is valid save the POST data to the session and redirect to the next page
         if form.is_valid():
             request.session['inmate_traits_data'] = request.POST
             return redirect('inmate_arrest_info')
-        
-    # If the request method is GET, render the form with info on the previous sesison
+
+    # If the request method is GET, render the form with info on the previous session
     else:
         form = InmateForm(initial=request.session.get('inmate_traits_data', None))
-    
+
     # Render the add_inmate.html template with the form object as a context variable
     return render(request, 'add_inmate.html', {'inmate_traits_form': form})
 

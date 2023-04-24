@@ -1,3 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
 .content-div {
     margin: 1%;
 }
@@ -15,3 +34,88 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+.navbar-nav .nav-link {
+    color: #000;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: #fff;
+  }
+
+
+  .account-container{
+    display: flex;
+}
+
+.sidenav{
+    color: rgb(0, 0, 0);
+    
+}
+
+.sidenav a {
+    
+    text-decoration: none;
+    font-size:25px;
+    color: #040404;
+    display:block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidenav a:hover{
+    color:#D11E35;
+}	
+
+
+
+.search-number{
+    margin-top: 2%;
+}
+
+.text-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+
+  
+  .btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .btn-group button {
+    margin: 0 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+.sidenav ul {
+    list-style: none;
+  }
+
+.button {
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    
+  }
