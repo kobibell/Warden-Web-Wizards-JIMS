@@ -208,7 +208,6 @@ class InmateTraits(models.Model):
     last_name = models.CharField(max_length=80)
     date_of_birth = models.DateField()
     place_of_birth = CountryField()
-    # nationality = models.CharField(max_length=80)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     hair_color = models.CharField(max_length=20, choices=HAIR_COLOR_CHOICES)
     eye_color = models.CharField(max_length=20, choices=EYE_COLOR_CHOICES)

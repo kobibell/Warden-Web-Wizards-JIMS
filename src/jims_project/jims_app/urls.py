@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path , include
 from . import views
 from django.views.generic.base import TemplateView
 from .views import logout_view, logout_success
@@ -77,8 +77,12 @@ urlpatterns = [
 
         path('add-inmate/property/', views.add_inmate_property,name='inmate_property'),
 
+        
+        
+
                 
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
