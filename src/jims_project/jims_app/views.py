@@ -81,6 +81,9 @@ def create_user(request):
         password = request.POST['password']
         position = request.POST['position']
 
+        existing_user = request.user.position
+        print(existing_user)
+
         # Create the user using your CustomUserManager
         user = CustomUser.objects.create_user(email=email, user_name=user_name, password=password, position = position, first_name = first_name, last_name = last_name)
 
@@ -88,7 +91,10 @@ def create_user(request):
 
         # Return a success response
         #!TODO Finish create user success
-        return render(request, 'home_page.html')
+        if existing_user == "Supervisor":
+            return render(request, 'home_page.html')
+        else:
+            return render(request, "login.html")
 
     #If the request is GET render the HTML form create_user.html
     else:
