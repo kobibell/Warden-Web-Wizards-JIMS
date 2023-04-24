@@ -1,40 +1,185 @@
 <style>
-    form label {
-    display: inline-block;
-    width: 200px; /* increased width from 150px */
-    text-align: right;
-}
-
-form input, form select {
-    display: inline-block;
-    width: 300px; /* increased width from 200px */
-}
-
-form span {
-    color: red;
-    font-size: 1.2em;
-    margin-left: 5px;
-}
-
-form label[for="sex"] {
-    width: 200px;
-    margin-right: 20px;
-}
-
-form input[name="other_sex"] {
-    width: 200px;
-    margin-left: 10px;
-}
-
-</style>
+    /* Add a border to the form and tab container */
+    form,
+    .tab-container {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  
+    form {
+      padding: 20px;
+      margin: 15px auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+    }
+  
+    /* Specify which form elements should be in which column */
+    label[for="first_name"],
+    label[for="last_name"],
+    label[for="middle_name"] {
+      grid-column: 1 / 2;
+    }
+  
+    input#first_name,
+    input#last_name,
+    input#middle_name {
+      grid-column: 2 / 3;
+    }
+  
+    label[for="weight"],
+    label[for="height"],
+    label[for="eye_color"],
+    label[for="hair_color"] {
+      grid-column: 1 / 2;
+    }
+  
+    input#weight,
+    input#height,
+    input#eye_color,
+    input#hair_color {
+      grid-column: 2 / 3;
+    }
+  
+    /* The rest of your CSS code */
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #444;
+    }
+  
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-top: 120px;
+      margin-bottom: 20px;
+    }
+  
+    h2 {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      font-weight: lighter;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+  
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+  
+    input[type="submit"],
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+  
+    input[type="submit"] {
+      background-color: #3da7fd;
+      color: #fff;
+    }
+  
+    button {
+      background-color: #ddd;
+      color: #444;
+    }
+  
+    button:hover,
+    input[type="submit"]:hover {
+      background-color: #fdc639;
+    }
+  
+    input:focus {
+      outline: none;
+      border-color: #f7e562;
+      box-shadow: 0 0 5px rgba(62, 142, 65, 0.5);
+    }
+  
+    .two-column-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+    }
+  </style>
+  
 
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Add Inmate</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Inmate</button>
-    </form>
+<div class="parent-div">
+    <div class="tab-container">
+        <button class="tab-button active" onclick="showTab(event, 'tab1')">Traits</button>
+        <button class="tab-button" onclick="showTab(event, 'tab2')">Health Sheet</button>
+        <button class="tab-button" onclick="showTab(event, 'tab3')">Vehicle Information</button>
+    </div>
+
+    <div id="tab1" class="tab-content">
+      <div class="form-container">
+          <!-- <h2>Add Inmate</h2> -->
+          <form method="post" class="two-column-form">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Save and Continue</button>
+          </form>
+      </div>
+  </div>
+  
+
+    <div id="tab2" class="tab-content" style="display:none">
+        <!-- Add content for Tab 2 here -->
+        <h2>Tab 2</h2>
+        <p>This is the content for Tab 2.</p>
+    </div>
+
+    <div id="tab3" class="tab-content" style="display:none">
+        <!-- Add content for Tab 3 here -->
+        <h2>Tab 3</h2>
+        <p>This is the content for Tab 3.</p>
+    </div>
+</div>
+
+<script>
+    function showTab(evt, tabName) {
+        // Declare variables
+        var i, tabcontent, tablinks;
+
+        // Hide all tab content
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove active class from tab buttons
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the clicked tab content and set the active class to the clicked tab button
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
 {% endblock %}

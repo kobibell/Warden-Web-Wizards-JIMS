@@ -8,4 +8,6 @@
 # Add .vscode to .gitignore if you have custom settings
 /.vscode
 
+*/__pycache__/
+
 *.pyc

@@ -2,10 +2,19 @@
 {% block content %}           
 <div>
     <h1>
-        Home page
+        Welcome {{ user.first_name }} {{ user.last_name }}
     </h1>
+    <h3>
+        Please navigate to subsequent pages using the nav bar.
+    </h3>
 </div>
-<button class="btn btn-primary" onclick="window.location.href = '/login/'">
+<button class="btn btn-primary" onclick="window.location.href = '/login'">
     Login Here
 </button>
+
+
+<button class="btn btn-primary" onclick="window.location.href = '/add_inmate'">
+    Add Inmate
+</button>
 {% endblock %} 
+
