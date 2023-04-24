@@ -342,9 +342,20 @@ def add_inmate_property(request):
                     health_sheet=health_sheet,
                     gang_name=gang_affiliation,
                     license_plate_number=vehicle_disposition,
-                    property=inmate_property
+                    property=inmate_property,
+                    account_number = account_number
                 )
                 inmate_sheet.save()
+
+                account_number = inmate_sheet.id
+                balance = 0.0
+
+                inmate_account = Accounts(
+                    account_number = account_number,
+                    inmate_id = account_number,
+                    balance = balance
+                )
+                inmate_account.save()
 
                 return render(request, 'inmate_confirmation.html')
 
