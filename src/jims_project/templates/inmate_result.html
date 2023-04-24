@@ -7,14 +7,13 @@
     <table class="table table-bordered">
         <thead>
         <tr>
+            <th>Picture</th>
             <th>Inmate ID</th>
             <th>First Name</th>
             <th>Middle Initial</th>
             <th>Last Name</th>
             <th>DOB</th>
             <th>Birthplace</th>
-            <th>Country</th>
-            <th>Nationality</th>
             <th>Sex</th>
             <th>Hair Color</th>
             <th>Eye Color</th>
@@ -33,13 +32,14 @@
         <tbody>
         {% for inmate in inmate_list %}
         <tr>
+            <td>{{ inmate.profile_picture }}</td>
             <td>{{ inmate.id }}</td>
             <td>{{ inmate.first_name }}</td>
             <td>{{ inmate.middle_initial }}</td>
             <td>{{ inmate.last_name }}</td>
             <td>{{ inmate.date_of_birth }}</td>
             <td>{{ inmate.place_of_birth }}</td>
-            <td>{{ inmate.country }}</td>
+            <td>{{ inmate. }}</td>
             <td>{{ inmate.nationality }}</td>
             <td>{{ inmate.sex }}</td>
             <td>{{ inmate.hair_color }}</td>
@@ -69,8 +69,6 @@
             <th>Last Name</th>
             <th>DOB</th>
             <th>Birthplace</th>
-            <th>Country</th>
-            <th>Nationality</th>
             <th>Sex</th>
             <th>Hair Color</th>
             <th>Eye Color</th>
@@ -95,8 +93,6 @@
             <td>{{ inmate.last_name }}</td>
             <td>{{ inmate.date_of_birth }}</td>
             <td>{{ inmate.place_of_birth }}</td>
-            <td>{{ inmate.country }}</td>
-            <td>{{ inmate.nationality }}</td>
             <td>{{ inmate.sex }}</td>
             <td>{{ inmate.hair_color }}</td>
             <td>{{ inmate.eye_color }}</td>
@@ -125,8 +121,6 @@
             <th>Last Name</th>
             <th>DOB</th>
             <th>Birthplace</th>
-            <th>Country</th>
-            <th>Nationality</th>
             <th>Sex</th>
             <th>Hair Color</th>
             <th>Eye Color</th>
@@ -151,8 +145,6 @@
             <td>{{ inmate.last_name }}</td>
             <td>{{ inmate.date_of_birth }}</td>
             <td>{{ inmate.place_of_birth }}</td>
-            <td>{{ inmate.country }}</td>
-            <td>{{ inmate.nationality }}</td>
             <td>{{ inmate.sex }}</td>
             <td>{{ inmate.hair_color }}</td>
             <td>{{ inmate.eye_color }}</td>
@@ -181,8 +173,6 @@
             <th>Last Name</th>
             <th>DOB</th>
             <th>Birthplace</th>
-            <th>Country</th>
-            <th>Nationality</th>
             <th>Sex</th>
             <th>Hair Color</th>
             <th>Eye Color</th>
@@ -207,8 +197,6 @@
             <td>{{ inmate.last_name }}</td>
             <td>{{ inmate.date_of_birth }}</td>
             <td>{{ inmate.place_of_birth }}</td>
-            <td>{{ inmate.country }}</td>
-            <td>{{ inmate.nationality }}</td>
             <td>{{ inmate.sex }}</td>
             <td>{{ inmate.hair_color }}</td>
             <td>{{ inmate.eye_color }}</td>

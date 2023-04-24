@@ -6,3 +6,5 @@ crispy_bootstrap5
 Pillow
 django-localflavor
 django-countries
+azure-storage-blob
+azure-identity
