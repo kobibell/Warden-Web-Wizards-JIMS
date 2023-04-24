@@ -82,7 +82,7 @@ def create_user(request):
 
         # Return a success response
         #!TODO Finish create user success
-        return render(request, 'create_user_success.html', {'user': user})
+        return render(request, 'home_page.html')
 
     #If the request is GET render the HTML form create_user.html
     else:
