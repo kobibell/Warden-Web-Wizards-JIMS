@@ -1,4 +1,4 @@
-{% extends 'inmate_booking_base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
@@ -7,8 +7,9 @@
 <form method="post">
     <div class="parent-div">
         <div class="form-container">
-            <h2 class="center-text">Creating a new user</h2>
-            <h5 class="center-text">Fill out the form below and submit to create a new user</h5>
+            <h2 class="center-text">Creating a new user:</h2>
+            <h5 class="center-text">Fill out the form below and submit to create a new user.</h5>
+            <hr></hr>
                 {% csrf_token %}
                 <label for="first_name">First Name:</label>
                 <input type="text" name="first_name" required><br>
