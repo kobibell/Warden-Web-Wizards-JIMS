@@ -6,11 +6,38 @@
         <form class="search-account" action="{% url 'get_all_transaction_details' %}" method='POST'>
             {% csrf_token %}
             <div class="mb-3">
-                <label for="search_num" class="form-label">Enter Account Number</label>
+                <h3>Transaction Search</h3>
+                <h5></h5>
+                <label for="search_num" class="form-label">Enter an account number below to search for all transactions associated with an account</label>
                 <input type="text" class="form-control" name="search_num" id="search_num">
             </div>
             <button type="submit" class="btn btn-primary">Get all transactions</button>
         </form>
     </div>
-    
+
+    <hr>
+
+    <h3>Accounts in JIMS system</h3>
+    <h6>Below are all of the accounts within the JIMS system</h6>
+
+    {% if accounts %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                    <tr>
+                        <td>{{ account.account_number }}</td>
+                        <td>$ {{ account.balance }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Accounts found.</p>
+    {% endif %}
 {% endblock account_content %}

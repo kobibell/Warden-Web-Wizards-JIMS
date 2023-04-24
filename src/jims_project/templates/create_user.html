@@ -1,28 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/inmate_booking.css' %}">
 <form method="post">
-    {% csrf_token %}
-    <label for="first_name">First Name:</label>
-    <input type="text" name="first_name" required><br>
+    <div class="parent-div">
+        <div class="form-container">
+            <h2 class="center-text">Creating a new user:</h2>
+            <h5 class="center-text">Fill out the form below and submit to create a new user.</h5>
+            <hr></hr>
+                {% csrf_token %}
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" required><br>
 
-    <label for="last_name">Last Name:</label>
-    <input type="text" name="last_name" required><br>
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" required><br>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" required><br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" required><br>
 
-    <label for="user_name">Username:</label>
-    <input type="text" name="user_name" required><br>
+                <label for="user_name">Username:</label>
+                <input type="text" name="user_name" required><br>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required><br>
-    
-    <label for="position">Position:</label>
-    <select name="position" required>
-        <option value="">Select a position</option>
-        <option value="Cashier">Cashier</option>
-        <option value="Booking Clerk">Booking Clerk</option>
-        <option value="Release Clerk">Release Clerk</option>
-        <option value="Supervisor">Supervisor</option>
-    </select><br>
-
-    <button type="submit">Create User</button>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required><br>
+            
+            <label for="position">Position:</label>
+            <select name="position" required>
+                <option value="">Select a position</option>
+                <option value="Cashier">Cashier</option>
+                <option value="Booking Clerk">Booking Clerk</option>
+                <option value="Release Clerk">Release Clerk</option>
+                <option value="Supervisor">Supervisor</option>
+            </select><br>
+            <button class="btn btn-primary" type="submit">Create User</button>
+        </div>
+    </div>
 </form>
+{% endblock content %}

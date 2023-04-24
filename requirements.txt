@@ -3,3 +3,7 @@ psycopg2
 django
 django-bootstrap-v5
 crispy_bootstrap5
+django-localflavor
+django-countries
+azure-storage-blob
+azure-identity

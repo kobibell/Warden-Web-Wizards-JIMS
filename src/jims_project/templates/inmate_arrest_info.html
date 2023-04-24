@@ -1,0 +1,25 @@
+{% extends 'inmate_booking_base.html' %}
+
+{% load static %}
+
+{% block inmate_content %}
+    <form method="post" action="{% url 'inmate_arrest_info' %}" id="inmate-form">
+        {% csrf_token %}
+        <div class="parent-div">
+            <div class="form-container">
+                {% for field in inmate_arrest_info_form %}
+                    <div class="form-field">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Continue</button>
+        </div>
+    </form>
+{% endblock %}

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     # Add jims_app to config
     'jims_app.apps.JimsAppConfig',
-
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'jims_app.middleware.ClearSessionDataMiddleware',
 ]
 
 ROOT_URLCONF = 'jims_project.urls'
@@ -146,7 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -158,3 +158,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

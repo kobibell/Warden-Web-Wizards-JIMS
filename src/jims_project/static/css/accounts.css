@@ -32,3 +32,21 @@
 .search-number{
     margin-top: 2%;
 }
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #ddd;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
