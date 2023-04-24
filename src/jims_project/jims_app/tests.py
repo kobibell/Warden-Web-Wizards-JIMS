@@ -54,7 +54,8 @@ class HomePageTest(TestCase):
 
         credential = urlencode({'username': 'chunkycop@police.com', 'password': 'glazed'})
         response = self.client.post('/', credential, content_type='application/x-www-form-urlencoded')
-        self.assertRedirects(response, "/home-page/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home_page.html')
 
     def test_invalid_login(self):
         '''
@@ -190,7 +191,7 @@ class AccountPagesTest(TestCase):
         data = urlencode({'search_num': '1'})
         response = self.client.post("/accounts/transactions-details/", data, content_type='application/x-www-form-urlencoded', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(TransactionDetails.objects.all().count(), 2)
+        self.assertEqual(TransactionDetails.objects.all().count(), 3)
     
     def test_get_all_accounts(self):
         '''
