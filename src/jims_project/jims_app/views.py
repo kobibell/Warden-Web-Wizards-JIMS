@@ -162,11 +162,12 @@ def withdraw_money(request):
                 account = None
 
             if(account):
-                account.balance = account.balance - form.cleaned_data['amount']
+                money = form.cleaned_data['amount']
 
-                if (account.balance < 0):
+                if (account.balance-money < 0):
                     return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
                 else:
+                    account.balance = account.balance - form.cleaned_data['amount']
                     transaction = TransactionDetails.objects.create(account_number=account, transaction_type='W', transaction_amount=form.cleaned_data['amount'], transaction_date=timezone.now())
                     account.save()
                     transaction.save()

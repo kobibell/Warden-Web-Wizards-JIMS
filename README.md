@@ -49,3 +49,8 @@
 ### Coverage Report
 
 `coverage report`
+
+### HTML View of coverage
+`coverage html`
+
+Then run the inde.html from htmlcov folder
