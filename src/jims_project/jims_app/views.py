@@ -82,7 +82,9 @@ def create_user(request):
         position = request.POST['position']
 
         # Create the user using your CustomUserManager
-        user = User.objects.create_user(email=email, user_name=user_name, password=password, position = position, first_name = first_name, last_name = last_name)
+        user = CustomUser.objects.create_user(email=email, user_name=user_name, password=password, position = position, first_name = first_name, last_name = last_name)
+
+        user.save()
 
         # Return a success response
         #!TODO Finish create user success
