@@ -118,6 +118,113 @@ def get_all_transaction_details(request):
 
     return render(request, 'transaction_details_list.html')
 
+def add_money(request):  
+    if request.method == 'POST':
+        form = AddMoneyForm(request.POST)
+        if form.is_valid():
+            try:
+             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
+            except Accounts.DoesNotExist:
+                account = None
+        
+            if(account):
+                account.balance = account.balance + form.cleaned_data['amount']
+                transaction = TransactionDetails.objects.create(
+                account_number=account, transaction_type='D', 
+                transaction_amount=form.cleaned_data['amount'], 
+                transaction_date=timezone.now(),
+                transaction_performed_by=request.user,  
+                )
+                
+                account.save()
+                transaction.save()
+
+                return render(request, 'add_money.html', {'message': 'Money added successfully'})
+            else:
+                return render(request, 'add_money.html', {'message': 'Account does not exist'})
+    else:
+        form = AddMoneyForm()
+    return render(request, 'add_money.html', {'form': form})
+
+def withdraw_money(request):  
+    if request.method == 'POST':
+        form = WithdrawMoneyForm(request.POST)
+        if form.is_valid():
+            try:
+             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
+            except Accounts.DoesNotExist:
+                account = None
+
+            if(account):
+                money = form.cleaned_data['amount']
+                if (account.balance-money < 0):
+                    return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
+                else:
+                    account.balance = account.balance - form.cleaned_data['amount']
+                    transaction = TransactionDetails.objects.create(
+                        account_number=account, transaction_type='W', 
+                        transaction_amount=form.cleaned_data['amount'], 
+                        transaction_date=timezone.now(),
+                        transaction_performed_by=request.user,
+                    )
+                    account.save()
+                    transaction.save()
+
+                    return render(request, 'withdraw_money.html', {'message': 'Money withdrawn successfully'})
+            else:
+                return render(request, 'withdraw_money.html', {'message': 'Account does not exist'})
+    else:
+        form = WithdrawMoneyForm()
+    return render(request, 'withdraw_money.html', {'form': form})
+    
+def view_inmate(request):
+    return render(request, 'view_inmate.html')
+
+def get_inmate_details(request):
+    if request.method == 'POST':
+        filter_by = request.POST.get('search_type')
+        if filter_by == 'full_list':
+            inmate_list = InmateTraits.objects.all()
+            context = {'inmate_list': inmate_list}
+            return render(request, 'inmate_result.html', context)
+        
+        if filter_by == 'by_first_name':
+            search_var = request.POST.get('search-box')
+            try:
+                inmate = InmateTraits.objects.filter(first_name=search_var)
+            except InmateTraits.DoesNotExist:
+                return render(request, 'view_inmate.html')
+            context= {'by_first_name': inmate}
+            try: 
+                return render(request, 'inmate_result.html', context)
+            except InmateTraits.MultipleObjectsReturned:
+                return render(request, 'view_inmate.html')
+    
+        if filter_by == 'by_last_name':
+            search_var = request.POST.get('search-box')
+            try:
+                inmate = InmateTraits.objects.filter(last_name=search_var)
+            except InmateTraits.DoesNotExist:
+                return render(request, 'view_inmate.html')
+            context= {'by_last_name': inmate}
+            try: 
+                return render(request, 'inmate_result.html', context)
+            except InmateTraits.MultipleObjectsReturned:
+                return render(request, 'view_inmate.html')
+    
+        if filter_by == 'by_id':
+            search_var = request.POST.get('search-box')
+            try:
+                inmate = InmateTraits.objects.filter(id=search_var)
+            except InmateTraits.DoesNotExist:
+                None
+            context= {'by_id': inmate}
+            return render(request, 'inmate_result.html', context)
+                
+        return render(request, 'view_inmate.html')
+
+from django.shortcuts import redirect
+
 def add_inmate(request):
     if request.method == 'POST':
         form = InmateForm(request.POST)

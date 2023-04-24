@@ -79,14 +79,15 @@ WSGI_APPLICATION = 'jims_project.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dev',
-        'USER': 'webwardens',
-        'PASSWORD': 'TakBXzeiVL2Ym8K',
-        'HOST': 'jims.postgres.database.azure.com',
-        'PORT': '5432',
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'new_alex_test',
+         'USER': 'webwardens',
+         'PASSWORD': 'TakBXzeiVL2Ym8K',
+         'HOST': 'jims.postgres.database.azure.com',
+         'PORT': '5432',
+     }
+    
 }
 
 # LOGGING = {
