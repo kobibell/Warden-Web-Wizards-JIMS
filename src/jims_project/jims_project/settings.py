@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     "crispy_bootstrap5",
-    "django_nose",
 ]
 
 MIDDLEWARE = [
@@ -85,7 +84,7 @@ WSGI_APPLICATION = 'jims_project.wsgi.application'
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'dev',
+         'NAME': 'sheetal_testing',
          'USER': 'webwardens',
          'PASSWORD': 'TakBXzeiVL2Ym8K',
          'HOST': 'jims.postgres.database.azure.com',
@@ -159,10 +158,3 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=foo,bar',
-]
