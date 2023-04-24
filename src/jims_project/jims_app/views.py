@@ -336,26 +336,33 @@ def add_inmate_property(request):
                 vehicle_disposition = vehicle_disposition_form.save()
                 inmate_property = form.save()
 
-                inmate_sheet = InmateSheet(
+                # Retrieve the last account created in the Accounts model
+                last_account = Accounts.objects.last()
+                
+                # If a last account exists increment its account_number by 1 to generate the next account number
+                # If no accounts exist (i.e., the database is empty) set the account_number to 1 for the first account
+                next_account_number = (last_account.account_number + 1) if last_account else 1
+
+                # Create an Accounts instance and save it
+                inmate_account = Accounts.objects.create(
+                    account_number=next_account_number,
+                    balance=0.0
+                )
+
+                inmate_account.save()
+
+                # Create and save the InmateSheet instance
+                inmate_sheet = InmateSheet.objects.create(
                     traits=traits,
                     arrest_info=arrest_info,
                     health_sheet=health_sheet,
                     gang_name=gang_affiliation,
                     license_plate_number=vehicle_disposition,
                     property=inmate_property,
-                    account_number = account_number
+                    account_number = inmate_account
                 )
+
                 inmate_sheet.save()
-
-                account_number = inmate_sheet.id
-                balance = 0.0
-
-                inmate_account = Accounts(
-                    account_number = account_number,
-                    inmate_id = account_number,
-                    balance = balance
-                )
-                inmate_account.save()
 
                 return render(request, 'inmate_confirmation.html')
 

@@ -151,9 +151,8 @@ class Accounts(models.Model):
     Create an Accounts model (database) HAS-A account_number, account_type, and balance
     """
 
-    #The fields of Accounts
-    account_number = models.CharField(max_length=200, null=False, primary_key=True)
-    inmate_id = models.CharField(max_length=200, null=False)
+    # The fields of Accounts
+    account_number = models.IntegerField(null=False, primary_key=True)
     balance = models.FloatField(null=False)
 
 class TransactionDetails(models.Model):
