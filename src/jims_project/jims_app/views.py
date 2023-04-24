@@ -13,6 +13,10 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+from .models import *
+
+from .forms import AddMoneyForm
+from .forms import WithdrawMoneyForm
 
 
 # Create your views here.
@@ -262,8 +266,16 @@ def add_money(request):
                 transaction_performed_by=request.user,  
                 )
                 
+                transaction = TransactionDetails.objects.create(
+                account_number=account, transaction_type='D', 
+                transaction_amount=form.cleaned_data['amount'], 
+                transaction_date=timezone.now(),
+                transaction_performed_by=request.user,  
+                )
+                
                 account.save()
                 transaction.save()
+
 
                 return render(request, 'add_money.html', {'message': 'Money added successfully'})
             else:
@@ -282,10 +294,11 @@ def withdraw_money(request):
                 account = None
 
             if(account):
-                account.balance = account.balance - form.cleaned_data['amount']
-                if (account.balance <= 0):
+                money = form.cleaned_data['amount']
+                if (account.balance-money < 0):
                     return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})
                 else:
+                    account.balance = account.balance - form.cleaned_data['amount']
                     transaction = TransactionDetails.objects.create(
                         account_number=account, transaction_type='W', 
                         transaction_amount=form.cleaned_data['amount'], 
@@ -294,6 +307,7 @@ def withdraw_money(request):
                     )
                     account.save()
                     transaction.save()
+
 
                     return render(request, 'withdraw_money.html', {'message': 'Money withdrawn successfully'})
             else:
@@ -501,8 +515,37 @@ def create_user_success(request):
     return render(request, 'create_user_success.html')
 
 def inventory(request):
-    return render(request, 'inventory.html')
+    inventory_list = InmateProperty.objects.all()
+    context = {'inventory_list': inventory_list}
+    return render(request, 'inventory.html', context)
 
+def update_release_status(request):
+    if request.method == 'POST':
+        property_id = request.POST.get('property_id')
+        release_status = request.POST.get('release_status')
+        try:
+            # Retrieve the InmateProperty object to be updated
+            inmate_property = InmateProperty.objects.get(id=property_id)
+            # Update the release_status field
+            inmate_property.release_status = release_status
+            # Save the updated object
+            inmate_property.save()
+            # Redirect to a success page
+            return redirect('success_page')
+        except InmateProperty.DoesNotExist:
+            # Handle case where InmateProperty object does not exist
+            # Redirect to an error page
+            return redirect('fail_page')
+    else:
+        # Handle case where request method is not POST
+        # Redirect to an error page
+        return redirect('fail_page')
+
+def update_release_status_success(request):
+    return render(request, 'update_release_status_success.html')
+
+def update_release_status_fail(request):
+    return render(request, 'update_release_status_fail.html')
 
 def logout_view(request):
     logout(request)

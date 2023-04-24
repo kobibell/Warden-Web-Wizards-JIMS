@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 
 import json
 
-from jims_app.models import CustomUser, Accounts, TransactionDetails
+from jims_app.models import *
 from jims_app.forms import AddMoneyForm
 
 # Create your tests here.
@@ -89,9 +89,9 @@ class AccountPagesTest(TestCase):
 
         credential = urlencode({'username': 'chunkycop@police.com', 'password': 'glazed'})
         self.client.post('/', credential, content_type='application/x-www-form-urlencoded')
-        
-        Accounts.objects.create(account_number="0001", inmate_id = "0001", balance=10)
-        TransactionDetails.objects.create(account_number=Accounts.objects.filter(account_number="0001")[0], transaction_type="D", transaction_amount=0, transaction_date=timezone.now())
+
+        Accounts.objects.create(account_number="1", balance=10)
+        TransactionDetails.objects.create(account_number=Accounts.objects.filter(account_number="1")[0], transaction_type="D", transaction_amount=0, transaction_date=timezone.now(), transaction_performed_by_id=1)
         
     def tearDown(self):
         '''
@@ -119,7 +119,7 @@ class AccountPagesTest(TestCase):
         '''
         Test valid form is created from data for processing
         '''
-        data = dict({"account_number": "0001", "amount": '0'})
+        data = dict({"account_number": "1", "amount": '0'})
         data = AddMoneyForm(data)
         self.assertTrue(data.is_valid())
 
@@ -127,10 +127,10 @@ class AccountPagesTest(TestCase):
         '''
         Test add money to account
         '''
-        data = urlencode({'account_number': '0001', 'amount': '100'})
+        data = urlencode({'account_number': '1', 'amount': '100'})
         self.client.post("/accounts/add-money/", data, content_type='application/x-www-form-urlencoded', follow=True)
         
-        accounts = Accounts.objects.filter(account_number="0001")
+        accounts = Accounts.objects.filter(account_number="1")
         self.assertEqual(accounts[0].balance, 110)
     
     def test_add_money_invalid_account(self):
@@ -150,10 +150,10 @@ class AccountPagesTest(TestCase):
         Test withdraw money from account
         '''
 
-        data = urlencode({'account_number': '0001', 'amount': '10'})
+        data = urlencode({'account_number': '1', 'amount': '10'})
         response = self.client.post("/accounts/withdraw-money/", data, content_type='application/x-www-form-urlencoded', follow=True)
       
-        accounts = Accounts.objects.filter(account_number="0001")
+        accounts = Accounts.objects.filter(account_number="1")
         self.assertEqual(accounts[0].balance, 0)
 
     def test_withdraw_money_invalid_account(self):
@@ -172,7 +172,7 @@ class AccountPagesTest(TestCase):
         Test withdraw money to account where account balance is low
         '''
     
-        data = urlencode({'account_number': '0001', 'amount': '500'})
+        data = urlencode({'account_number': '1', 'amount': '500'})
         response = self.client.post("/accounts/withdraw-money/", data, content_type='application/x-www-form-urlencoded', follow=True)
 
         messages = ''.join(list(response.context['message']))
@@ -183,11 +183,11 @@ class AccountPagesTest(TestCase):
         Test transaction details get updated with add money function
         '''
 
-        data = urlencode({'account_number': '0001', 'amount': '100'})
+        data = urlencode({'account_number': '1', 'amount': '100'})
         response = self.client.post("/accounts/add-money/", data, content_type='application/x-www-form-urlencoded', follow=True)
         self.assertEqual(response.status_code, 200)
 
-        data = urlencode({'search_num': '0001'})
+        data = urlencode({'search_num': '1'})
         response = self.client.post("/accounts/transactions-details/", data, content_type='application/x-www-form-urlencoded', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(TransactionDetails.objects.all().count(), 2)
@@ -200,3 +200,9 @@ class AccountPagesTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['accounts'].count(),1)
 
+        """InmateTraits.objects.create(first_name="Chuck", last_name="Smith", date_of_birth="1906-04-22", place_of_birth="US",
+                                     sex="M", hair_color="brown", eye_color="brown", height_feet="5", height_inches="6", weight="100",
+                                       primary_add="7000 Test Drive", drivers_license_num="B1000000", drivers_license_state="CA", date_added="2023-04-24 18:27:57+00")
+        InmateSheet.objects.create(account_number="1", arrest_info=InmateArrestInfo.objects.filter(id="1")[0], emergency_contact=InmateTraits.objects.filter(id="1")[0], gang_name=InmateTraits.objects.filter(id="1")[0], 
+                                   health_sheet=InmateTraits.objects.filter(id="1")[0], license_plate_number=InmateTraits.objects.filter(id="1")[0], property="1", traits=InmateTraits.objects.filter(id="1")[0])
+        """

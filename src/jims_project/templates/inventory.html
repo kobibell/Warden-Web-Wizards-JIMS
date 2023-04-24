@@ -1,1 +1,48 @@
+<!-- inventory_list.html -->
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/inmate.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Inmate Property List</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type of Property</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Location</th>
+                <th>Release Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for property in inventory_list %}
+            <tr>
+                <td>{{ property.type_of_property }}</td>
+                <td>{{ property.description }}</td>
+                <td>{{ property.value }}</td>
+                <td>{{ property.location }}</td>
+                <td>{{ property.release_status|yesno:"Yes,No"|default:"No" }}</td>
+                <td>
+                    {% if property.release_status == False %}
+                    <form action="{% url 'update_release_status' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="property_id" value="{{ property.id }}">
+                        <input type="hidden" name="release_status" value="True">
+                        <button type="submit" class="btn btn-primary">Release</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No properties found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

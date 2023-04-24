@@ -42,4 +42,30 @@
     {% else %}
         <p>No Accounts found.</p>
     {% endif %}
+
+    <hr>
+
+    <h3>Accounts in JIMS system</h3>
+    <h6>Below are all of the accounts within the JIMS system</h6>
+
+    {% if accounts %}
+        <table class="table table-bordered" style="width: fit-content;">
+            <thead>
+                <tr>
+                    <th>Account Number / Inmate ID</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                    <tr>
+                        <td>{{ account.account_number }}</td>
+                        <td>$ {{ account.balance }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Accounts found.</p>
+    {% endif %}
 {% endblock account_content %}
