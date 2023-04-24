@@ -12,3 +12,11 @@
 */__pycache__/
 
 *.pyc
+
+.coverage
+
+.coveragerc
+
+.coverage.
+
+htmlcov/
