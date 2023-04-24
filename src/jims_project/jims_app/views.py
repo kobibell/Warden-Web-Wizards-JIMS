@@ -13,11 +13,11 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
 from .models import *
 
 from .forms import AddMoneyForm
 from .forms import WithdrawMoneyForm
+
 
 # Create your views here.
 
@@ -52,7 +52,7 @@ def user_login(request):
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return redirect('/home-page/')
+                return render(request, 'home_page.html')
             
          # If the user is not authenticated display an error message and log the failed login attempt (in the Djano Admin Page)
         else:
@@ -256,8 +256,7 @@ def add_money(request):
              account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
             except Accounts.DoesNotExist:
                 account = None
-        
-        
+
             if(account):
                 account.balance = account.balance + form.cleaned_data['amount']
                 transaction = TransactionDetails.objects.create(
@@ -369,18 +368,18 @@ def add_inmate(request):
     # If the request method is POST process the form data
     if request.method == 'POST':
 
-        # Create a form object with the POST data and FILES
-        form = InmateForm(request.POST, request.FILES)
+        # Create a form object with the POST data
+        form = InmateForm(request.POST)
 
         # If the form is valid save the POST data to the session and redirect to the next page
         if form.is_valid():
             request.session['inmate_traits_data'] = request.POST
             return redirect('inmate_arrest_info')
-
-    # If the request method is GET, render the form with info on the previous session
+        
+    # If the request method is GET, render the form with info on the previous sesison
     else:
         form = InmateForm(initial=request.session.get('inmate_traits_data', None))
-
+    
     # Render the add_inmate.html template with the form object as a context variable
     return render(request, 'add_inmate.html', {'inmate_traits_form': form})
 
@@ -502,83 +501,6 @@ def add_inmate_property(request):
                     account_number = inmate_account
                 )
 
-                inmate_sheet.save()
-
-                return render(request, 'inmate_confirmation.html')
-
-    else:
-        form = InmateHealthSheetForm(initial=request.session.get('inmate_health_sheet_data', None))
-
-    # Render the inmate_health_sheet.html template with the form object as a context variable
-    return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
-
-
-def add_inmate_gang_affiliation(request):
-
-    if request.method == 'POST':
-
-        form = InmateGangAffiliationForm(request.POST)
-        
-        if form.is_valid():
-            request.session['inmate_gang_affiliation_data'] = request.POST
-            return redirect('inmate_vehicle_disposition')
-        
-    else:
-        form = InmateGangAffiliationForm(initial=request.session.get('inmate_gang_affiliation_data', None))
-
-    return render(request, 'inmate_gang_affiliation.html', {'inmate_gang_affiliation_form': form})
-
-def add_inmate_vehicle_disposition(request):
-
-    # If the request method is POST process the form data
-    if request.method == 'POST':
-
-        # Create a form object with the POST data
-        form = InmateVehicleDispositionForm(request.POST)
-        
-        # If the form is valid save the POST data to the session and redirect to the next page
-        if form.is_valid():
-            request.session['inmate_vehicle_disposition_data'] = request.POST
-            return redirect('inmate_property')
-        
-    # If the request method is GET, render a blank form
-    else:
-        form = InmateVehicleDispositionForm(initial=request.session.get('inmate_vehicle_disposition_data', None))
-
-    # Render the inmate_arrest_info.html template with the form object as a context variable
-    return render(request, 'inmate_vehicle_disposition.html', {'inmate_vehicle_disposition_form': form})
-
-
-def add_inmate_property(request):
-    if request.method == 'POST':
-        form = InmatePropertyForm(request.POST)
-
-        if form.is_valid():
-            inmate_form = InmateForm(request.session['inmate_traits_data'])
-            arrest_info_form = InmateArrestingInfoForm(request.session['inmate_arrest_info_data'])
-            health_sheet_form = InmateHealthSheetForm(request.session['inmate_health_sheet_data'])
-            gang_affiliation_form = InmateGangAffiliationForm(request.session['inmate_gang_affiliation_data'])
-            vehicle_disposition_form = InmateVehicleDispositionForm(request.session['inmate_vehicle_disposition_data'])
-
-            if (inmate_form.is_valid() and arrest_info_form.is_valid() and
-                    health_sheet_form.is_valid() and gang_affiliation_form.is_valid() and
-                    vehicle_disposition_form.is_valid()):
-
-                traits = inmate_form.save()
-                arrest_info = arrest_info_form.save()
-                health_sheet = health_sheet_form.save()
-                gang_affiliation = gang_affiliation_form.save()
-                vehicle_disposition = vehicle_disposition_form.save()
-                inmate_property = form.save()
-
-                inmate_sheet = InmateSheet(
-                    traits=traits,
-                    arrest_info=arrest_info,
-                    health_sheet=health_sheet,
-                    gang_name=gang_affiliation,
-                    license_plate_number=vehicle_disposition,
-                    property=inmate_property
-                )
                 inmate_sheet.save()
 
                 return render(request, 'inmate_confirmation.html')
