@@ -381,15 +381,15 @@ def update_release_status(request):
             inmate_property.release_status = release_status
             # Save the updated object
             inmate_property.save()
-            # Redirect to a success page or return a success response
+            # Redirect to a success page
             return redirect('success_page')
         except InmateProperty.DoesNotExist:
             # Handle case where InmateProperty object does not exist
-            # Redirect to an error page or return an error response
+            # Redirect to an error page
             return redirect('fail_page')
     else:
         # Handle case where request method is not POST
-        # Redirect to an error page or return an error response
+        # Redirect to an error page
         return redirect('fail_page')
 
 def update_release_status_success(request):
