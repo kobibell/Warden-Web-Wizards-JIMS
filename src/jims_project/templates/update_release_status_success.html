@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/inmate.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="success-page">
+        <h2>Success!</h2>
+        <p>The release status has been updated successfully.</p>
+        <a href="{% url 'inventory' %}" class="btn btn-primary">Back to Inventory</a>
+    </div>
+{% endblock content %}

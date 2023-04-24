@@ -66,5 +66,11 @@ urlpatterns = [
         path('add-inmate/vehicle-disposition/', views.add_inmate_vehicle_disposition,name='inmate_vehicle_disposition'),
 
         path('add-inmate/property/', views.add_inmate_property,name='inmate_property'),
+
+        path('home-page/inventory/update-release-status', views.update_release_status, name='update_release_status'),
+
+        path('home-page/inventory/update_release_status_success', views.update_release_status_success, name='success_page'),
+
+        path('home-page/inventory/update_release_status_fail', views.update_release_status_fail, name='fail_page'),
 ]
 

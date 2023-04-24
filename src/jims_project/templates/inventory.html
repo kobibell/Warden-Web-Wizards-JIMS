@@ -1,3 +1,4 @@
+<!-- inventory_list.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -15,6 +16,7 @@
                 <th>Value</th>
                 <th>Location</th>
                 <th>Release Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,11 +26,21 @@
                 <td>{{ property.description }}</td>
                 <td>{{ property.value }}</td>
                 <td>{{ property.location }}</td>
-                <td>{{ property.release_status }}</td>
+                <td>{{ property.release_status|yesno:"Yes,No"|default:"No" }}</td>
+                <td>
+                    {% if property.release_status == False %}
+                    <form action="{% url 'update_release_status' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="property_id" value="{{ property.id }}">
+                        <input type="hidden" name="release_status" value="True">
+                        <button type="submit" class="btn btn-primary">Release</button>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">No properties found.</td>
+                <td colspan="6">No properties found.</td>
             </tr>
             {% endfor %}
         </tbody>

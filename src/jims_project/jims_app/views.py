@@ -15,7 +15,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-from .models import Accounts, CustomUser, InmateTraits
+from .models import Accounts, CustomUser, InmateTraits, InmateProperty
 from .models import TransactionDetails
 
 # Create your views here.
@@ -369,3 +369,31 @@ def logout_view(request):
 
 def logout_success(request):
     return render(request, 'logout_success.html')
+
+def update_release_status(request):
+    if request.method == 'POST':
+        property_id = request.POST.get('property_id')
+        release_status = request.POST.get('release_status')
+        try:
+            # Retrieve the InmateProperty object to be updated
+            inmate_property = InmateProperty.objects.get(id=property_id)
+            # Update the release_status field
+            inmate_property.release_status = release_status
+            # Save the updated object
+            inmate_property.save()
+            # Redirect to a success page or return a success response
+            return redirect('success_page')
+        except InmateProperty.DoesNotExist:
+            # Handle case where InmateProperty object does not exist
+            # Redirect to an error page or return an error response
+            return redirect('fail_page')
+    else:
+        # Handle case where request method is not POST
+        # Redirect to an error page or return an error response
+        return redirect('fail_page')
+
+def update_release_status_success(request):
+    return render(request, 'update_release_status_success.html')
+
+def update_release_status_fail(request):
+    return render(request, 'update_release_status_fail.html')
