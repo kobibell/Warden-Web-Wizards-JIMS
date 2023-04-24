@@ -48,7 +48,7 @@ def user_login(request):
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return render(request, 'home_page.html')
+                return redirect('/home-page/')
             
          # If the user is not authenticated display an error message and log the failed login attempt (in the Djano Admin Page)
         else:
@@ -252,7 +252,7 @@ def add_money(request):
              account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
             except Accounts.DoesNotExist:
                 account = None
-
+        
             if(account):
                 account.balance = account.balance + form.cleaned_data['amount']
                 transaction = TransactionDetails.objects.create(
@@ -282,6 +282,7 @@ def withdraw_money(request):
                 account = None
 
             if(account):
+
                 account.balance = account.balance - form.cleaned_data['amount']
                 if (account.balance <= 0):
                     return render(request, 'withdraw_money.html', {'message': 'Insufficient funds'})

@@ -41,3 +41,16 @@
 - To change the database that the application is connected locate the settings.py file
 
 - Within the `DATABASE` section change the value of `NAME` to your desired database
+
+### Running Tests
+
+`coverage run --source='.' manage.py test jims_app`
+
+### Coverage Report
+
+`coverage report`
+
+### HTML View of coverage
+`coverage html`
+
+Then run the inde.html from htmlcov folder

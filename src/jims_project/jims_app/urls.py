@@ -8,10 +8,10 @@ from .views import logout_view, logout_success
 #!! url paths should use dashes (-) instead of underscores (_)
 urlpatterns = [
         #base page for all incoming traffic without url specification
-        path(r'', views.user_login, name='landing_page'),
+        path(r'', views.user_login, name='login'),
 
         #basic login page; also acts as landing page for now
-        path('login/', views.user_login, name='login'),
+        #path('login/', views.user_login, name='login'),
 
         #home page that will likely be variable for different user types
         path('home-page/', views.home_page, name='home_page'),
@@ -47,9 +47,9 @@ urlpatterns = [
 
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
 
-        path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
+        #path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
 
-        path('home-page/inventory/', views.inventory, name='inventory'),
+        #path('home-page/inventory/', views.inventory, name='inventory'),
 
         path('logout/', views.logout_view, name='logout'),
 
