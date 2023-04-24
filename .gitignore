@@ -4,6 +4,9 @@
 # Add __pychache__ to .gitignore
 **/src/jims_project/jims_app/__pycache__
 **/src/jims_project/jims_project/__pycache__
+**/src/jims_project/jims_app/migrations
+
+**/src/jims_project/jims_app/migrations
 
 # Add .vscode to .gitignore if you have custom settings
 /.vscode
@@ -11,3 +14,11 @@
 */__pycache__/
 
 *.pyc
+
+.coverage
+
+.coveragerc
+
+.coverage.
+
+htmlcov/

@@ -2,24 +2,31 @@
 {% load static %}
 
 {% block extrahead %}
-    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>Accounts</h1>
+    <h1 class="text-center">Accounts main page</h1>
 
-    <div class="account-container">
-        <div class="sidenav">
-            <ul>
-            <ul> <a href="/accounts/home">Accounts Operations</a> </ul>
-            <ul> <a href="/accounts/transactions-details-form">Transaction Details</a> </ul>
-            <ul> <a href="/accounts/search-name">Search by Name</a> </ul>
-            </ul>
-        </div>
-        
+    <div class="container align-items-start">
+    
+  
+    <div class="sidenav">
+      <ul>
+        <li><a href="/accounts/home">Accounts Operations</a></li>
+        <li><a href="/accounts/transactions-details-form">Transaction Details</a></li>
+        <li><a href="/accounts/search-name">Search by Name</a></li>
+      </ul>
+
         <div class="main-account">
-            {% block account_content %}
-            {% endblock account_content %}
+        {% block account_content %}
+        {% endblock account_content %}
         </div>
-    <div>
+  </div>
+  
+
+        
+        </div>
+    </div>
 {% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/inmate_booking.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <center><h1>Inmate Booking</h1></center>
+    <div class="parent-div">
+        <div class="tab-container">
+            <a class="tab-button" href="{% url 'add_inmate' %}">General Traits</a>
+            <a class="tab-button" href="{% url 'inmate_arrest_info' %}">Arresting Information</a>
+            <a class="tab-button" href="{% url 'inmate_health_sheet' %}">Health Information</a>
+            <a class="tab-button" href="{% url 'inmate_gang_affiliation' %}">Gang Affiliation</a>
+            <a class="tab-button" href="{% url 'inmate_vehicle_disposition' %}">Vehicle Disposition</a>
+            <a class="tab-button" href="{% url 'inmate_property' %}">Inventory</a>
+        </div>
+        {% block inmate_content %}
+        {% endblock %}
+    </div>
+{% endblock %}
