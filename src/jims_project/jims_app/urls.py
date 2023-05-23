@@ -55,6 +55,8 @@ urlpatterns = [
 
         path('create-user/success/', views.create_user_success, name='create_user_success'),
 
+        path('view-users/', views.view_users, name='view_users'),
+
         path('view-inmate/', views.view_inmate, name='view_inmate'),
 
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),

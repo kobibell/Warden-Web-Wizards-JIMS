@@ -523,6 +523,13 @@ def add_inmate_property(request):
 def create_user_success(request):
     return render(request, 'create_user_success.html')
 
+def view_users(request):
+    user_list = CustomUser.objects.order_by('-position')
+    context = {'user_list': user_list}
+    return render(request, 'view_users.html', context)
+
+
+
 def inventory(request):
     inventory_list = InmateProperty.objects.all()
     context = {'inventory_list': inventory_list}
