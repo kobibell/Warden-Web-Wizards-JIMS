@@ -7,3 +7,4 @@ django-localflavor
 django-countries
 azure-storage-blob
 azure-identity
+Pillow

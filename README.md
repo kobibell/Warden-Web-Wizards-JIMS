@@ -1,56 +1,69 @@
 # Warden-Web-Wizards-JIMS
 
-## Setting Up Python Virtual Environment
-- Python environments are isolated spaces where you can install and manage Python packages independently of the system Python installation. In other words, a Python environment allows you to have multiple versions of Python and their associated packages installed on the same machine, without conflicts.
+## Background
+
+This project was undertaken as part of our Software Engineering course, with the objective of developing a comprehensive solution for the San Diego Sheriff's Office. Our task was to analyze and create an application based on hypothetical problem scenarios provided by a client.
+
+The primary goal of this project was to design and implement a robust Jail Information Management System (JIMS) to address the existing shortcomings in computer support for detention facilities. We carefully examined the requirements in various functional areas, including booking, inventory management, inmate cash account management, user management, and abstraction.
+
+## Installation Guide
+
+### Cloning the Project
+1. Open your terminal and navigate to the directory where you wish to clone the project.
+2. Run `git clone https://github.com/<username>/<repository>.git` to clone the repository. `Replace <username>/<repository>.git` with the URL of this GitHub repository.
+L of the GitHub repository you want to clone.
+
+### Setting Up the Project Environment
+To maintain package versions and prevent potential conflicts, we suggest creating a Python virtual environment for this project.
+
+1. Navigate to the directory where you wish to create the virtual environment.
+2. Use the command `python3 -m venv <path/to/new/virtual/environment>` to establish a new virtual environment. Substitute `<path/to/new/virtual/environment>` with the preferred path for the environment.
+3. To activate the virtual environment, run `source <path/to/new/virtual/environment>/bin/activate`.
+4. Install the project requirements with `pip3 install requirements.txt` command.
 
 
-2. Check that you have Python 3 installed by running python3 --version. If you don't have Python 3 installed, you can download it from the official website: https://www.python.org/downloads/mac-osx/.
-  - Note: The module we need is venv which is a built-in module with python3.
+### Running the Server
 
-3. Create a new virtual environment by running `python3 -m venv </path/to/new/virtual/environment>`. Replace `</path/to/new/virtual/environment>` with the path where you want to create your virtual environment. Take note of this path as you will need it to activate your environment
+1. Navigate to the main project folder in the terminal.
+2. Use `python3 ./src/jims_project/manage.py runserver` to start the server.
 
-1. First, ensure that the venv module is installed on your machine by running the command python3 -m venv --help in your terminal.
-2. To create a new virtual environment, navigate to the directory where you want to create the environment and run the command `python3 -m venv <path/to/new/virtual/environment> `. Replace `<path/to/new/virtual/environment>` with the path where you want to create the environment.
-  - NOTE : This step it may not needed as I have already created the env within this branch assuming it is the one you are cloning.
-3. To activate the virtual environment, run the command ` source <path/to/new/virtual/environment>/bin/activate `. This command will activate the virtual environment and show its name in your terminal prompt.
-4. Once activated, you can now run Python code within the virtual environment. Packages installed while working within this environment will be isolated from your global Python installation, preventing any potential conflicts with different versions of the same package or different project dependencies.
-5. You can now install any necessary packages or dependencies using pip. For instance, you can run ` pip install <package-name> `to install a package.
-6. To standardize libraries and ensure everyone is using the same package versions, add any required or desired packages to  ` <path/to/new/virtual/environment>/requirements.txt` by simply entering the package name.
-7. In the terminal, run the command ` pip3 install -r <path/to/new/virtual/environment>/requirements.txt `. This command will install all packages listed in the requirements file you specified.
-8. Once you're done working within the virtual environment (done working on the project), you can deactivate it by running the command deactivate in your terminal.
+### Logging in
+The following credentials can be used to login:
+- Email : guest@guest.com
+- Password : guest
 
-## Making migrations
-- Models are the Python classes that define the structure and behavior of your database tables. When you make changes to your models, such as adding, modifying, or deleting fields, Django needs to know how to update the database schema to reflect those changes. This is where migrations come in.
+## Developer Guide
 
-- When you make changes to your models make sure you make migrations and migrate using the following steps
+### Database Managment
+This application utilizes Django's in-built support for various databases. Originally connected to the 'main_dev' Azure database, the application now uses a local SQLite database to curtail additional costs. The code for the previous database connection remains intact for reference purposes, even though the database is inactive.
 
-1. Within the terminal navigate to the main project folder
+To modify the database settings:
 
-2. Run the following command `python3 ./src/jims_project/manage.py makemigrations`
+1. Go to the settings.py file at `./src/jims_project/jims_project`.
+2. Locate the `DATABASES` configuration dictionary where the default connection is defined. The `ENGINE` configuration signifies the Python import path to your database engine, which is how Django communicates with your database. The `NAME` configuration is your database's name.
 
-3. Run the following command `python3 ./src/jims_project/manage.py migrate`
+Remember to run migrations every time you create a new database or alter your models. Refer to the Making Migrations section for more information.
 
-## Steps for running the server
-1. Within the terminal navigate to the main project folder
+### Making migrations
+- Models are the Python classes that define the structure and behavior of your database tables. When you make changes to your models, such as adding, modifying, or deleting fields, Django needs to know how to update the database schema to reflect those changes. To ensure the database reflects the changes to your models, you must create migrations and then apply them.
 
-2. Run the following command `python3 ./src/jims_project/manage.py runserver`
+To generate migrations:
 
-## Changing Database
-- The 'main_dev' database in Azure is the current database that the app is connected to
-
-- To change the database that the application is connected locate the settings.py file
-
-- Within the `DATABASE` section change the value of `NAME` to your desired database
+1. Open the terminal and go to the main project directory.
+2. Use `python3 ./src/jims_project/manage.py makemigrations` to prepare migration files based on the changes you've made to your models.
+3. Apply these changes to the database with `python3 ./src/jims_project/manage.py migrate`.
 
 ### Running Tests
+The project uses coverage.py as a tool for measuring code coverage of Python programs. It monitors your program, noting which parts of the code have been executed, then analyzes the source to identify code that could have been executed but was not. This is a great tool to ensure that your tests are thorough.
 
-`coverage run --source='.' manage.py test jims_app`
+To run tests and generate coverage reports:
 
-### Coverage Report
+1. Navigate to the main project directory in the terminal.
+2. Run all test cases in the 'jims_app' with the command `coverage run --source='.' manage.py test jims_app`.
+3. Generate a coverage report showing the code coverage for each file and the total coverage with `coverage report`.
+4. Create a detailed interactive HTML report using `coverage html` and view it in your web browser by opening the index.html file from the html
 
-`coverage report`
+Remember that while high coverage is a good goal, 100% coverage does not guarantee that your program is free of bugs. Always aim to write meaningful tests that effectively validate the functionality of your program.
 
-### HTML View of coverage
-`coverage html`
 
-Then run the inde.html from htmlcov folder
+
