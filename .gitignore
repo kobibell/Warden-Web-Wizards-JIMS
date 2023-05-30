@@ -6,8 +6,6 @@
 **/src/jims_project/jims_project/__pycache__
 **/src/jims_project/jims_app/migrations
 
-**/src/jims_project/jims_app/migrations
-
 # Add .vscode to .gitignore if you have custom settings
 /.vscode
 
@@ -22,6 +20,3 @@
 .coverage.
 
 htmlcov/
-
-# Ignore the SQLite database file
-db.sqlite3
