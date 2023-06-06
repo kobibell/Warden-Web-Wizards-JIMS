@@ -28,8 +28,8 @@ To maintain package versions and prevent potential conflicts, we suggest creatin
 2. Use `python3 ./src/jims_project/manage.py runserver` to start the server.
 
 ### Logging in
-The following credentials can be used to login:
-- Email : guest@guest.com
+The following credentials can be used initially to login:
+- Email : guest@gmail.com
 - Password : guest
 
 ## Developer Guide
