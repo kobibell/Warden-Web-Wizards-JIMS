@@ -23,6 +23,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = '/home-page/'
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,6 +50,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'jims_project.urls'
+
+SITE_URL = '/home-page/'
 
 TEMPLATES = [
     {

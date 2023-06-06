@@ -52,7 +52,7 @@ def user_login(request):
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return render(request, 'home_page.html')
+                return redirect('home_page')
             
          # If the user is not authenticated display an error message and log the failed login attempt (in the Djano Admin Page)
         else:
@@ -141,8 +141,8 @@ def accounts_home(request):
 
                 #Try to find the account with the given account number
                 try:
-                    account = Accounts.objects.get(account_number=deposit_form.cleaned_data['account_number'])
-                except Accounts.DoesNotExist:
+                    account = Account.objects.get(account_number=deposit_form.cleaned_data['account_number'])
+                except Account.DoesNotExist:
                     account = None
 
                 # If the account exists
@@ -150,7 +150,7 @@ def accounts_home(request):
 
                     #Update the account balance and create a new transactino
                     account.balance = account.balance + deposit_form.cleaned_data['amount']
-                    transaction = TransactionDetails.objects.create(
+                    transaction = TransactionDetail.objects.create(
                         account_number=account, transaction_type='D',
                         transaction_amount=deposit_form.cleaned_data['amount'],
                         transaction_date=timezone.now(),
@@ -180,10 +180,10 @@ def accounts_home(request):
 
                 # Try to find the account with the given account number
                 try:
-                    account = Accounts.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
+                    account = Account.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
                 
                 # If the account does not exist set it equal to none
-                except Accounts.DoesNotExist:
+                except Account.DoesNotExist:
                     account = None
 
                 # If the account exists update its balance
@@ -196,7 +196,7 @@ def accounts_home(request):
                     #Update the account balance and create a new transactino
                     else:
                         account.balance = account.balance - withdraw_form.cleaned_data['amount']
-                        transaction = TransactionDetails.objects.create(
+                        transaction = TransactionDetail.objects.create(
                             account_number=account, transaction_type='W',
                             transaction_amount=withdraw_form.cleaned_data['amount'],
                             transaction_date=timezone.now(),
@@ -215,7 +215,7 @@ def accounts_home(request):
                     message = 'Account does not exist'
 
     # Get the transaction history for the current user
-    transactions = TransactionDetails.objects.filter(transaction_performed_by=request.user)
+    transactions = TransactionDetail.objects.filter(transaction_performed_by=request.user)
 
     # Create a dictionary of variables to pass to the template
     context = {
@@ -231,7 +231,7 @@ def accounts_home(request):
 
 @login_required
 def accounts_transaction_details(request):
-    accounts = Accounts.objects.all()
+    accounts = Account.objects.all()
     context = {'accounts': accounts}
     return render(request, 'accounts_search_number.html', context)
 
@@ -241,7 +241,7 @@ def accounts_search_name(request):
 
 @login_required
 def get_all_accounts(request):
-    accounts = Accounts.objects.all()
+    accounts = Account.objects.all()
     context = {'accounts': accounts}
     return render(request, 'account_list.html', context)
 
@@ -250,7 +250,7 @@ def get_all_transaction_details(request):
     if request.method == 'POST':
         filter_by = request.POST.get('search_num')
         if filter_by:
-            transaction_details = TransactionDetails.objects.filter(account_number=filter_by)
+            transaction_details = TransactionDetail.objects.filter(account_number=filter_by)
             context = {'transaction_details': transaction_details}
             return render(request, 'transaction_details_list.html', context)
 
@@ -261,20 +261,20 @@ def add_money(request):
         form = AddMoneyForm(request.POST)
         if form.is_valid():
             try:
-             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
-            except Accounts.DoesNotExist:
+             account = Account.objects.get(account_number=form.cleaned_data['account_number'])
+            except Account.DoesNotExist:
                 account = None
 
             if(account):
                 account.balance = account.balance + form.cleaned_data['amount']
-                transaction = TransactionDetails.objects.create(
+                transaction = TransactionDetail.objects.create(
                 account_number=account, transaction_type='D', 
                 transaction_amount=form.cleaned_data['amount'], 
                 transaction_date=timezone.now(),
                 transaction_performed_by=request.user,  
                 )
                 
-                transaction = TransactionDetails.objects.create(
+                transaction = TransactionDetail.objects.create(
                 account_number=account, transaction_type='D', 
                 transaction_amount=form.cleaned_data['amount'], 
                 transaction_date=timezone.now(),
@@ -297,8 +297,8 @@ def withdraw_money(request):
         form = WithdrawMoneyForm(request.POST)
         if form.is_valid():
             try:
-             account = Accounts.objects.get(account_number=form.cleaned_data['account_number'])
-            except Accounts.DoesNotExist:
+             account = Account.objects.get(account_number=form.cleaned_data['account_number'])
+            except Account.DoesNotExist:
                 account = None
 
             if(account):
@@ -308,7 +308,7 @@ def withdraw_money(request):
                 else:
                     account.balance = account.balance - money
                     print(type(money))
-                    transaction = TransactionDetails.objects.create(
+                    transaction = TransactionDetail.objects.create(
                         account_number=account, transaction_type='W', 
                         transaction_amount=form.cleaned_data['amount'], 
                         transaction_date=timezone.now(),
@@ -484,15 +484,15 @@ def add_inmate_property(request):
                 vehicle_disposition = vehicle_disposition_form.save()
                 inmate_property = form.save()
 
-                # Retrieve the last account created in the Accounts model
-                last_account = Accounts.objects.last()
+                # Retrieve the last account created in the Account model
+                last_account = Account.objects.last()
                 
                 # If a last account exists increment its account_number by 1 to generate the next account number
                 # If no accounts exist (i.e., the database is empty) set the account_number to 1 for the first account
                 next_account_number = (last_account.account_number + 1) if last_account else 1
 
-                # Create an Accounts instance and save it
-                inmate_account = Accounts.objects.create(
+                # Create an Account instance and save it
+                inmate_account = Account.objects.create(
                     account_number=next_account_number,
                     balance=0.0
                 )

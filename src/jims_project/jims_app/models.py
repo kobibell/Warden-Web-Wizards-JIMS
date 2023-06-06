@@ -146,21 +146,21 @@ class ReleaseClerk(models.Model):
     release_clerk_id = models.CharField(max_length=200, null=False)
 
 
-class Accounts(models.Model):
+class Account(models.Model):
     """
-    Create an Accounts model (database) HAS-A account_number, account_type, and balance
+    Create an Account model (database) HAS-A account_number, account_type, and balance
     """
 
-    # The fields of Accounts
+    # The fields of Account
     account_number = models.IntegerField(null=False, primary_key=True)
     balance = models.FloatField(null=False)
 
-class TransactionDetails(models.Model):
+class TransactionDetail(models.Model):
     """
-    Create a TransactionDetails model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
+    Create a TransactionDetail model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
     """
     transaction_id = models.AutoField(primary_key=True)
-    account_number = models.ForeignKey(Accounts, null=False, on_delete=models.CASCADE)
+    account_number = models.ForeignKey(Account, null=False, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
@@ -286,4 +286,4 @@ class InmateSheet(models.Model):
     property = models.OneToOneField(InmateProperty, on_delete=models.SET_NULL, null=True)
     gang_name = models.OneToOneField(InmateGangs, on_delete=models.SET_NULL, null=True)
     emergency_contact = models.OneToOneField(EmergencyContacts, on_delete=models.SET_NULL, null=True)
-    account_number = models.OneToOneField(Accounts, on_delete=models.CASCADE, default=None)
+    account_number = models.OneToOneField(Account, on_delete=models.CASCADE, default=None)

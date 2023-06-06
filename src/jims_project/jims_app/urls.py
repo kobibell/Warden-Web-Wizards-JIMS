@@ -12,11 +12,9 @@ from django.contrib import admin
 # As stated below make sure that the path is using (-)instead of (_)
 #!! url paths should use dashes (-) instead of underscores (_)
 
-                
-
 urlpatterns = [
-    
-    
+        path('admin/', admin.site.urls),
+
         #base page for all incoming traffic without url specification
         path(r'', views.user_login, name='login'),
 
@@ -86,13 +84,5 @@ urlpatterns = [
         path('home-page/inventory/update_release_status_success', views.update_release_status_success, name='success_page'),
 
         path('home-page/inventory/update_release_status_fail', views.update_release_status_fail, name='fail_page'),
-
-        
-        
-
-                
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
