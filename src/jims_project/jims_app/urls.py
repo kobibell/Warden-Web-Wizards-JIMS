@@ -13,8 +13,6 @@ from django.contrib import admin
 #!! url paths should use dashes (-) instead of underscores (_)
 
 urlpatterns = [
-        path('admin/', admin.site.urls),
-
         #base page for all incoming traffic without url specification
         path(r'', views.user_login, name='login'),
 
