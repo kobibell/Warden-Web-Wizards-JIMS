@@ -11,7 +11,6 @@ The primary goal of this project was to design and implement a robust Jail Infor
 ### Cloning the Project
 1. Open your terminal and navigate to the directory where you wish to clone the project.
 2. Run `git clone https://github.com/<username>/<repository>.git` to clone the repository. `Replace <username>/<repository>.git` with the URL of this GitHub repository.
-L of the GitHub repository you want to clone.
 
 ### Setting Up the Project Environment
 To maintain package versions and prevent potential conflicts, we suggest creating a Python virtual environment for this project.
