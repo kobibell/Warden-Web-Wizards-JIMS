@@ -12,39 +12,37 @@ class CustomUserManager(BaseUserManager):
     A custom manager for the CustomUser model that extends Django's BaseUserManager.
 
     This manager provides methods for creating and managing custom users 
-
-    Args:
-        BaseUserManager (Class) : Django's BaseUserManager Class
     """
     def create_user(self, email, user_name, first_name, last_name, password, position, **other_fields):
         """
         Creates a new custom user instance with the given fields.
 
         Args:
-            email (str): The email address of the user
-            user_name (str): The username of the user
-            first_name (str): the first name of the user
-            last_name (str): the last name of the user
-            password (str): the password of the user
-            position (str): the position of the user
+            email (str): The email address of the user.
+            user_name (str): The username of the user.
+            first_name (str): The first name of the user.
+            last_name (str): The last name of the user.
+            password (str): The password of the user.
+            position (str): The position of the user.
+            **other_fields: Additional fields to be set on the user.
 
         Returns:
-            CustomUser: A newly created user instance
+            CustomUser: A newly created user instance.
         """
         
-        # Normalzie the email to contain only lowercase values
+        # Normalize the email to contain only lowercase values
         email = self.normalize_email(email)
 
-        #Create an instance a user using Djanos underlying base user manager
+        # Create an instance of a user using Django's underlying base user manager
         user = self.model(email=email, user_name=user_name, first_name = first_name, last_name = last_name, position = position, **other_fields)
 
-        #For the current user instance take has the users password
+        # Set the user's password
         user.set_password(password)
 
-        #Save the user
+        # Save the user
         user.save(using=self._db) 
 
-        #Print for testing
+        # Print for testing
         print(f"User created: username={user_name}, password={password}, password_hash={user.password}")
         
         return user
@@ -54,21 +52,21 @@ class CustomUserManager(BaseUserManager):
         Creates a new superuser instance with the given fields.
 
         Args:
-            email (str): The email address of the user
-            password (str): The password of the user
-            first_name (str): The first name of the user
-            last_name (str): The last name of the user
-            **other_fields: Additional fields to be set on the user
+            email (str): The email address of the user.
+            password (str): The password of the user.
+            first_name (str): The first name of the user.
+            last_name (str): The last name of the user.
+            **other_fields: Additional fields to be set on the user.
 
         Returns:
-            CustomUser: A newly created superuser instance
+            CustomUser: A newly created superuser instance.
         """
 
-        # A super user will have an additional field is_staff which by default should be true
-        # Note : This staff is assocaited with staff of the Djano Admin not the JIMS System
+        # A superuser will have the additional field 'is_staff' set to True by default
+        # Note: 'is_staff' is associated with staff of the Django Admin, not the JIMS System
         other_fields.setdefault('is_staff', True)
 
-        # A super user will have an additional field is_superuser which by default should be true
+        # A superuser will have the additional field 'is_superuser' set to True by default
         other_fields.setdefault('is_superuser', True)
 
         return self.create_user(email, password=password, first_name=first_name, last_name=last_name, **other_fields)
@@ -76,12 +74,12 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
-    A custom user model that extends Django's built-in AbstractBaseUser and PermissionsMixin.
+    A custom user model that extends Django's AbstractBaseUser and PermissionsMixin.
 
-    The purpose of this class is to define a custom user model that we can use to create user accounts with custom fields and functions beyond the defualy fields provided by Django
+    This model allows creating user accounts with custom fields and functions beyond the default fields provided by Django.
     """
-
-    # A custom user will be one of four positions
+    
+    # The choices avalible for a Custom Users Position
     POSITION_CHOICES = (
         ('Cashier', 'Cashier'),
         ('Booking Clerk', 'Booking Clerk'),
@@ -89,7 +87,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('Release Clerk', 'Release Clerk'),
     )
 
-    #The feilds of a Custom User
+    #The feilds of a CustomUser
     user_id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
@@ -99,36 +97,38 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_status = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    # Define the username field that user will login with is their email
+    # The field to use as the unique identifier for the user when logging in
     USERNAME_FIELD = 'email'
 
-    # In order to create a custom user a user name, first name last name and a position are required
+    # The fields that are required when creating a user, apart from the username and password
     REQUIRED_FIELDS = ['user_name', 'first_name', 'last_name', 'position']
 
+    # The manager class to use for creating and managing user instances.
     objects = CustomUserManager()
 
 class Officer(models.Model):
     """
-    Create an Supervisor model 
-    
-    A Officer model IS-A Custom User that HAS-A officer_id
+    A model representing an Officer within the JIMS system.
+
+    A Officer IS-A CustomUser
     """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     officer_id = models.CharField(max_length=200, null=False)
 
 class BookingClerk(models.Model):
     """
-    Create an Supervisor model which IS-A Custom User that HAS-A booking_clerk_id
-    """
+    A model representing a Booking Clerk within the JIMS system.
 
-    #The feilds of a Booking Clerk
+    A Booking Clerk IS-A CustomUser
+    """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     booking_clerk_id = models.CharField(max_length=200, null=False)
 
-
 class Supervisor(models.Model):
     """
-    Create an Supervisor model which IS-A Custom User that HAS-A supervisor ID
+    A model representing a Supervisor within the JIMS system.
+
+    A Supervisor IS-A CustomUser
     """
 
     #The feilds of a Supervisor
@@ -138,7 +138,9 @@ class Supervisor(models.Model):
 
 class ReleaseClerk(models.Model):
     """
-    Create an Release Clerk model which IS-A Custom User that HAS-A release_clerk_id
+    A model representing a Release Clerk within the JIMS system. 
+
+    A Release Clerk IS-A CustomUser
     """
 
     #The feilds of a ReleaseClerk
@@ -146,31 +148,34 @@ class ReleaseClerk(models.Model):
     release_clerk_id = models.CharField(max_length=200, null=False)
 
 
-class Account(models.Model):
+class InmateFinancialAccount(models.Model):
     """
-    Create an Account model (database) HAS-A account_number, account_type, and balance
+    A model representing an inmate's financial account.
     """
 
-    # The fields of Account
+    # The fields of InmateFinancialAccount
     account_number = models.IntegerField(null=False, primary_key=True)
     balance = models.FloatField(null=False)
 
 class TransactionDetail(models.Model):
     """
-    Create a TransactionDetail model (database) with the transaction_id, transaction_type, transaction_amount, and transaction_date
+    A model representing a transaction detail.
     """
+
+    # The fields of a TransactionDetail
     transaction_id = models.AutoField(primary_key=True)
-    account_number = models.ForeignKey(Account, null=False, on_delete=models.CASCADE)
+    account_number = models.ForeignKey(InmateFinancialAccount, null=False, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=2, null=False)
     transaction_amount = models.FloatField(null=False)
     transaction_date = models.DateTimeField(null=False)
     transaction_performed_by = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE)
 
 class InmateTraits(models.Model):
-    
     """
-    Create an InmateTraits Model (database) with the details below
+    A model representing the traits and characteristics of an inmate.
     """
+
+    # The choices avalible for certain feilds
     SEX_CHOICES = [
         ('W', 'Woman'),
         ('M', 'Man'),
@@ -200,8 +205,10 @@ class InmateTraits(models.Model):
     )
 
     FEET_CHOICES = [(i, f'{i} ft') for i in range(2, 8)]
+
     INCHES_CHOICES = [(i, f'{i} in') for i in range(0, 12)]
-    
+
+    # The fields of a InmateTraits
     profile_picture = models.ImageField(upload_to='inmate_pictures/', blank=True, null=True)
     first_name = models.CharField(max_length=80)
     middle_initial = models.CharField(max_length=1, blank=True, null=True)
@@ -223,6 +230,11 @@ class InmateTraits(models.Model):
     date_added = models.DateTimeField(null=False, default=timezone.now)
 
 class InmateArrestInfo(models.Model):
+    """
+    A model representing the arrest information of an inmate.
+    """
+
+    # The fields of a Inmate Arrest Info
     arrest_timestamp = models.DateTimeField()
     arresting_agency = models.CharField(max_length=100)
     arresting_location = models.CharField(max_length=100)
@@ -234,7 +246,13 @@ class InmateArrestInfo(models.Model):
     bail_allowance = models.BooleanField()
     bail_amount = models.DecimalField(max_digits=8, decimal_places=2)
 
+
 class InmateVehicles(models.Model):
+    """
+    A model representing the vehicles associated with an inmate.
+    """
+
+    # The fields of a Inmate Vehicles
     license_plate_number = models.CharField(max_length=7, primary_key=True)
     license_plate_state = models.CharField(max_length=2)
     make = models.CharField(max_length=50)
@@ -244,7 +262,13 @@ class InmateVehicles(models.Model):
     impound_company = models.CharField(max_length=100)
     impound_location = models.CharField(max_length=100)
 
+
 class InmateHealthSheet(models.Model):
+    """
+    A model representing the health information of an inmate.
+    """
+
+    # The fields of a Inmate Health Sheet
     epilepsy = models.CharField(max_length=225)
     escape_risk = models.BooleanField()
     head_lice = models.CharField(max_length=225)
@@ -259,13 +283,24 @@ class InmateHealthSheet(models.Model):
     uses_alcohol = models.CharField(max_length=225)
 
 class InmateProperty(models.Model):
+    """
+    A model representing the property of an inmate.
+    """
+
+    # The fields of an Inmates Property
     type_of_property = models.CharField(max_length=100)
     description = models.CharField(max_length=225)
     value = models.DecimalField(max_digits=8, decimal_places=2)
     location = models.CharField(max_length=50)
     release_status = models.BooleanField()
 
+
 class EmergencyContacts(models.Model):
+    """
+    A model representing the emergency contacts of an inmate.
+    """
+
+    # The fields of an Inmates Emergency Contact
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
@@ -273,12 +308,24 @@ class EmergencyContacts(models.Model):
     relationship = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15)
 
+
 class InmateGangs(models.Model):
+    """
+    A model representing the gang affiliations of an inmate.
+    """
+
+    # The fields of an Inmates Gang
     gang_name = models.CharField(max_length=50, primary_key=True)
     gang_area = models.CharField(max_length=50)
     is_active = models.BooleanField()
 
-class InmateSheet(models.Model):
+
+class InmateInformationSheet(models.Model):
+    """
+    An InmateInformationSheet class that represents an inmate's comprehensive profile or record.
+    """
+
+    # The fields of an Inmates Information Sheet
     traits = models.OneToOneField(InmateTraits, on_delete=models.CASCADE)
     arrest_info = models.OneToOneField(InmateArrestInfo, on_delete=models.CASCADE)
     health_sheet = models.OneToOneField(InmateHealthSheet, on_delete=models.CASCADE)
@@ -286,4 +333,4 @@ class InmateSheet(models.Model):
     property = models.OneToOneField(InmateProperty, on_delete=models.SET_NULL, null=True)
     gang_name = models.OneToOneField(InmateGangs, on_delete=models.SET_NULL, null=True)
     emergency_contact = models.OneToOneField(EmergencyContacts, on_delete=models.SET_NULL, null=True)
-    account_number = models.OneToOneField(Account, on_delete=models.CASCADE, default=None)
+    account_number = models.OneToOneField(InmateFinancialAccount, on_delete=models.CASCADE, default=None)
