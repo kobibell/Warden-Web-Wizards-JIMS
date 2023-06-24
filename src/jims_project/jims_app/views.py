@@ -60,7 +60,7 @@ def user_login(request):
             print(f"Failed login attempt: username={user_name}, password={password}") 
 
     # Render the login page with a CSRF token for security
-    return render(request, 'login.html', {'csrf_token': csrf.get_token(request)})
+    return render(request, 'user/login.html', {'csrf_token': csrf.get_token(request)})
 
 def create_user(request):
     """
@@ -92,20 +92,20 @@ def create_user(request):
         # Return a success response
         #!TODO Finish create user success
         if existing_user == "Supervisor":
-            return render(request, 'home_page.html')
+            return render(request, 'user/home_page.html')
         else:
-            return render(request, "login.html")
+            return render(request, "user/login.html")
 
     #If the request is GET render the HTML form create_user.html
     else:
-        return render(request, 'create_user.html')
+        return render(request, 'user/create_user.html')
 
 @login_required
 def home_page(request):
     context = {
         'user': request.user,
     }
-    return render(request, 'home_page.html', context)
+    return render(request, 'user/home_page.html', context)
 
 @login_required
 def accounts_home(request):
@@ -141,7 +141,7 @@ def accounts_home(request):
 
                 #Try to find the account with the given account number
                 try:
-                    account = Account.objects.get(account_number=deposit_form.cleaned_data['account_number'])
+                    account = InmateFinancialAccount.objects.get(account_number=deposit_form.cleaned_data['account_number'])
                 except Account.DoesNotExist:
                     account = None
 
@@ -180,7 +180,7 @@ def accounts_home(request):
 
                 # Try to find the account with the given account number
                 try:
-                    account = Account.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
+                    account = InmateFinancialAccount.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
                 
                 # If the account does not exist set it equal to none
                 except Account.DoesNotExist:
@@ -227,23 +227,23 @@ def accounts_home(request):
     }
 
     # Render the accounts_home template with the updated context data.
-    return render(request, 'accounts_home.html', context)
+    return render(request, 'financial/accounts_home.html', context)
 
 @login_required
 def accounts_transaction_details(request):
-    accounts = Account.objects.all()
+    accounts = InmateFinancialAccount.objects.all()
     context = {'accounts': accounts}
-    return render(request, 'accounts_search_number.html', context)
+    return render(request, 'financial/accounts_search_number.html', context)
 
 @login_required
 def accounts_search_name(request):
-    return render(request, 'accounts_search_name.html')
+    return render(request, 'financial/accounts_search_name.html')
 
 @login_required
 def get_all_accounts(request):
-    accounts = Account.objects.all()
+    accounts = InmateFinancialAccount.objects.all()
     context = {'accounts': accounts}
-    return render(request, 'account_list.html', context)
+    return render(request, 'financial/account_list.html', context)
 
 @login_required
 def get_all_transaction_details(request):
@@ -252,16 +252,16 @@ def get_all_transaction_details(request):
         if filter_by:
             transaction_details = TransactionDetail.objects.filter(account_number=filter_by)
             context = {'transaction_details': transaction_details}
-            return render(request, 'transaction_details_list.html', context)
+            return render(request, 'financial/transaction_details_list.html', context)
 
-    return render(request, 'transaction_details_list.html')
+    return render(request, 'financial/transaction_details_list.html')
 
 def add_money(request):  
     if request.method == 'POST':
         form = AddMoneyForm(request.POST)
         if form.is_valid():
             try:
-             account = Account.objects.get(account_number=form.cleaned_data['account_number'])
+             account = InmateFinancialAccount.objects.get(account_number=form.cleaned_data['account_number'])
             except Account.DoesNotExist:
                 account = None
 
@@ -297,7 +297,7 @@ def withdraw_money(request):
         form = WithdrawMoneyForm(request.POST)
         if form.is_valid():
             try:
-             account = Account.objects.get(account_number=form.cleaned_data['account_number'])
+             account = InmateFinancialAccount.objects.get(account_number=form.cleaned_data['account_number'])
             except Account.DoesNotExist:
                 account = None
 
@@ -326,7 +326,7 @@ def withdraw_money(request):
     return render(request, 'withdraw_money.html', {'form': form})
     
 def view_inmate(request):
-    return render(request, 'view_inmate.html')
+    return render(request, 'inmates/view_inmate.html')
 
 def get_inmate_details(request):
     if request.method == 'POST':
@@ -334,31 +334,31 @@ def get_inmate_details(request):
         if filter_by == 'full_list':
             inmate_list = InmateTraits.objects.all()
             context = {'inmate_list': inmate_list}
-            return render(request, 'inmate_result.html', context)
+            return render(request, 'inmates/inmate_result.html', context)
         
         if filter_by == 'by_first_name':
             search_var = request.POST.get('search-box')
             try:
                 inmate = InmateTraits.objects.filter(first_name=search_var)
             except InmateTraits.DoesNotExist:
-                return render(request, 'view_inmate.html')
+                return render(request, 'inmates/view_inmate.html')
             context= {'by_first_name': inmate}
             try: 
-                return render(request, 'inmate_result.html', context)
+                return render(request, 'inmates/inmate_result.html', context)
             except InmateTraits.MultipleObjectsReturned:
-                return render(request, 'view_inmate.html')
+                return render(request, 'inmates/view_inmate.html')
     
         if filter_by == 'by_last_name':
             search_var = request.POST.get('search-box')
             try:
                 inmate = InmateTraits.objects.filter(last_name=search_var)
             except InmateTraits.DoesNotExist:
-                return render(request, 'view_inmate.html')
+                return render(request, 'inmates/view_inmate.html')
             context= {'by_last_name': inmate}
             try: 
-                return render(request, 'inmate_result.html', context)
+                return render(request, 'inmates/inmate_result.html', context)
             except InmateTraits.MultipleObjectsReturned:
-                return render(request, 'view_inmate.html')
+                return render(request, 'inmates/view_inmate.html')
     
         if filter_by == 'by_id':
             search_var = request.POST.get('search-box')
@@ -367,7 +367,7 @@ def get_inmate_details(request):
             except InmateTraits.DoesNotExist:
                 None
             context= {'by_id': inmate}
-            return render(request, 'inmate_result.html', context)
+            return render(request, 'inmates/inmate_result.html', context)
                 
         return render(request, 'view_inmate.html')
 
@@ -390,7 +390,7 @@ def add_inmate(request):
         form = InmateForm(initial=request.session.get('inmate_traits_data', None))
     
     # Render the add_inmate.html template with the form object as a context variable
-    return render(request, 'add_inmate.html', {'inmate_traits_form': form})
+    return render(request, 'booking/add_inmate.html', {'inmate_traits_form': form})
 
 def add_inmate_arrest_information(request):
 
@@ -404,7 +404,7 @@ def add_inmate_arrest_information(request):
     else:
         form = InmateArrestingInfoForm(initial=request.session.get('inmate_arrest_info_data', None))
 
-    return render(request, 'inmate_arrest_info.html', {'inmate_arrest_info_form': form})
+    return render(request, 'booking/inmate_arrest_info.html', {'inmate_arrest_info_form': form})
 
 def add_inmate_health_sheet(request):
 
@@ -414,7 +414,7 @@ def add_inmate_health_sheet(request):
         # Create a form object with the POST data
         form = InmateHealthSheetForm(request.POST)
         
-         # If the form is valid save the POST data to the session and redirect to the next page
+        # If the form is valid save the POST data to the session and redirect to the next page
         if form.is_valid():
             request.session['inmate_health_sheet_data'] = request.POST
             return redirect('inmate_gang_affiliation')
@@ -423,7 +423,7 @@ def add_inmate_health_sheet(request):
         form = InmateHealthSheetForm(initial=request.session.get('inmate_health_sheet_data', None))
 
     # Render the inmate_health_sheet.html template with the form object as a context variable
-    return render(request, 'inmate_health_sheet.html', {'inmate_health_sheet_form': form})
+    return render(request, 'booking/inmate_health_sheet.html', {'inmate_health_sheet_form': form})
 
 
 def add_inmate_gang_affiliation(request):
@@ -439,7 +439,7 @@ def add_inmate_gang_affiliation(request):
     else:
         form = InmateGangAffiliationForm(initial=request.session.get('inmate_gang_affiliation_data', None))
 
-    return render(request, 'inmate_gang_affiliation.html', {'inmate_gang_affiliation_form': form})
+    return render(request, 'booking/inmate_gang_affiliation.html', {'inmate_gang_affiliation_form': form})
 
 def add_inmate_vehicle_disposition(request):
 
@@ -459,7 +459,7 @@ def add_inmate_vehicle_disposition(request):
         form = InmateVehicleDispositionForm(initial=request.session.get('inmate_vehicle_disposition_data', None))
 
     # Render the inmate_arrest_info.html template with the form object as a context variable
-    return render(request, 'inmate_vehicle_disposition.html', {'inmate_vehicle_disposition_form': form})
+    return render(request, 'booking/inmate_vehicle_disposition.html', {'inmate_vehicle_disposition_form': form})
 
 
 def add_inmate_property(request):
@@ -485,22 +485,22 @@ def add_inmate_property(request):
                 inmate_property = form.save()
 
                 # Retrieve the last account created in the Account model
-                last_account = Account.objects.last()
+                last_account = InmateFinancialAccount.objects.last()
                 
                 # If a last account exists increment its account_number by 1 to generate the next account number
                 # If no accounts exist (i.e., the database is empty) set the account_number to 1 for the first account
                 next_account_number = (last_account.account_number + 1) if last_account else 1
 
                 # Create an Account instance and save it
-                inmate_account = Account.objects.create(
+                inmate_account = InmateFinancialAccount.objects.create(
                     account_number=next_account_number,
                     balance=0.0
                 )
 
                 inmate_account.save()
 
-                # Create and save the InmateSheet instance
-                inmate_sheet = InmateSheet.objects.create(
+                # Create and save the InmateInformationSheet instance
+                inmate_sheet = InmateInformationSheet.objects.create(
                     traits=traits,
                     arrest_info=arrest_info,
                     health_sheet=health_sheet,
@@ -512,12 +512,12 @@ def add_inmate_property(request):
 
                 inmate_sheet.save()
 
-                return render(request, 'inmate_confirmation.html')
+                return render(request, 'booking/inmate_confirmation.html')
 
     else:
         form = InmatePropertyForm(initial=request.session.get('inmate_property_data', None))
 
-    return render(request, 'inmate_property.html', {'inmate_property_form': form})
+    return render(request, 'booking/inmate_property.html', {'inmate_property_form': form})
 
 
 def create_user_success(request):
@@ -526,7 +526,7 @@ def create_user_success(request):
 def inventory(request):
     inventory_list = InmateProperty.objects.all()
     context = {'inventory_list': inventory_list}
-    return render(request, 'inventory.html', context)
+    return render(request, 'inventory/inventory.html', context)
 
 def update_release_status(request):
     if request.method == 'POST':
@@ -551,14 +551,14 @@ def update_release_status(request):
         return redirect('fail_page')
 
 def update_release_status_success(request):
-    return render(request, 'update_release_status_success.html')
+    return render(request, 'inventory/update_release_status_success.html')
 
 def update_release_status_fail(request):
-    return render(request, 'update_release_status_fail.html')
+    return render(request, 'inventory/update_release_status_fail.html')
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('logout_success'))
 
 def logout_success(request):
-    return render(request, 'logout_success.html')
+    return render(request, 'user/logout_success.html')
