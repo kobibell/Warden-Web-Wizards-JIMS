@@ -142,7 +142,7 @@ def accounts_home(request):
                 #Try to find the account with the given account number
                 try:
                     account = InmateFinancialAccount.objects.get(account_number=deposit_form.cleaned_data['account_number'])
-                except Account.DoesNotExist:
+                except InmateFinancialAccount.DoesNotExist:
                     account = None
 
                 # If the account exists
@@ -183,7 +183,7 @@ def accounts_home(request):
                     account = InmateFinancialAccount.objects.get(account_number=withdraw_form.cleaned_data['account_number'])
                 
                 # If the account does not exist set it equal to none
-                except Account.DoesNotExist:
+                except InmateFinancialAccount.DoesNotExist:
                     account = None
 
                 # If the account exists update its balance
@@ -262,7 +262,7 @@ def add_money(request):
         if form.is_valid():
             try:
              account = InmateFinancialAccount.objects.get(account_number=form.cleaned_data['account_number'])
-            except Account.DoesNotExist:
+            except InmateFinancialAccount.DoesNotExist:
                 account = None
 
             if(account):
@@ -298,7 +298,7 @@ def withdraw_money(request):
         if form.is_valid():
             try:
              account = InmateFinancialAccount.objects.get(account_number=form.cleaned_data['account_number'])
-            except Account.DoesNotExist:
+            except InmateFinancialAccount.DoesNotExist:
                 account = None
 
             if(account):
