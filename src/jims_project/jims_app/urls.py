@@ -14,7 +14,7 @@ urlpatterns = [
         path(r'', views.user_login, name='login'),
         
         #!NOTE : DO NOT THINK THIS IS NEEDED ANYMORE (Still under review)
-        # path('logout/', views.logout_view, name='logout'),
+        path('logout/', views.logout_view, name='logout'),
 
         path('logout-success/', views.logout_success, name='logout_success'),
 
