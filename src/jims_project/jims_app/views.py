@@ -15,7 +15,7 @@ User = get_user_model()
 
 from .models import *
 
-from .forms import AddMoneyForm
+from .forms import DepositMoneyForm
 from .forms import WithdrawMoneyForm
 
 
@@ -123,7 +123,7 @@ def accounts_home(request):
      
     # Initialize variables
     message = None
-    deposit_form = AddMoneyForm()
+    deposit_form = DepositMoneyForm()
     withdraw_form = WithdrawMoneyForm()
 
     # Check if the form has been submitted if it has get its action
@@ -133,8 +133,8 @@ def accounts_home(request):
         # If the action is to deposit money: 
         if action == 'deposit':
 
-            # Create an instance of the AddMoneyForm with the submitted data
-            deposit_form = AddMoneyForm(request.POST)
+            # Create an instance of the DepositMoneyForm with the submitted data
+            deposit_form = DepositMoneyForm(request.POST)
 
             # If the form is valid
             if deposit_form.is_valid():
@@ -258,7 +258,7 @@ def get_all_transaction_details(request):
 
 def add_money(request):  
     if request.method == 'POST':
-        form = AddMoneyForm(request.POST)
+        form = DepositMoneyForm(request.POST)
         if form.is_valid():
             try:
              account = InmateFinancialAccount.objects.get(account_number=form.cleaned_data['account_number'])
@@ -289,7 +289,7 @@ def add_money(request):
             else:
                 return render(request, 'add_money.html', {'message': 'Account does not exist'})
     else:
-        form = AddMoneyForm()
+        form = DepositMoneyForm()
     return render(request, 'add_money.html', {'form': form})
 
 def withdraw_money(request):  
