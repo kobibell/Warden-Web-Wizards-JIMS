@@ -322,7 +322,7 @@ class InmateGangs(models.Model):
 
 class InmateInformationSheet(models.Model):
     """
-    An InmateInformationSheet class that represents an inmate's comprehensive profile or record.
+    A model that represents an inmate's comprehensive information sheet or information about the inmate.
     """
 
     # The fields of an Inmates Information Sheet
