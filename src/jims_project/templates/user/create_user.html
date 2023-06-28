@@ -35,6 +35,9 @@
                 <option value="Supervisor">Supervisor</option>
             </select><br>
             <button class="btn btn-primary" type="submit">Create User</button>
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
         </div>
     </div>
 </form>

@@ -10,6 +10,7 @@ from .forms import *
 from django.urls import reverse
 from .models import *
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 
 User = get_user_model()
 
@@ -70,7 +71,7 @@ def create_user(request):
         request (HttpRequest): The HTTP request object representing the current request.
     """
 
-    # If the request method is post
+    # If the request method is POST
     if request.method == 'POST':
 
         # Get the form data from the request POST data
@@ -81,22 +82,21 @@ def create_user(request):
         password = request.POST['password']
         position = request.POST['position']
 
-        existing_user = request.user.position
-        print(existing_user)
-
-        # Create the user using your CustomUserManager
-        user = CustomUser.objects.create_user(email=email, user_name=user_name, password=password, position = position, first_name = first_name, last_name = last_name)
-
-        user.save()
+        try:
+            # Attempt to create the user using your CustomUserManager
+            user = CustomUser.objects.create_user(email=email, user_name=user_name, password=password, position=position, first_name=first_name, last_name=last_name)
+        except IntegrityError:
+            # Handle the case when a duplicate username or email is detected
+            return render(request, 'user/create_user.html', {'error': 'Username or email already taken.'})
 
         # Return a success response
-        #!TODO Finish create user success
+        existing_user = request.user.position
         if existing_user == "Supervisor":
             return render(request, 'user/home_page.html')
         else:
             return render(request, "user/login.html")
 
-    #If the request is GET render the HTML form create_user.html
+    # If the request is GET, render the HTML form create_user.html
     else:
         return render(request, 'user/create_user.html')
 
