@@ -3,18 +3,53 @@
 {% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extrahead %}
 
-<link rel="stylesheet" href="{% static 'css/main.css' %}">
-{% block extrahead %}
-    
+    {% endblock %}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h1 class="card-title">Welcome {{ user.first_name }} {{ user.last_name }}</h1>
+                        <h3 class="card-subtitle mb-4">Please navigate to subsequent pages using the navigation bar.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Work Schedule</h5>
+                    <div class="work-schedule">
+                        <ul>
+                            <li>Monday: 9 AM - 5 PM</li>
+                            <li>Tuesday: 9 AM - 5 PM</li>
+                            <li>Wednesday: 9 AM - 5 PM</li>
+                            <li>Thursday: 9 AM - 5 PM</li>
+                            <li>Friday: 9 AM - 5 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Alerts</h5>
+                    <div class="alert-system">
+                        <div class="alert alert-dark" role="alert">
+                            You have no alerts at this moment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
-
-<div class="text-center">
-    <h1>Welcome {{ user.first_name }} {{ user.last_name }}</h1>
-    <h3 style="margin-bottom: 10px;">Please navigate to subsequent pages using the nav bar.</h3>
-</div>
-
-
-{% endblock %}
-

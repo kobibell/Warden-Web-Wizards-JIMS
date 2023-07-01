@@ -60,7 +60,7 @@ button {
 }
 
 input[type="submit"] {
-    background-color: #3da7fd;
+    background-color: #FF5722;
     color: #fff;
 }
 
@@ -76,6 +76,6 @@ input[type="submit"]:hover {
 
 input:focus {
     outline: none;
-    border-color: #3da7fd;
-    box-shadow: 0 0 5px rgba(62, 142, 65, 0.5);
+    border-color: #FF5722; 
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5); 
 }
