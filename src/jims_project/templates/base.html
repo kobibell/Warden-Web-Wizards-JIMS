@@ -33,7 +33,7 @@
                     <a class="dropdown-item" href="/view-inmate">View Inmates</a>
                     <!-- For Is the user is a supervisor or booking clerk add a drop down to add inmates -->
                     {% if user.position == 'Supervisor' or user.position == 'Booking Clerk' %}
-                      <a class="dropdown-item" href="/add-inmate">Book Inmates</a>
+                      <a class="dropdown-item" href="/book-inmate/traits">Book Inmates</a>
                     {% endif %}
                   </div>
                 </li>

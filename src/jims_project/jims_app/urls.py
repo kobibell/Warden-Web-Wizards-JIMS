@@ -54,25 +54,25 @@ urlpatterns = [
         path('view-inmate/inmate-details/', views.get_inmate_details, name='get_inmate_details'),
 
         # Page for adding inmates within the system 
-        path('add-inmate/', views.add_inmate, name='add_inmate'),
+        path('book-inmate/traits/', views.add_inmate, name='add_inmate'),
 
         # Page for adding an inamtes health sheet when booking an inmate
-        path('add-inmate/health-sheet/', views.add_inmate_health_sheet, name='inmate_health_sheet'),
+        path('book-inmate/health-sheet/', views.add_inmate_health_sheet, name='inmate_health_sheet'),
         
         # Page for adding an arrest info when booking an inmate
-        path('add-inmate/arrest-information/', views.add_inmate_arrest_information, name='inmate_arrest_info'),
+        path('book-inmate/arrest-information/', views.add_inmate_arrest_information, name='inmate_arrest_info'),
 
         # Page for adding an gang affiliation when booking an inmate
-        path('add-inmate/gang-affiliation/', views.add_inmate_gang_affiliation, name='inmate_gang_affiliation'),
+        path('book-inmate/gang-affiliation/', views.add_inmate_gang_affiliation, name='inmate_gang_affiliation'),
 
         # Page for adding an vehicle disposition when booking an inmate
-        path('add-inmate/vehicle-disposition/', views.add_inmate_vehicle_disposition,name='inmate_vehicle_disposition'),
+        path('book-inmate/vehicle-disposition/', views.add_inmate_vehicle_disposition,name='inmate_vehicle_disposition'),
 
         # Page for adding an inmates property when booking an inmate
-        path('add-inmate/property/', views.add_inmate_property,name='inmate_property'),
+        path('book-inmate/property/', views.add_inmate_property,name='inmate_property'),
 
         #!NOTE : DO NOT THINK THIS IS NEEDED ANYMORE (Still under review)
-        # path('home-page/add-inmate/', views.add_inmate, name='add_inmate'),
+        # path('home-page/book-inmate/', views.add_inmate, name='add_inmate'),
 
         #!TODO : Update / fix to not include 'home-page'. Seems inconsistent with the rest URL patterns.
         
